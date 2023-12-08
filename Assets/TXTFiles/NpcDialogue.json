@@ -1,52 +1,59 @@
 {
-    "npcs": [
-        {
-            "name": "NPC 1",
-            "dialogue": {
-                "dialogue1": [
-                    "Dialogue 1 for NPC 1",
-                    "Dialogue 2 for NPC 1",
-                    "Dialogue 3 for NPC 1"
-                ],
-                "dialogue2": [
-                    "Dialogue2 1 for NPC 1",
-                    "Dialogue2 2 for NPC 1",
-                    "Dialogue2 3 for NPC 1"
-                ]
-                
-            }
-        },
-        {
-            "name": "NPC 2",
-            "dialogue": {
-                "dialogue1": [
-                    "Dialogue 1 for NPC 2",
-                    "Dialogue 2 for NPC 2",
-                    "Dialogue 3 for NPC 2"
-                ],
-                "dialogue2": [
-                    "Dialogue2 1 for NPC 2",
-                    "Dialogue2 2 for NPC 2",
-                    "Dialogue2 3 for NPC 2"
-                ]
-
-            }
-        },
-        {
-            "name": "NPC 3",
-            "dialogue": {
-                "dialogue1": [
-                    "Dialogue 1 for NPC 3",
-                    "Dialogue 2 for NPC 3",
-                    "Dialogue 3 for NPC 3"
-                ],
-                "dialogue2": [
-                    "Dialogue2 1 for NPC 3",
-                    "Dialogue2 2 for NPC 3",
-                    "Dialogue2 3 for NPC 3"
-                ]
-
-            }
-        }
-    ]
+  "npcs": [
+    {
+      "name": "NPC 1",
+      "WhichDialogue": "0",
+      "dialogue": {
+        "dialogue1": [
+          "\"Dialogue 1 for NPC 1\" Print()",
+          "[How are you?]-I am fine-I am not fine",
+          "(1)",
+          "\"That's great to hear\"",
+          
+          "(2)",
+          "\"I am so sorry\"",
+          
+          
+          "\"Dialogue 3 for NPC 1\""
+        ],
+        "dialogue2": [
+          "Dialogue2 1 for NPC 1",
+          "Dialogue2 2 for NPC 1",
+          "Dialogue2 3 for NPC 1"
+        ]
+      }
+    },
+    {
+      "name": "NPC 2",
+      "WhichDialogue": "0",
+      "dialogue": {
+        "dialogue1": [
+          "Dialogue 1 for NPC 2",
+          "Dialogue 2 for NPC 2",
+          "Dialogue 3 for NPC 2"
+        ],
+        "dialogue2": [
+          "Dialogue2 1 for NPC 2",
+          "Dialogue2 2 for NPC 2",
+          "Dialogue2 3 for NPC 2"
+        ]
+      }
+    },
+    {
+      "name": "NPC 3",
+      "WhichDialogue": "0",
+      "dialogue": {
+        "dialogue1": [
+          "Dialogue 1 for NPC 3",
+          "Dialogue 2 for NPC 3",
+          "Dialogue 3 for NPC 3"
+        ],
+        "dialogue2": [
+          "Dialogue2 1 for NPC 3",
+          "Dialogue2 2 for NPC 3",
+          "Dialogue2 3 for NPC 3"
+        ]
+      }
+    }
+  ]
 }

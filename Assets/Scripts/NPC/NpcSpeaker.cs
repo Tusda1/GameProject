@@ -1,25 +1,25 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
+using DIALOGUE;
 
 public class NpcSpeaker : MonoBehaviour
 {
     private List<List<string>> _dialogueDict;
-    private bool _playerInRange = false;
+    private bool _playerInRange;
     private int _whichDialogue;
     private bool _conversationRunning;
     private bool _userInput;
+    private bool _waitingForResponse;
     
     private TextArchitect _architect;
     
-    private Coroutine speakingCoroutine = null;
+    private Coroutine _speakingCoroutine;
     // Start is called before the first frame update
     void Start()
     {
-        _dialogueDict = NpcDialogueHandler.GetDialogue();
+        _dialogueDict = NpcDialogueHandler.GetDialogue(NpcManager.instance.npc.npcName);
         _architect = new TextArchitect(NpcManager.instance.text);
     }
 
@@ -28,10 +28,10 @@ public class NpcSpeaker : MonoBehaviour
     {
         if (PlayerInteraction.Instance.IsInteractPressed)
             _userInput = true;
-        else if (speakingCoroutine == null)
+        else
             _userInput = false;
         
-        if (_playerInRange & _userInput & !_conversationRunning)
+        if (_userInput & !_conversationRunning & _playerInRange )
         {
             _userInput = false;
             StartSpeaking();
@@ -52,11 +52,11 @@ public class NpcSpeaker : MonoBehaviour
         {
             _playerInRange = false;
 
-            if (speakingCoroutine != null) // If a conversation is in progress when the player leaves the zone
+            if (_speakingCoroutine != null) // If a conversation is in progress when the player leaves the zone
             {
-                StopCoroutine(speakingCoroutine);
+                StopCoroutine(_speakingCoroutine);
                 NpcManager.instance.text.text = "";
-                speakingCoroutine = null;
+                _speakingCoroutine = null;
                 _conversationRunning = false;
             }
         }
@@ -65,25 +65,90 @@ public class NpcSpeaker : MonoBehaviour
     private void StartSpeaking()
     {
         _conversationRunning = true;
-        if (speakingCoroutine == null)
+        if (_speakingCoroutine == null)
         {
-            speakingCoroutine = StartCoroutine(Speaking());
+            _speakingCoroutine = StartCoroutine(Speaking());
         }
     }
 
     private IEnumerator Speaking()
     {
-        int howManyStrings = _dialogueDict[_whichDialogue].Count;
-        for (int i = 0; i < howManyStrings; i++)
+        for (int i = 0; i < _dialogueDict[_whichDialogue].Count; i++)
         {
-            _architect.Build(_dialogueDict[_whichDialogue][i]);
-            yield return WaitForUserInput();
+            DIALOGUE_LINES line = DialogueParser.Parse(_dialogueDict[_whichDialogue][i]);
+
+            if (line.hasDialogue)
+                yield return Line_RunDialogue(line);
+
+            if (line.hasCommands)
+                yield return Line_RunCommands(line);
+                
+            if (line.hasDialogue)
+                yield return WaitForUserInput();
             
             if (!_playerInRange) // Check if the player has left the NPC range during speaking
             {
                 break; // Exit the coroutine if the player is no longer in range
             }
         }
+    }
+    
+    IEnumerator Line_RunDialogue(DIALOGUE_LINES line)
+    {
+        yield return BuildLineSegments(line.dialogueData);
+    }
+    
+    IEnumerator BuildLineSegments(DL_DialogueData line)
+    {
+        for (int i = 0; i < line.Segments.Count; i++)
+        {
+            DL_DialogueData.DIALOGUE_SEGMENT segment = line.Segments[i];
+
+            yield return WaitForDialogueSegmentSignalToBeTriggered(segment);
+
+            yield return BuildDialogue(segment.dialogue, segment.appendText);
+        }
+    }
+    
+    IEnumerator WaitForDialogueSegmentSignalToBeTriggered(DL_DialogueData.DIALOGUE_SEGMENT segment)
+    {
+        switch (segment.startSignal)
+        {
+            case DL_DialogueData.DIALOGUE_SEGMENT.StartSignal.C:
+            case DL_DialogueData.DIALOGUE_SEGMENT.StartSignal.A:
+                yield return WaitForUserInput();
+                break;
+            case DL_DialogueData.DIALOGUE_SEGMENT.StartSignal.WC:
+            case DL_DialogueData.DIALOGUE_SEGMENT.StartSignal.WA:
+                yield return new WaitForSeconds(segment.signalDelay);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    IEnumerator BuildDialogue(string dialogue, bool append = false)
+    {
+        if (!append)
+            _architect.Build(dialogue);
+        else
+            _architect.Append(dialogue);
+            
+        while (_architect.isBuilding)
+        {
+            yield return null;
+        }
+    }
+    
+    IEnumerator Line_RunCommands(DIALOGUE_LINES line)
+    {
+        List<DL_COMMAND_DATA.Command> commands = line.commandData.commands;
+
+        foreach (DL_COMMAND_DATA.Command command in commands)
+        {
+            CommandManager.instance.Execute(command.name, command.arguments);
+        }
+        yield return null;
     }
 
     private IEnumerator WaitForUserInput()
@@ -92,5 +157,10 @@ public class NpcSpeaker : MonoBehaviour
             yield return null;
         
         _userInput = false;
+    }
+
+    private void ChoiceMade()
+    {
+        
     }
 }
