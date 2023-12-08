@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using DIALOGUE;
+using TMPro;
 
 public class NpcSpeaker : MonoBehaviour
 {
+    public static NpcSpeaker CurrentSpeaker { get; private set; }
+    
     private List<List<string>> _dialogueDict;
     private bool _playerInRange;
     private int _whichDialogue;
@@ -16,11 +18,13 @@ public class NpcSpeaker : MonoBehaviour
     private TextArchitect _architect;
     
     private Coroutine _speakingCoroutine;
+    
+    public NpcScrub npc;
+    public TextMeshProUGUI text;
     // Start is called before the first frame update
     void Start()
     {
-        _dialogueDict = NpcDialogueHandler.GetDialogue(NpcManager.instance.npc.npcName);
-        _architect = new TextArchitect(NpcManager.instance.text);
+        _architect = new TextArchitect(text);
     }
 
     // Update is called once per frame
@@ -55,15 +59,19 @@ public class NpcSpeaker : MonoBehaviour
             if (_speakingCoroutine != null) // If a conversation is in progress when the player leaves the zone
             {
                 StopCoroutine(_speakingCoroutine);
-                NpcManager.instance.text.text = "";
+                text.text = "";
                 _speakingCoroutine = null;
                 _conversationRunning = false;
+                CurrentSpeaker = null;
             }
         }
     }
     
     private void StartSpeaking()
     {
+        _whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.npcName);
+        _dialogueDict = NpcDialogueHandler.GetDialogue(npc.npcName);
+        CurrentSpeaker = this;
         _conversationRunning = true;
         if (_speakingCoroutine == null)
         {

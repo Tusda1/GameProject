@@ -28,7 +28,7 @@ public class ChangeDialogueTest : MonoBehaviour
         if (_playerInRange & PlayerInteraction.Instance.IsInteractPressed)
         {
             Debug.Log("Hei");
-            NpcDialogueHandler.ChangeWhichDialogue("NPC 1", "1");
+            NpcDialogueHandler.ChangeWhichDialogue("NPC 1", 1);
         }
     }
 }
