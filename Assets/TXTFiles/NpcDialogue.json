@@ -14,9 +14,9 @@
           "\"Dialogue 3 for NPC 1\" NextDialogue()"
         ],
         "dialogue2": [
-          "Dialogue2 1 for NPC 1",
-          "Dialogue2 2 for NPC 1",
-          "Dialogue2 3 for NPC 1"
+          "\"Dialogue2 1 for NPC 1\"",
+          "\"Dialogue2 2 for NPC 1\"",
+          "\"Dialogue2 3 for NPC 1\""
         ]
       }
     },

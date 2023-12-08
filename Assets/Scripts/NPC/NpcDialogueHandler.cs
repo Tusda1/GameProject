@@ -118,56 +118,49 @@ public static class NpcDialogueHandler
     {
         string filePath = Path.Combine(Application.dataPath, "TXTFiles/NpcDialogue.json");
 
-        if (File.Exists(filePath))
-        {
-            string json = File.ReadAllText(filePath);
-
-            JObject jsonObject = JObject.Parse(json);
-
-            if (jsonObject != null)
-            {
-                // Find the NPC with the matching name
-                JObject npc = jsonObject["npcs"].FirstOrDefault(n => (string)n["name"] == npcName) as JObject;
-
-                if (npc != null)
-                {
-                    if (npc.TryGetValue("WhichDialogue", out JToken currentDialogToken))
-                    {
-                        if (currentDialogToken.Type == JTokenType.Integer)
-                        {
-                            int currentDialog = (int)currentDialogToken;
-                            int updatedDialog = currentDialog + newValue;
-                            npc["WhichDialogue"] = updatedDialog;
-
-                            // Write the modified JSON back to the file
-                            File.WriteAllText(filePath, jsonObject.ToString());
-
-                            Debug.Log("Updated WhichDialogue for NPC: " + npcName + " to " + updatedDialog);
-                        }
-                        else
-                        {
-                            Debug.LogError("Unexpected data type for WhichDialogue for NPC: " + npcName);
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError("WhichDialogue key not found for NPC: " + npcName);
-                    }
-                }
-                else
-                {
-                    Debug.LogError("NPC not found with the given name: " + npcName);
-                }
-            }
-            else
-            {
-                Debug.LogError("Failed to parse JSON.");
-            }
-        }
-        else
+        if (!File.Exists(filePath))
         {
             Debug.LogError("File does not exist at the specified path: " + filePath);
+            return;
         }
+
+        string json = File.ReadAllText(filePath);
+        JObject jsonObject = JObject.Parse(json);
+
+        if (jsonObject == null)
+        {
+            Debug.LogError("Failed to parse JSON.");
+            return;
+        }
+
+        JObject npc = jsonObject["npcs"].FirstOrDefault(n => (string)n["name"] == npcName) as JObject;
+
+        if (npc == null)
+        {
+            Debug.LogError("NPC not found with the given name: " + npcName);
+            return;
+        }
+
+        if (!npc.TryGetValue("WhichDialogue", out JToken currentDialogToken))
+        {
+            Debug.LogError("WhichDialogue key not found for NPC: " + npcName);
+            return;
+        }
+
+        if (currentDialogToken.Type != JTokenType.Integer)
+        {
+            Debug.LogError("Unexpected data type for WhichDialogue for NPC: " + npcName);
+            return;
+        }
+
+        int currentDialog = (int)currentDialogToken;
+        int updatedDialog = currentDialog + newValue;
+        npc["WhichDialogue"] = updatedDialog;
+
+        // Write the modified JSON back to the file
+        File.WriteAllText(filePath, jsonObject.ToString());
+
+        Debug.Log("Updated WhichDialogue for NPC: " + npcName + " to " + updatedDialog);
     }
     
     public static void ResetDialogue()
