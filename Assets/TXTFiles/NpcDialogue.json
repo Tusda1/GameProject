@@ -1,15 +1,27 @@
 {
   "npcs": [
     {
+      "name": "ExampleNpc",
+      "WhichDialogue": 0,
+      "dialogue": {
+        "dialogue1": [
+          "\"Dialogue 1 for NPC 2\"",
+          "\"Dialogue 2 for NPC 2\"",
+          "\"Dialogue 3 for NPC 2\""
+        ],
+        "dialogue2": [
+          "\"Dialogue2 1 for NPC 2\""
+        ]
+      }
+    },
+    {
       "name": "NPC 1",
-      "WhichDialogue": 1,
+      "WhichDialogue": 0,
       "dialogue": {
         "dialogue1": [
           "\"Dialogue 1 for NPC 1\" Print()",
-          "[How are you?]-I am fine-I am not fine",
-          "(1)",
+          "\"How are you\" Choices(\"I am good\" \"I am not good\")",
           "\"That's great to hear\"",
-          "(2)",
           "\"I am so sorry\"",
           "\"Dialogue 3 for NPC 1\" NextDialogue()"
         ],
@@ -21,24 +33,8 @@
       }
     },
     {
-      "name": "NPC 2",
-      "WhichDialogue": "0",
-      "dialogue": {
-        "dialogue1": [
-          "Dialogue 1 for NPC 2",
-          "Dialogue 2 for NPC 2",
-          "Dialogue 3 for NPC 2"
-        ],
-        "dialogue2": [
-          "Dialogue2 1 for NPC 2",
-          "Dialogue2 2 for NPC 2",
-          "Dialogue2 3 for NPC 2"
-        ]
-      }
-    },
-    {
       "name": "NPC 3",
-      "WhichDialogue": "0",
+      "WhichDialogue": 0,
       "dialogue": {
         "dialogue1": [
           "Dialogue 1 for NPC 3",

@@ -13,7 +13,7 @@ public class NpcSpeaker : MonoBehaviour
     private int _whichDialogue;
     private bool _conversationRunning;
     private bool _userInput;
-    private bool _waitingForResponse;
+    public bool waitingForResponse;
     
     private TextArchitect _architect;
     
@@ -24,6 +24,7 @@ public class NpcSpeaker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        NpcDialogueHandler.ResetDialogue();
         _architect = new TextArchitect(text);
     }
 
@@ -161,7 +162,7 @@ public class NpcSpeaker : MonoBehaviour
 
     private IEnumerator WaitForUserInput()
     {
-        while (!_userInput)
+        while (!_userInput || waitingForResponse)
             yield return null;
         
         _userInput = false;

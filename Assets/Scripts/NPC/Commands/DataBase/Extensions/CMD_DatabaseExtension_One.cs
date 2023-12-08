@@ -23,7 +23,8 @@ public class CMD_DatabaseExtension_One : CMD_Database_Extension
 
     private static void Choices(string[] options)
     {
-        
+        ButtonManager.DisplayButtons(options);
+        NpcSpeaker.CurrentSpeaker.waitingForResponse = true;
     }
 
     private static void NextDialogue()
