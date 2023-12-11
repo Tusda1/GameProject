@@ -157,7 +157,7 @@ public static class NpcDialogueHandler
         Debug.Log("Updated WhichDialogue for all NPCs to 0");
     }
     
-    private static void DeleteLines(int deleteStart, int deleteAmount)
+    public static void DeleteLines(int deleteStart, int deleteAmount)
     {
         deleteStart += NpcSpeaker.CurrentSpeaker.currentDialogueLine;
 

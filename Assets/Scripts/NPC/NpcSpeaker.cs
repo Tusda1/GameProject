@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 using TMPro;
-using UnityEngine.Serialization;
 
 public class NpcSpeaker : MonoBehaviour
 {
     public static NpcSpeaker CurrentSpeaker { get; private set; }
     
-    [HideInInspector]
+
     public List<List<string>> dialogueDict;
+    [HideInInspector]
     public int whichDialogue;
+    [HideInInspector]
+    public bool userInput;
     
     private bool _playerInRange;
     private bool _conversationRunning;
-    private bool _userInput;
     public bool waitingForResponse;
     public int currentDialogueLine;
     
@@ -35,14 +36,12 @@ public class NpcSpeaker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerInteraction.Instance.IsInteractPressed)
-            _userInput = true;
-        else
-            _userInput = false;
+        if (PlayerInteraction.Instance.IsInteractPressed & _playerInRange)
+            userInput = true;
         
-        if (_userInput & !_conversationRunning & _playerInRange )
+        if (userInput & !_conversationRunning & _playerInRange )
         {
-            _userInput = false;
+            userInput = false;
             StartSpeaking();
         }
     }
@@ -167,14 +166,9 @@ public class NpcSpeaker : MonoBehaviour
 
     private IEnumerator WaitForUserInput()
     {
-        while (!_userInput || waitingForResponse)
+        while (!userInput || waitingForResponse)
             yield return null;
         
-        _userInput = false;
-    }
-
-    private void ChoiceMade()
-    {
-        
+        userInput = false;
     }
 }

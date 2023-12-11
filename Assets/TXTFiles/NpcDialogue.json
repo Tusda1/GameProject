@@ -16,12 +16,12 @@
     },
     {
       "name": "NPC 1",
-      "WhichDialogue": 0,
+      "WhichDialogue": 1,
       "dialogue": {
         "dialogue1": [
           "\"Dialogue 1 for NPC 1\"",
           "\"How are you\" Choices(\"I am good\" \"I am not good\")",
-          "DeleteLines(\"1\" \"3\")",
+          "DeleteLines(\"1\" \"3\" \"4\" \"3\")",
           "\"option 1 first\"",
           "\"option 1 second\"",
           "\"option 1 third\"",

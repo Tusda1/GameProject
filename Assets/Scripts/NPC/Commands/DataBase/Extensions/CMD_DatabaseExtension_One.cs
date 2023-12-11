@@ -6,7 +6,7 @@ public class CMD_DatabaseExtension_One : CMD_Database_Extension
 {
     new public static void Extend(CommandDatabase database)
     {
-        //Add COmmand with no parameters
+        //Add Command with no parameters
         database.AddCommand("Print",new Action(PrintDefaultMessage));
         
         database.AddCommand("Choices", new Action<string[]>(Choices));
@@ -31,10 +31,22 @@ public class CMD_DatabaseExtension_One : CMD_Database_Extension
         NpcSpeaker.CurrentSpeaker.waitingForResponse = true;
     }
     
-    //Used for deleting the route that wasnt chosen after a choice.
+    //Used for deleting the route that wasn't chosen after a choice.
+    //The parameter is an array of the starts and lengths of the different routes. It will use this to delete the routes that weren't chosen.
     private static void DeleteLines(string[] deleteStartAndAmount)
     {
+        //Decrements buttonPressed by 1 so that the first button becomes 0 in order to match the index of an array.
+        int optionChosen = ButtonManager.buttonPressed - 1;
         
+        //For loops that deletes all routes except the one chosen
+        for (int i = 0; i < (deleteStartAndAmount.Length/2); i++)
+        {
+            //Makes sure i is not equal to optionChosen. If it is equal it will not delete that route.
+            if (i != optionChosen)
+            {
+                NpcDialogueHandler.DeleteLines(int.Parse(deleteStartAndAmount[i * 2]), int.Parse(deleteStartAndAmount[(i * 2) + 1]));
+            }
+        }
     }
 
     //Used at the end of a dialogue to move on to the next dialogue.

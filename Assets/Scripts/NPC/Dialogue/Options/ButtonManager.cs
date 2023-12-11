@@ -3,16 +3,7 @@ using UnityEngine;
 
 public static class ButtonManager
 {
-    public static int optionChosen;
-    
-    public enum buttons
-    {
-        Button1,
-        Button2,
-        Button3,
-        Button4
-    }
-    public static buttons buttonPressed;
+    public static int buttonPressed;
     
     public static void DisplayButtons(string[] options)
     {
