@@ -1,0 +1,11 @@
+You can find an example for how to set up an "Npc" in the json document at the top of the NpcDialogue Json file.
+If you want to add any commands at any point you do that at after the dialogue line in the dialogues catagory.
+The format for a command is as follows. Command(\"Arg1\" \"Arg2\") How many arguments if any depends on the command.
+Dialogue is preceded and followed by \". This is necessary in order for the script to recognize it as dialogue.
+The \ is used to escape the ". What that means is that the json file wont read it as a " and the " will be included in the string for the script to read.
+
+
+Commands and Explanations
+Choices(). This is a command used in dialogue when you want the player to say or respond to anything. The arguments here will be the options. You can have a maximum of 4 arguments.
+NextDialogue(). This command takes no arguments and simply makes the Npc go to the next dialogue. This is usually used at the end of a dialogue in order to stop looping of the same dialogue.
+NextScene(). This command takes one argument which is the name of the scene you wish to change to.

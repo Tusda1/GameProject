@@ -18,11 +18,21 @@ public class ButtonContainer : MonoBehaviour
     public TextMeshProUGUI buttonThreeText;
     public TextMeshProUGUI buttonFourText;
 
-    public List<GameObject> buttonList;
-    public List<TextMeshProUGUI> buttonTextList;
+    public List<GameObject> buttonList = new List<GameObject>(); //
+    public List<TextMeshProUGUI> buttonTextList = new List<TextMeshProUGUI>(); 
 
-    private void Start()
+    private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            // Rest of your initialization code...
+        }
+        else
+        {
+            Destroy(gameObject); // Ensures there's only one instance
+        }
+        
         buttonList.Add(buttonOne);
         buttonList.Add(buttonTwo);
         buttonList.Add(buttonThree);

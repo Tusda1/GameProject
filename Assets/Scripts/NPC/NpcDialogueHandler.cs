@@ -6,6 +6,7 @@ using UnityEngine;
 
 public static class NpcDialogueHandler
 {
+    //This method is used to get the needed dialogue for the npc you are talking to
     public static List<List<string>> GetDialogue(string keyName)
     {
         string filePath = Path.Combine(Application.dataPath, "TXTFiles/NpcDialogue.json");
@@ -48,6 +49,7 @@ public static class NpcDialogueHandler
     }
 
     
+    //This method is used to get a variable called whichdialogue which keeps track of what dialogue you are meant to hear next
     public static int GetWhichDialogue(string npcName)
     {
         string filePath = Path.Combine(Application.dataPath, "TXTFiles/NpcDialogue.json");
@@ -154,5 +156,11 @@ public static class NpcDialogueHandler
 
         Debug.Log("Updated WhichDialogue for all NPCs to 0");
     }
+    
+    private static void DeleteLines(int deleteStart, int deleteAmount)
+    {
+        deleteStart += NpcSpeaker.CurrentSpeaker.currentDialogueLine;
 
+        NpcSpeaker.CurrentSpeaker.dialogueDict[NpcSpeaker.CurrentSpeaker.whichDialogue].RemoveRange(deleteStart, deleteAmount);
+    }
 }

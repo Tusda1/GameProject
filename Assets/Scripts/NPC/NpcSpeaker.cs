@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class NpcSpeaker : MonoBehaviour
 {
     public static NpcSpeaker CurrentSpeaker { get; private set; }
     
-    private List<List<string>> _dialogueDict;
+    [HideInInspector]
+    public List<List<string>> dialogueDict;
+    public int whichDialogue;
+    
     private bool _playerInRange;
-    private int _whichDialogue;
     private bool _conversationRunning;
     private bool _userInput;
     public bool waitingForResponse;
+    public int currentDialogueLine;
     
     private TextArchitect _architect;
     
@@ -70,8 +74,8 @@ public class NpcSpeaker : MonoBehaviour
     
     private void StartSpeaking()
     {
-        _whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.npcName);
-        _dialogueDict = NpcDialogueHandler.GetDialogue(npc.npcName);
+        whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.npcName);
+        dialogueDict = NpcDialogueHandler.GetDialogue(npc.npcName);
         CurrentSpeaker = this;
         _conversationRunning = true;
         if (_speakingCoroutine == null)
@@ -82,9 +86,10 @@ public class NpcSpeaker : MonoBehaviour
 
     private IEnumerator Speaking()
     {
-        for (int i = 0; i < _dialogueDict[_whichDialogue].Count; i++)
+        for (int i = 0; i < dialogueDict[whichDialogue].Count; i++)
         {
-            DIALOGUE_LINES line = DialogueParser.Parse(_dialogueDict[_whichDialogue][i]);
+            currentDialogueLine = i;
+            DIALOGUE_LINES line = DialogueParser.Parse(dialogueDict[whichDialogue][i]);
 
             if (line.hasDialogue)
                 yield return Line_RunDialogue(line);
