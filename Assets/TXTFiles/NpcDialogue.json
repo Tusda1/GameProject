@@ -16,7 +16,7 @@
     },
     {
       "name": "NPC 1",
-      "WhichDialogue": 1,
+      "WhichDialogue": 0,
       "dialogue": {
         "dialogue1": [
           "\"Dialogue 1 for NPC 1\"",
@@ -30,7 +30,8 @@
           "\"option 2 third\"",
           "\"That's great to hear\"",
           "\"I am so sorry\"",
-          "\"Dialogue 3 for NPC 1\" NextDialogue()"
+          "\"Dialogue 3 for NPC 1\" NextDialogue()",
+          "Leave()"
         ],
         "dialogue2": [
           "\"Dialogue2 1 for NPC 1\"",

@@ -70,6 +70,15 @@ public class NpcSpeaker : MonoBehaviour
             }
         }
     }
+
+    public void EndConversation()
+    {
+        StopCoroutine(_speakingCoroutine);
+        text.text = "";
+        _speakingCoroutine = null;
+        _conversationRunning = false;
+        CurrentSpeaker = null;
+    }
     
     private void StartSpeaking()
     {
@@ -98,11 +107,6 @@ public class NpcSpeaker : MonoBehaviour
                 
             if (line.hasDialogue)
                 yield return WaitForUserInput();
-            
-            if (!_playerInRange) // Check if the player has left the NPC range during speaking
-            {
-                break; // Exit the coroutine if the player is no longer in range
-            }
         }
     }
     

@@ -2,7 +2,7 @@ using System;
 using DIALOGUE;
 using UnityEngine;
 
-public class CMD_DatabaseExtension_One : CMD_Database_Extension
+public class CmdDatabaseExtensionOne : CMD_Database_Extension
 {
     new public static void Extend(CommandDatabase database)
     {
@@ -12,6 +12,8 @@ public class CMD_DatabaseExtension_One : CMD_Database_Extension
         database.AddCommand("Choices", new Action<string[]>(Choices));
         
         database.AddCommand("DeleteLines",new Action<string[]>(DeleteLines));
+        
+        database.AddCommand("Leave", new Action(LeaveConversation));
         
         database.AddCommand("NextDialogue",new Action(NextDialogue));
         
@@ -47,6 +49,11 @@ public class CMD_DatabaseExtension_One : CMD_Database_Extension
                 NpcDialogueHandler.DeleteLines(int.Parse(deleteStartAndAmount[i * 2]), int.Parse(deleteStartAndAmount[(i * 2) + 1]));
             }
         }
+    }
+
+    private static void LeaveConversation()
+    {
+        NpcSpeaker.CurrentSpeaker.EndConversation();
     }
 
     //Used at the end of a dialogue to move on to the next dialogue.
