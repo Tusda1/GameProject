@@ -78,6 +78,7 @@ public class NpcSpeaker : MonoBehaviour
         _speakingCoroutine = null;
         _conversationRunning = false;
         CurrentSpeaker = null;
+        DialogueBoxManager.Instance.HideDialogueContainers();
     }
     
     private void StartSpeaking()
@@ -86,6 +87,7 @@ public class NpcSpeaker : MonoBehaviour
         dialogueDict = NpcDialogueHandler.GetDialogue(npc.npcName);
         CurrentSpeaker = this;
         _conversationRunning = true;
+        DialogueBoxManager.Instance.ShowDialogueContainers(npc.portrait);
         if (_speakingCoroutine == null)
         {
             _speakingCoroutine = StartCoroutine(Speaking());

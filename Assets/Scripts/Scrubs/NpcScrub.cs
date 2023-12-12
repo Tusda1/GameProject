@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class NpcScrub : ScriptableObject
 {
     public Sprite sprite;
-    public Image portrait;
+    public Sprite portrait;
     
     public string npcName;
 }
