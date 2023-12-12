@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 370508426}
   m_Layer: 5
   m_Name: Npchead
-  m_TagString: Untagged
+  m_TagString: DialogueUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -607,6 +607,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 370508424}
   m_CullTransparentMesh: 1
+--- !u!1 &382699625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 382699627}
+  - component: {fileID: 382699626}
+  m_Layer: 0
+  m_Name: DialogueBoxManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &382699626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382699625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2274e5a36d859847ab26a9708a62f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portraitNpcImage: {fileID: 370508426}
+--- !u!4 &382699627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382699625}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.016386941, y: 0.38587967, z: 0.030592661}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &499785845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,7 +1338,7 @@ GameObject:
   - component: {fileID: 1567041866}
   m_Layer: 5
   m_Name: PlayerHead
-  m_TagString: Untagged
+  m_TagString: DialogueUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2198,7 +2243,7 @@ GameObject:
   - component: {fileID: 2145098280}
   m_Layer: 5
   m_Name: TextBox
-  m_TagString: Untagged
+  m_TagString: DialogueUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2392,3 +2437,4 @@ SceneRoots:
   - {fileID: 591200405}
   - {fileID: 1781544622}
   - {fileID: 499785848}
+  - {fileID: 382699627}
