@@ -1,0 +1,13 @@
+{
+  "SaveData": [
+    {
+      "DataType": "Player",
+      "GoodClues": 0,
+      "BadClues": 0
+    },
+    {
+      "DataType": "Npc",
+      "Interacted": 0
+    }
+  ]
+}
