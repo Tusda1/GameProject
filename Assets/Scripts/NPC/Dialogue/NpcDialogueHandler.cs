@@ -9,7 +9,7 @@ public static class NpcDialogueHandler
     //This method is used to get the needed dialogue for the npc you are talking to
     public static List<List<string>> GetDialogue(string keyName)
     {
-        string filePath = Path.Combine(Application.dataPath, "TXTFiles/NpcDialogue.json");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/NpcDialogue.json");
 
         if (!File.Exists(filePath))
         {
@@ -52,7 +52,7 @@ public static class NpcDialogueHandler
     //This method is used to get a variable called whichdialogue which keeps track of what dialogue you are meant to hear next
     public static int GetWhichDialogue(string npcName)
     {
-        string filePath = Path.Combine(Application.dataPath, "TXTFiles/NpcDialogue.json");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/NpcDialogue.json");
 
         if (!File.Exists(filePath))
         {
@@ -89,7 +89,7 @@ public static class NpcDialogueHandler
 
     public static void ChangeWhichDialogue(string npcName, int newValue)
     {
-        string filePath = Path.Combine(Application.dataPath, "TXTFiles/NpcDialogue.json");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/NpcDialogue.json");
 
         if (!File.Exists(filePath))
         {
@@ -133,7 +133,7 @@ public static class NpcDialogueHandler
     
     public static void ResetDialogue()
     {
-        string filePath = Path.Combine(Application.dataPath, "TXTFiles/NpcDialogue.json");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/NpcDialogue.json");
 
         if (!File.Exists(filePath))
         {
