@@ -3,14 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Controls _input = null;
+    private Controles _input = null;
     private Vector2 _moveVector = Vector2.zero;
     private Rigidbody2D _rb = null;
     private float _moveSpeed = 10;
 
     private void Awake()
     {
-        _input = new Controls();
+        _input = new Controles();
         _rb = GetComponent<Rigidbody2D>();
     }
 

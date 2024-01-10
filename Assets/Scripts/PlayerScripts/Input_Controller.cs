@@ -1,23 +1,19 @@
 using UnityEngine;
 
-public class Input_Controler : MonoBehaviour
+public class Input_Controller : MonoBehaviour
 {
-    public static Input_Controler Instance { get; private set; }
+    public static Input_Controller Instance { get; private set; }
     private  Controles _input;
 
     [HideInInspector] public Vector2 moveDirection;
     [HideInInspector] public bool interactPressed;
-    [HideInInspector] public bool openNoteBook;
     [HideInInspector] public bool nextOption;
     [HideInInspector] public bool previousOption;
-    [HideInInspector] public bool bookDirection;
     
     private void Update()
     {
-        moveDirection = _input.Player.move.ReadValue<Vector2>();
-        bookDirection = _input.Player.move.triggered;
-        interactPressed = _input.Player.Interackt.WasPressedThisFrame();
-        openNoteBook = _input.Player.openNotebook.WasPressedThisFrame();
+        moveDirection = _input.Player.Movement.ReadValue<Vector2>();
+        interactPressed = _input.Player.Interact.WasPressedThisFrame();
         nextOption = _input.Player.NextDialogueOption.WasPressedThisFrame();
         previousOption = _input.Player.PreviousDialogueOption.WasPressedThisFrame();
     }

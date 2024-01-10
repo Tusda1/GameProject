@@ -13,15 +13,15 @@ public class ButtonSelector : MonoBehaviour
             if (NpcSpeaker.CurrentSpeaker.waitingForResponse == true)
             {
                 // Keyboard input to navigate through buttons
-                if (Input_Controler.Instance.previousOption)
+                if (Input_Controller.Instance.previousOption)
                 {
                     MoveToPreviousButton();
                 }
-                else if (Input_Controler.Instance.nextOption)
+                else if (Input_Controller.Instance.nextOption)
                 {
                     MoveToNextButton();
                 }
-                else if (Input_Controler.Instance.interactPressed) // Enter key to select the current button
+                else if (Input_Controller.Instance.interactPressed) // Enter key to select the current button
                 {
                     SelectButton(ButtonManager.currentButtonIndex);
                 }
