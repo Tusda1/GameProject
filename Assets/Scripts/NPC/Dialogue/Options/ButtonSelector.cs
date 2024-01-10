@@ -13,11 +13,11 @@ public class ButtonSelector : MonoBehaviour
             if (NpcSpeaker.CurrentSpeaker.waitingForResponse == true)
             {
                 // Keyboard input to navigate through buttons
-                if (Input_Controller.Instance.previousOption)
+                if (Input_Controller.Instance.upMenu)
                 {
                     MoveToPreviousButton();
                 }
-                else if (Input_Controller.Instance.nextOption)
+                else if (Input_Controller.Instance.downMenu)
                 {
                     MoveToNextButton();
                 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Input_Controller : MonoBehaviour
 {
@@ -7,15 +8,19 @@ public class Input_Controller : MonoBehaviour
 
     [HideInInspector] public Vector2 moveDirection;
     [HideInInspector] public bool interactPressed;
-    [HideInInspector] public bool nextOption;
-    [HideInInspector] public bool previousOption;
+    [HideInInspector] public bool downMenu; 
+    [HideInInspector] public bool upMenu;
+    [HideInInspector] public bool leftMenu;
+    [HideInInspector] public bool rightMenu;
     
     private void Update()
     {
         moveDirection = _input.Player.Movement.ReadValue<Vector2>();
         interactPressed = _input.Player.Interact.WasPressedThisFrame();
-        nextOption = _input.Player.NextDialogueOption.WasPressedThisFrame();
-        previousOption = _input.Player.PreviousDialogueOption.WasPressedThisFrame();
+        downMenu = _input.Player.MenuDown.WasPressedThisFrame();
+        upMenu = _input.Player.MenuUp.WasPressedThisFrame();
+        leftMenu = _input.Player.MenuLeft.WasPressedThisFrame();
+        rightMenu = _input.Player.MenuRight.WasPressedThisFrame();
     }
     private void Awake()
     {

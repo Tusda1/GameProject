@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
     
     [Header("Components")]
     private Rigidbody2D _rb;
-    private Input_Controller _input;
     private Animator _animator;
 
     public LayerMask solidObjectsLayer;
@@ -27,18 +26,17 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _input = GetComponent<Input_Controller>();
         _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if (_input.interactPressed) Interact();
+        if (Input_Controller.Instance.interactPressed) Interact();
     }
     
     private void FixedUpdate()
     {
-        _moveVector = _input.moveDirection;
+        _moveVector = Input_Controller.Instance.moveDirection;
         _rb.velocity = _moveVector * _moveSpeed;
 
         if (_moveVector != Vector2.zero)

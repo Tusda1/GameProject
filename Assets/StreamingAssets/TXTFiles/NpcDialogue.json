@@ -16,7 +16,7 @@
     },
     {
       "name": "NPC 1",
-      "WhichDialogue": 1,
+      "WhichDialogue": 0,
       "dialogue": {
         "dialogue1": [
           "\"Dialogue 1 for NPC 1\"",

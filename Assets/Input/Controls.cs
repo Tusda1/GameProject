@@ -62,6 +62,42 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""f2515db4-3e83-4412-a0ee-1608ed8457bb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""739c9a33-a8dc-426d-8bca-5564cc5f4d2c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""f09b3b15-1575-4df8-9823-ee67d540cf2b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""d83fd16e-a7dc-4cf9-99e4-5a9e68e3059e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -262,6 +298,94 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""PreviousDialogueOption"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c4f5401-bc44-467e-b85e-c853497ff156"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e45bdc1-3bc1-4c8b-b250-19f6ce2153c0"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee485e9f-1c1f-4728-bebc-d7e4c2b26c89"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea853e6e-6808-445e-8df5-93086cbbbd5f"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd37a821-650d-4a11-86b9-f04cf03fec06"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a81da703-f089-4d28-bfed-0f35238bffdc"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""494b96d1-61d8-4204-be8d-a79f41348863"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18026f67-8c58-4724-8bcf-6650a815b7cd"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -274,6 +398,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_NextDialogueOption = m_Player.FindAction("NextDialogueOption", throwIfNotFound: true);
         m_Player_PreviousDialogueOption = m_Player.FindAction("PreviousDialogueOption", throwIfNotFound: true);
+        m_Player_MenuDown = m_Player.FindAction("MenuDown", throwIfNotFound: true);
+        m_Player_MenuUp = m_Player.FindAction("MenuUp", throwIfNotFound: true);
+        m_Player_MenuLeft = m_Player.FindAction("MenuLeft", throwIfNotFound: true);
+        m_Player_MenuRight = m_Player.FindAction("MenuRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +467,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_NextDialogueOption;
     private readonly InputAction m_Player_PreviousDialogueOption;
+    private readonly InputAction m_Player_MenuDown;
+    private readonly InputAction m_Player_MenuUp;
+    private readonly InputAction m_Player_MenuLeft;
+    private readonly InputAction m_Player_MenuRight;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -347,6 +479,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @NextDialogueOption => m_Wrapper.m_Player_NextDialogueOption;
         public InputAction @PreviousDialogueOption => m_Wrapper.m_Player_PreviousDialogueOption;
+        public InputAction @MenuDown => m_Wrapper.m_Player_MenuDown;
+        public InputAction @MenuUp => m_Wrapper.m_Player_MenuUp;
+        public InputAction @MenuLeft => m_Wrapper.m_Player_MenuLeft;
+        public InputAction @MenuRight => m_Wrapper.m_Player_MenuRight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -368,6 +504,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PreviousDialogueOption.started += instance.OnPreviousDialogueOption;
             @PreviousDialogueOption.performed += instance.OnPreviousDialogueOption;
             @PreviousDialogueOption.canceled += instance.OnPreviousDialogueOption;
+            @MenuDown.started += instance.OnMenuDown;
+            @MenuDown.performed += instance.OnMenuDown;
+            @MenuDown.canceled += instance.OnMenuDown;
+            @MenuUp.started += instance.OnMenuUp;
+            @MenuUp.performed += instance.OnMenuUp;
+            @MenuUp.canceled += instance.OnMenuUp;
+            @MenuLeft.started += instance.OnMenuLeft;
+            @MenuLeft.performed += instance.OnMenuLeft;
+            @MenuLeft.canceled += instance.OnMenuLeft;
+            @MenuRight.started += instance.OnMenuRight;
+            @MenuRight.performed += instance.OnMenuRight;
+            @MenuRight.canceled += instance.OnMenuRight;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -384,6 +532,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PreviousDialogueOption.started -= instance.OnPreviousDialogueOption;
             @PreviousDialogueOption.performed -= instance.OnPreviousDialogueOption;
             @PreviousDialogueOption.canceled -= instance.OnPreviousDialogueOption;
+            @MenuDown.started -= instance.OnMenuDown;
+            @MenuDown.performed -= instance.OnMenuDown;
+            @MenuDown.canceled -= instance.OnMenuDown;
+            @MenuUp.started -= instance.OnMenuUp;
+            @MenuUp.performed -= instance.OnMenuUp;
+            @MenuUp.canceled -= instance.OnMenuUp;
+            @MenuLeft.started -= instance.OnMenuLeft;
+            @MenuLeft.performed -= instance.OnMenuLeft;
+            @MenuLeft.canceled -= instance.OnMenuLeft;
+            @MenuRight.started -= instance.OnMenuRight;
+            @MenuRight.performed -= instance.OnMenuRight;
+            @MenuRight.canceled -= instance.OnMenuRight;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -407,5 +567,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnNextDialogueOption(InputAction.CallbackContext context);
         void OnPreviousDialogueOption(InputAction.CallbackContext context);
+        void OnMenuDown(InputAction.CallbackContext context);
+        void OnMenuUp(InputAction.CallbackContext context);
+        void OnMenuLeft(InputAction.CallbackContext context);
+        void OnMenuRight(InputAction.CallbackContext context);
     }
 }

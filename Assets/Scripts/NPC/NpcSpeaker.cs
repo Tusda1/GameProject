@@ -69,10 +69,12 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         CurrentSpeaker = null;
         DialogueBoxManager.Instance.HideDialogueContainers();
         Player.frozen = false;
+        GameManager.Instance.DialogueScriptsOff();
     }
     
     private void StartSpeaking()
     {
+        GameManager.Instance.DialogueScriptsOn();
         Player.frozen = true;
         whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.npcName);
         dialogueDict = NpcDialogueHandler.GetDialogue(npc.npcName);
