@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 1699852654208915994}
   - component: {fileID: 2075905024090880953}
   - component: {fileID: 4858618739442149949}
-  - component: {fileID: 6878508748850380816}
+  - component: {fileID: 8785800648552856856}
+  - component: {fileID: 3602407322892007987}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -126,7 +127,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &4858618739442149949
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -173,7 +174,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6878508748850380816
+--- !u!114 &8785800648552856856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,6 +183,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 168796001784434520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bfb0e77a1fe2d9429143746989d5553, type: 3}
+  m_Script: {fileID: 11500000, guid: 44953357d7bb5dc4ea781b8c4a220e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  solidObjectsLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  interacebleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  facing: {x: 0, y: 0}
+--- !u!114 &3602407322892007987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168796001784434520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f243296605585dc48856f5257bde3344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveDirection: {x: 0, y: 0}
+  interactPressed: 0
+  nextOption: 0
+  previousOption: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Input_Controller : MonoBehaviour
 {
     public static Input_Controller Instance { get; private set; }
-    private  Controles _input;
+    private  Controls _input;
 
     [HideInInspector] public Vector2 moveDirection;
     [HideInInspector] public bool interactPressed;
@@ -29,7 +29,7 @@ public class Input_Controller : MonoBehaviour
             Destroy(gameObject); // Ensures there's only one instance
         }
         
-        _input = new Controles();
+        _input = new Controls();
     }
     
     private void OnEnable() { _input.Enable(); }
