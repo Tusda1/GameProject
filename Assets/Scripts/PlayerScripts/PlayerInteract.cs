@@ -51,12 +51,10 @@ public class Player : MonoBehaviour
         var faceingDir = new Vector3(_animator.GetFloat("Horizontal"),_animator.GetFloat("Vertical"));
         facing = faceingDir;
         var interactPos = transform.position + faceingDir;
-
-        Debug.Log("Got to collider check");
+        
         var collider = Physics2D.OverlapCircle(interactPos, 0.3f);
         if (collider != null)
         {
-            Debug.Log("got to interactable");
             collider.GetComponent<Interactable>()?.Interact();
         }
     }

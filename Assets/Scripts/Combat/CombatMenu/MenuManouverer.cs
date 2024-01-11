@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,12 +10,14 @@ public class MenuManouverer : MonoBehaviour
 {
     public static MenuManouverer Instance { get; private set; }
     
-    public Button[] buttons;
+    public GameObject[] buttonGameObjects;
+    private Button[] _buttons;
     private int _currentButtonIndex; // Index of the currently selected button
     
     private bool _highlighted;
     
     private Dictionary<string, Action> _choiceDictionary = new Dictionary<string, Action>();
+    private List<string> _keys = new List<string>();
     private int _choiceIndex;
     private int _choiceCount;
 
@@ -32,6 +36,14 @@ public class MenuManouverer : MonoBehaviour
     
     private void Start()
     {
+        // Initialize the array of Buttons using the GameObject references
+        _buttons = new Button[buttonGameObjects.Length];
+
+        for (int i = 0; i < buttonGameObjects.Length; i++)
+        {
+            // Get the Button component from each GameObject
+            _buttons[i] = buttonGameObjects[i].GetComponent<Button>();
+        }
         HighlightButton(_currentButtonIndex);
     }
 
@@ -73,7 +85,7 @@ public class MenuManouverer : MonoBehaviour
     private void MoveToNextButton()
     {
         // Move to the next button in the array
-        if (_currentButtonIndex < buttons.Length)
+        if (_currentButtonIndex < _buttons.Length)
         {
             _currentButtonIndex = (_currentButtonIndex + 1);
             HighlightButton(_currentButtonIndex);
@@ -83,7 +95,7 @@ public class MenuManouverer : MonoBehaviour
     private void MoveToDownButton()
     {
         // Move to the previous button in the array
-        if (_currentButtonIndex < buttons.Length - 1)
+        if (_currentButtonIndex < _buttons.Length - 1)
         {
             _currentButtonIndex = (_currentButtonIndex + 2);
             HighlightButton(_currentButtonIndex);
@@ -103,7 +115,7 @@ public class MenuManouverer : MonoBehaviour
     public void HighlightButton(int index)
     {
         // Unhighlight all buttons
-        foreach (Button button in buttons)
+        foreach (Button button in _buttons)
         {
             ColorBlock colors = button.colors;
             colors.normalColor = Color.white; // Change this color to suit your needs
@@ -111,15 +123,15 @@ public class MenuManouverer : MonoBehaviour
         }
 
         // Highlight the selected button
-        ColorBlock selectedColors = buttons[index].colors;
+        ColorBlock selectedColors = _buttons[index].colors;
         selectedColors.normalColor = Color.blue; // Change this color to suit your needs
-        buttons[index].colors = selectedColors;
+        _buttons[index].colors = selectedColors;
     }
 
     private void SelectButton(int index)
     {
         // Perform the action associated with the selected button
-        buttons[index].onClick.Invoke();
+        _buttons[index].onClick.Invoke();
     }
     
     public void ClearChoices()
@@ -132,14 +144,51 @@ public class MenuManouverer : MonoBehaviour
         _choiceDictionary.Add(choiceName, choiceAction);
     }
     
-    public void LoadNewMenu()
+    private void ClearMenuButtons()
     {
+        for (int i = 0; i < buttonGameObjects.Length; i++)
+        {
+            buttonGameObjects[i].SetActive(false);
+        }
+    }
+    
+    public void ShowMenuButtons()
+    {
+        ClearMenuButtons();
+        
         _choiceCount = _choiceDictionary.Count;
         
-        foreach (var key in _choiceDictionary.Keys)
+        for (int i = 0; i < _choiceCount; i++)
         {
-            buttons[_choiceIndex].GetComponentInChildren<Text>().text = key;
-            _choiceIndex++;
+            if (i == 4)
+            {
+                break;
+            }
+            buttonGameObjects[i].SetActive(true);
+        }
+    }
+    
+    public void LoadNewMenu()
+    {
+        _keys = _choiceDictionary.Keys.ToList();
+        
+        for (int i = 0; i < _choiceCount; i++)
+        {
+            if (i == 4)
+            {
+                break;
+            }
+            buttonGameObjects[i].GetComponentInChildren<TextMeshProUGUI>().text = _keys[i];
+            _buttons[i].onClick.AddListener(() => AddActionToButton(_keys[i]));
+        }
+    }
+
+    private void AddActionToButton(string actionKey)
+    {
+        if (_choiceDictionary.ContainsKey(actionKey))
+        {
+            Action selectedAction = _choiceDictionary[actionKey];
+            selectedAction.Invoke();
         }
     }
 }

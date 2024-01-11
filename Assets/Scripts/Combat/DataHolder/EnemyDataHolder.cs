@@ -12,9 +12,9 @@ public static class EnemyDataHolder
     public static void SetEnemyData(EnemyScrub enemy)
     {
         enemyData = enemy;
-        currentEnemyHealth = enemyData.maxHealth;
-        enemyName = enemyData.enemyName;
-        enemySprite = enemyData.enemySprite;
+        currentEnemyHealth = enemy.maxHealth;
+        enemyName = enemy.enemyName;
+        enemySprite = enemy.enemySprite;
     }
     
     public static void TakeDamage(int damage)

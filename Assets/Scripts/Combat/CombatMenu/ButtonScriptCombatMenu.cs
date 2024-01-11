@@ -10,15 +10,16 @@ public class ButtonScriptCombatMenu : MonoBehaviour
         MenuManouverer.Instance.ClearChoices();
         
         Dictionary<string, object> attackMovesDict = SaveFileHandler.GetSaveFile("AttackMoves");
-        foreach (var key in attackMovesDict.Keys)
-        {
-            Debug.Log(key);
-        }
         
         if (attackMovesDict.Count > 0)
         {
             var firstKey = attackMovesDict.Keys.First();
             attackMovesDict.Remove(firstKey);
+        }
+        
+        foreach (var key in attackMovesDict.Keys)
+        {
+            Debug.Log(key);
         }
         
         foreach (var key in attackMovesDict.Keys)
@@ -29,6 +30,8 @@ public class ButtonScriptCombatMenu : MonoBehaviour
             }
         }
         
+        MenuManouverer.Instance.ShowMenuButtons();
+        MenuManouverer.Instance.LoadNewMenu();
     }
     
     public void InventoryButton()
