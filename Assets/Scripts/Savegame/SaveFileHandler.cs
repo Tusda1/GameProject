@@ -9,7 +9,7 @@ public static class SaveFileHandler
 {
     public static Dictionary<string, object> GetSaveFile(string dataType)
     {
-        string filePath = Path.Combine(Application.dataPath, "TXTFiles/Savegame.json");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/Savegame.json");
         Dictionary<string, object> saveData = new Dictionary<string, object>();
 
         if (!File.Exists(filePath))
@@ -50,9 +50,10 @@ public static class SaveFileHandler
         return null;
     }
 
+    
     public static void UpdateSaveData(string dataType, string key, object newValue)
     {
-        string filePath = Path.Combine(Application.dataPath, "TXTFiles/Savegame.json");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/Savegame.json");
 
         if (!File.Exists(filePath))
         {
@@ -98,7 +99,7 @@ public static class SaveFileHandler
     
     public static void IncrementSaveData(string dataType, string key, int incrementBy)
     {
-        string filePath = Path.Combine(Application.dataPath, "TXTFiles/Savegame.json");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/Savegame.json");
 
         if (!File.Exists(filePath))
         {
@@ -145,8 +146,8 @@ public static class SaveFileHandler
     
     public static void ResetSavegame()
     {
-        string currentJsonFilePath = Path.Combine(Application.dataPath, "TXTFiles/Savegame.json");
-        string newJsonFilePath = Path.Combine(Application.dataPath, "TXTFiles/SavegameStandard.json"); // Provide the path to the new JSON file here
+        string currentJsonFilePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/Savegame.json");
+        string newJsonFilePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/SavegameStandard.json"); // Provide the path to the new JSON file here
 
         if (!File.Exists(newJsonFilePath))
         {

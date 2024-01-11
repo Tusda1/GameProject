@@ -8,6 +8,10 @@
     {
       "DataType": "Npc",
       "Interacted": 0
+    },
+    {
+      "DataType": "AttackMoves",
+      "Punch": true
     }
   ]
 }
