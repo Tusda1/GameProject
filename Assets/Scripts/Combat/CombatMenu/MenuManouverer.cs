@@ -44,6 +44,10 @@ public class MenuManouverer : MonoBehaviour
             // Get the Button component from each GameObject
             _buttons[i] = buttonGameObjects[i].GetComponent<Button>();
         }
+        
+        // Sets up the initial menu buttons and then highlights one of them
+        ButtonScriptCombatMenu.BackToMain();
+        
         HighlightButton(_currentButtonIndex);
     }
 
@@ -68,7 +72,7 @@ public class MenuManouverer : MonoBehaviour
         }
         else if (Input_Controller.Instance.interactPressed) // Enter key to select the current button
         {
-            SelectButton(ButtonManager.currentButtonIndex);
+            SelectButton(_currentButtonIndex);
         }
     }
 
@@ -131,12 +135,20 @@ public class MenuManouverer : MonoBehaviour
     private void SelectButton(int index)
     {
         // Perform the action associated with the selected button
-        _buttons[index].onClick.Invoke();
+        if (index >= 0 && index < _buttons.Length)
+        {
+            _buttons[index].onClick.Invoke();
+        }
     }
+
     
     public void ClearChoices()
     {
         _choiceDictionary.Clear();
+        foreach (Button button in _buttons)
+        {
+            button.onClick.RemoveAllListeners();
+        }
     }
     
     public void AddChoice(string choiceName, Action choiceAction)
@@ -178,8 +190,10 @@ public class MenuManouverer : MonoBehaviour
             {
                 break;
             }
+            
+            string key = _keys[i];
             buttonGameObjects[i].GetComponentInChildren<TextMeshProUGUI>().text = _keys[i];
-            _buttons[i].onClick.AddListener(() => AddActionToButton(_keys[i]));
+            _buttons[i].onClick.AddListener(() => AddActionToButton(key));
         }
     }
 

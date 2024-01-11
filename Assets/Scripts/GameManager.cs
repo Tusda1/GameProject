@@ -28,7 +28,14 @@ public class GameManager : MonoBehaviour
 
     public void InitateCombat()
     {
+        Player.frozen = true;
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
+    }
+
+    public void EndCombat()
+    {
+        SceneManager.UnloadSceneAsync("Combat");
+        Player.frozen = false;
     }
 
     private IEnumerator TurnOffDialogueScriptsAfterInitalized()

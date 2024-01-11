@@ -49,7 +49,6 @@ public static class SaveFileHandler
         Debug.LogError($"DataType '{dataType}' not found.");
         return null;
     }
-
     
     public static void UpdateSaveData(string dataType, string key, object newValue)
     {

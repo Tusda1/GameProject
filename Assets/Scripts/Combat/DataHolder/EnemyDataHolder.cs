@@ -23,6 +23,7 @@ public static class EnemyDataHolder
         if (currentEnemyHealth <= 0)
         {
             Debug.Log("battle over");
+            GameManager.Instance.EndCombat();
         }
     }
 }

@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if (frozen) return;
         _moveVector = Input_Controller.Instance.moveDirection;
         _rb.velocity = _moveVector * _moveSpeed;
 

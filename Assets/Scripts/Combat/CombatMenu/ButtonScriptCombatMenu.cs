@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ButtonScriptCombatMenu : MonoBehaviour
+public static class ButtonScriptCombatMenu
 {
-    public void AttackMoveButton()
+    public static void AttackMoveButton()
     {
         MenuManouverer.Instance.ClearChoices();
+        MenuManouverer.Instance.AddChoice("Back", BackToMain);
         
         Dictionary<string, object> attackMovesDict = SaveFileHandler.GetSaveFile("AttackMoves");
         
@@ -15,11 +17,6 @@ public class ButtonScriptCombatMenu : MonoBehaviour
         {
             var firstKey = attackMovesDict.Keys.First();
             attackMovesDict.Remove(firstKey);
-        }
-        
-        foreach (var key in attackMovesDict.Keys)
-        {
-            Debug.Log(key);
         }
         
         foreach (var key in attackMovesDict.Keys)
@@ -34,18 +31,31 @@ public class ButtonScriptCombatMenu : MonoBehaviour
         MenuManouverer.Instance.LoadNewMenu();
     }
     
-    public void InventoryButton()
+    public static void InventoryButton()
     {
         
     }
     
-    public void RunButton()
+    public static void RunButton()
     {
         
     }
 
-    public void TalkButton()
+    public static void TalkButton()
     {
         
+    }
+
+    public static void BackToMain()
+    {
+        MenuManouverer.Instance.ClearChoices();
+        
+        MenuManouverer.Instance.AddChoice("Attack", AttackMoveButton);
+        MenuManouverer.Instance.AddChoice("Inventory", InventoryButton);
+        MenuManouverer.Instance.AddChoice("Talk", TalkButton);
+        MenuManouverer.Instance.AddChoice("Run", RunButton);
+        
+        MenuManouverer.Instance.ShowMenuButtons();
+        MenuManouverer.Instance.LoadNewMenu();
     }
 }
