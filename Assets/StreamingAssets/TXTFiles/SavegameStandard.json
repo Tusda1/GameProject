@@ -12,6 +12,14 @@
     {
       "DataType": "AttackMoves",
       "Punch": true
+    },
+    {
+      "DataType": "Equipped",
+      "Weapon": "Steel Sword",
+      "Armor": "Steel Armor"
+    },
+    {
+      "DataType": "Inventory"
     }
   ]
 }
