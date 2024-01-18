@@ -27,7 +27,6 @@ public static class ButtonScriptCombatMenu
             }
         }
         
-        MenuManouverer.Instance.ShowMenuButtons();
         MenuManouverer.Instance.LoadNewMenu();
     }
     
@@ -55,7 +54,6 @@ public static class ButtonScriptCombatMenu
         MenuManouverer.Instance.AddChoice("Talk", TalkButton);
         MenuManouverer.Instance.AddChoice("Run", RunButton);
         
-        MenuManouverer.Instance.ShowMenuButtons();
         MenuManouverer.Instance.LoadNewMenu();
     }
 }

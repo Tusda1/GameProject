@@ -7,9 +7,25 @@ using System.Linq;
 
 public static class SaveFileHandler
 {
+    public static void CopySaveDataToPersistentPath()
+    {
+        string streamingAssetsPath = Application.streamingAssetsPath;
+        string persistentPath = Application.persistentDataPath;
+
+        // Path to the original JSON file in streaming assets   
+        string originalFilePath = Path.Combine(streamingAssetsPath, "TXTFiles/SavegameStandard.json");
+
+        // Path to the copy of the JSON file in the persistent data path
+        string copiedFilePath = Path.Combine(persistentPath, "SavegameCopy.json");
+
+        // Copy the file to the persistent data path
+        File.Copy(originalFilePath, copiedFilePath, true);
+        
+    }
+    
     public static Dictionary<string, object> GetSaveFile(string dataType)
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/Savegame.json");
+        string filePath = Path.Combine(Application.persistentDataPath, "SavegameCopy.json");
         Dictionary<string, object> saveData = new Dictionary<string, object>();
 
         if (!File.Exists(filePath))
@@ -52,7 +68,7 @@ public static class SaveFileHandler
     
     public static void UpdateSaveData(string dataType, string key, object newValue)
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/Savegame.json");
+        string filePath = Path.Combine(Application.persistentDataPath, "SavegameCopy.json");
 
         if (!File.Exists(filePath))
         {
@@ -98,7 +114,7 @@ public static class SaveFileHandler
     
     public static void IncrementSaveData(string dataType, string key, int incrementBy)
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/Savegame.json");
+        string filePath = Path.Combine(Application.persistentDataPath, "SavegameCopy.json");
 
         if (!File.Exists(filePath))
         {
@@ -141,21 +157,5 @@ public static class SaveFileHandler
         }
 
         Debug.LogError($"DataType '{dataType}' not found.");
-    }
-    
-    public static void ResetSavegame()
-    {
-        string currentJsonFilePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/Savegame.json");
-        string newJsonFilePath = Path.Combine(Application.streamingAssetsPath, "TXTFiles/SavegameStandard.json"); // Provide the path to the new JSON file here
-
-        if (!File.Exists(newJsonFilePath))
-        {
-            Debug.LogError("New JSON file does not exist at the specified path: " + newJsonFilePath);
-            return;
-        }
-
-        string newJsonContent = File.ReadAllText(newJsonFilePath);
-
-        File.WriteAllText(currentJsonFilePath, newJsonContent);
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +9,7 @@ public class MenuManouverer : MonoBehaviour
 {
     public static MenuManouverer Instance { get; private set; }
     
-    public GameObject[] buttonGameObjects;
+    [SerializeField] private GameObject[] buttonGameObjects;
     private Button[] _buttons;
     private int _currentButtonIndex; // Index of the currently selected button
     
@@ -50,7 +49,7 @@ public class MenuManouverer : MonoBehaviour
         
         HighlightButton(_currentButtonIndex);
     }
-
+    
     private void Update()
     {
         // Keyboard input to navigate through buttons
@@ -76,13 +75,20 @@ public class MenuManouverer : MonoBehaviour
         }
     }
 
+    #region MoveCurrentButton
     private void MoveToPreviousButton()
     {
         // Move to the previous button in the array
         if (_currentButtonIndex > 0)
         {
-            _currentButtonIndex = (_currentButtonIndex - 1);
+            _currentButtonIndex -= 1;
             HighlightButton(_currentButtonIndex);
+        }
+        else if (_choiceIndex > 0)
+        {
+            _choiceIndex -= 4;
+            LoadNewMenu();
+            _currentButtonIndex = 3;
         }
     }
 
@@ -91,8 +97,13 @@ public class MenuManouverer : MonoBehaviour
         // Move to the next button in the array
         if (_currentButtonIndex < _buttons.Length)
         {
-            _currentButtonIndex = (_currentButtonIndex + 1);
+            _currentButtonIndex += 1;
             HighlightButton(_currentButtonIndex);
+        }
+        else if (_choiceIndex + 4 <= _choiceCount)
+        {
+            _choiceIndex += 4;
+            LoadNewMenu();
         }
     }
     
@@ -101,8 +112,20 @@ public class MenuManouverer : MonoBehaviour
         // Move to the previous button in the array
         if (_currentButtonIndex < _buttons.Length - 1)
         {
-            _currentButtonIndex = (_currentButtonIndex + 2);
+            _currentButtonIndex += 2;
             HighlightButton(_currentButtonIndex);
+        }
+        else if (_choiceIndex + 5 <= _choiceCount)
+        {
+            _choiceIndex += 4;
+            LoadNewMenu();
+            if (_currentButtonIndex == 3)
+                _currentButtonIndex = 1;
+        }
+        else if (_choiceIndex + 4 <= _choiceCount)
+        {
+            _choiceIndex += 4;
+            LoadNewMenu();
         }
     }
     
@@ -111,12 +134,22 @@ public class MenuManouverer : MonoBehaviour
         // Move to the next button in the array
         if (_currentButtonIndex > 1)
         {
-            _currentButtonIndex = (_currentButtonIndex - 2);
+            _currentButtonIndex -= 2;
             HighlightButton(_currentButtonIndex);
         }
+        else if (_choiceIndex > 0)
+        {
+            _choiceIndex -= 4;
+            LoadNewMenu();
+            if (_currentButtonIndex == 0)
+                _currentButtonIndex = 2;
+            else if (_currentButtonIndex == 1)
+                _currentButtonIndex = 3;
+        }
     }
-    
-    public void HighlightButton(int index)
+    #endregion
+
+    private void HighlightButton(int index)
     {
         // Unhighlight all buttons
         foreach (Button button in _buttons)
@@ -141,36 +174,37 @@ public class MenuManouverer : MonoBehaviour
         }
     }
 
-    
+    #region ClearAndAddChoices
+    //Needs to be called before adding new choices
     public void ClearChoices()
     {
         _choiceDictionary.Clear();
-        foreach (Button button in _buttons)
-        {
-            button.onClick.RemoveAllListeners();
-        }
     }
     
     public void AddChoice(string choiceName, Action choiceAction)
     {
         _choiceDictionary.Add(choiceName, choiceAction);
     }
-    
+    #endregion
+
+    #region Show new menu
+    //Called in ShowMenuButtons
     private void ClearMenuButtons()
     {
-        for (int i = 0; i < buttonGameObjects.Length; i++)
+        foreach (var buttonGameObject in buttonGameObjects)
         {
-            buttonGameObjects[i].SetActive(false);
+            buttonGameObject.SetActive(false);
         }
     }
     
-    public void ShowMenuButtons()
+    //Shows the amount of buttons needed up to a maximum of 4
+    private void ShowMenuButtons()
     {
         ClearMenuButtons();
         
         _choiceCount = _choiceDictionary.Count;
         
-        for (int i = 0; i < _choiceCount; i++)
+        for (int i = 0; i < _choiceCount - _choiceIndex; i++)
         {
             if (i == 4)
             {
@@ -178,31 +212,50 @@ public class MenuManouverer : MonoBehaviour
             }
             buttonGameObjects[i].SetActive(true);
         }
+        
+        _currentButtonIndex = 0;
     }
     
-    public void LoadNewMenu()
+    //Called in LoadNewMenu
+    private void ClearListeners()
     {
+        foreach (Button button in _buttons)
+        {
+            button.onClick.RemoveAllListeners();
+        }
+    }
+
+    private void AddNewMenuChoices()
+    {
+        ClearListeners();
         _keys = _choiceDictionary.Keys.ToList();
         
-        for (int i = 0; i < _choiceCount; i++)
+        for (int i = 0; i < _choiceCount - _choiceIndex; i++)
         {
             if (i == 4)
             {
                 break;
             }
             
-            string key = _keys[i];
-            buttonGameObjects[i].GetComponentInChildren<TextMeshProUGUI>().text = _keys[i];
-            _buttons[i].onClick.AddListener(() => AddActionToButton(key));
+            string key = _keys[_choiceIndex + i];
+            buttonGameObjects[i].GetComponentInChildren<TextMeshProUGUI>().text = _keys[_choiceIndex + i];
+            _buttons[_choiceIndex + i].onClick.AddListener(() => AddActionToButton(key));
         }
     }
 
+    //Called in LoadNewMenu
     private void AddActionToButton(string actionKey)
     {
-        if (_choiceDictionary.ContainsKey(actionKey))
+        if (_choiceDictionary.TryGetValue(actionKey, out var selectedAction))
         {
-            Action selectedAction = _choiceDictionary[actionKey];
             selectedAction.Invoke();
         }
     }
+    
+    public void LoadNewMenu()
+    {
+        ShowMenuButtons();
+        AddNewMenuChoices();
+    }
+    #endregion
 }
