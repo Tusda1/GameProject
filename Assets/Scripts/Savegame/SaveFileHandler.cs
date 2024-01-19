@@ -20,7 +20,6 @@ public static class SaveFileHandler
 
         // Copy the file to the persistent data path
         File.Copy(originalFilePath, copiedFilePath, true);
-        
     }
     
     public static Dictionary<string, object> GetSaveFile(string dataType)
