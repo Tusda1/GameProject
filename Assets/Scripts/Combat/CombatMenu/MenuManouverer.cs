@@ -15,7 +15,7 @@ public class MenuManouverer : MonoBehaviour
     
     private bool _highlighted;
     
-    private Dictionary<string, Action> _choiceDictionary = new Dictionary<string, Action>();
+    private Dictionary<string, ActionInfo> _choiceDictionary = new Dictionary<string, ActionInfo>();
     private List<string> _keys = new List<string>();
     private int _choiceIndex;
     private int _choiceCount;
@@ -47,7 +47,7 @@ public class MenuManouverer : MonoBehaviour
         // Sets up the initial menu buttons and then highlights one of them
         ButtonScriptCombatMenu.BackToMain();
         
-        HighlightButton(_currentButtonIndex);
+        HighlightButton();
     }
     
     private void Update()
@@ -82,7 +82,7 @@ public class MenuManouverer : MonoBehaviour
         if (_currentButtonIndex > 0)
         {
             _currentButtonIndex -= 1;
-            HighlightButton(_currentButtonIndex);
+            HighlightButton();
         }
         else if (_choiceIndex > 0)
         {
@@ -95,12 +95,12 @@ public class MenuManouverer : MonoBehaviour
     private void MoveToNextButton()
     {
         // Move to the next button in the array
-        if (_currentButtonIndex < _buttons.Length)
+        if (_currentButtonIndex < _buttons.Length - 1)
         {
             _currentButtonIndex += 1;
-            HighlightButton(_currentButtonIndex);
+            HighlightButton();
         }
-        else if (_choiceIndex + 4 <= _choiceCount)
+        else if (_choiceIndex + 4 < _choiceCount)
         {
             _choiceIndex += 4;
             LoadNewMenu();
@@ -110,19 +110,19 @@ public class MenuManouverer : MonoBehaviour
     private void MoveToDownButton()
     {
         // Move to the previous button in the array
-        if (_currentButtonIndex < _buttons.Length - 1)
+        if (_currentButtonIndex < _buttons.Length - 2)
         {
             _currentButtonIndex += 2;
-            HighlightButton(_currentButtonIndex);
+            HighlightButton();
         }
-        else if (_choiceIndex + 5 <= _choiceCount)
+        else if (_choiceIndex + 5 < _choiceCount)
         {
             _choiceIndex += 4;
             LoadNewMenu();
             if (_currentButtonIndex == 3)
                 _currentButtonIndex = 1;
         }
-        else if (_choiceIndex + 4 <= _choiceCount)
+        else if (_choiceIndex + 4 < _choiceCount)
         {
             _choiceIndex += 4;
             LoadNewMenu();
@@ -135,7 +135,7 @@ public class MenuManouverer : MonoBehaviour
         if (_currentButtonIndex > 1)
         {
             _currentButtonIndex -= 2;
-            HighlightButton(_currentButtonIndex);
+            HighlightButton();
         }
         else if (_choiceIndex > 0)
         {
@@ -149,7 +149,7 @@ public class MenuManouverer : MonoBehaviour
     }
     #endregion
 
-    private void HighlightButton(int index)
+    private void HighlightButton()
     {
         // Unhighlight all buttons
         foreach (Button button in _buttons)
@@ -160,9 +160,9 @@ public class MenuManouverer : MonoBehaviour
         }
 
         // Highlight the selected button
-        ColorBlock selectedColors = _buttons[index].colors;
+        ColorBlock selectedColors = _buttons[_currentButtonIndex].colors;
         selectedColors.normalColor = Color.blue; // Change this color to suit your needs
-        _buttons[index].colors = selectedColors;
+        _buttons[_currentButtonIndex].colors = selectedColors;
     }
 
     private void SelectButton(int index)
@@ -181,9 +181,9 @@ public class MenuManouverer : MonoBehaviour
         _choiceDictionary.Clear();
     }
     
-    public void AddChoice(string choiceName, Action choiceAction)
+    public void AddChoice(string choiceName, Action choiceAction, bool isCombatMove)
     {
-        _choiceDictionary.Add(choiceName, choiceAction);
+        _choiceDictionary.Add(choiceName, new ActionInfo(choiceAction, isCombatMove));
     }
     #endregion
 
@@ -214,6 +214,7 @@ public class MenuManouverer : MonoBehaviour
         }
         
         _currentButtonIndex = 0;
+        HighlightButton();
     }
     
     //Called in LoadNewMenu
@@ -246,9 +247,18 @@ public class MenuManouverer : MonoBehaviour
     //Called in LoadNewMenu
     private void AddActionToButton(string actionKey)
     {
-        if (_choiceDictionary.TryGetValue(actionKey, out var selectedAction))
+        if (_choiceDictionary.TryGetValue(actionKey, out var ActionInfo))
         {
+            Action selectedAction = ActionInfo.action; 
+            bool isCombatMove = ActionInfo.isCombatMove;
+            
             selectedAction.Invoke();
+
+            if (isCombatMove)
+            {
+                ClearMenuButtons();
+                CombatEvents.playerTurnEnd.Invoke();
+            }
         }
     }
     

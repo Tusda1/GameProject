@@ -9,7 +9,7 @@ public static class ButtonScriptCombatMenu
     public static void AttackMoveButton()
     {
         MenuManouverer.Instance.ClearChoices();
-        MenuManouverer.Instance.AddChoice("Back", BackToMain);
+        MenuManouverer.Instance.AddChoice("Back", BackToMain, false);
         
         Dictionary<string, object> attackMovesDict = SaveFileHandler.GetSaveFile("AttackMoves");
         
@@ -23,7 +23,7 @@ public static class ButtonScriptCombatMenu
         {
             if ((bool)attackMovesDict[key] == true)
             {
-                MenuManouverer.Instance.AddChoice(key, PlayerAttackMoves.attackMoves[key]);
+                MenuManouverer.Instance.AddChoice(key, PlayerAttackMoves.attackMoves[key], true);
             }
         }
         
@@ -49,10 +49,10 @@ public static class ButtonScriptCombatMenu
     {
         MenuManouverer.Instance.ClearChoices();
         
-        MenuManouverer.Instance.AddChoice("Attack", AttackMoveButton);
-        MenuManouverer.Instance.AddChoice("Inventory", InventoryButton);
-        MenuManouverer.Instance.AddChoice("Talk", TalkButton);
-        MenuManouverer.Instance.AddChoice("Run", RunButton);
+        MenuManouverer.Instance.AddChoice("Attack", AttackMoveButton, false);
+        MenuManouverer.Instance.AddChoice("Inventory", InventoryButton, false);
+        MenuManouverer.Instance.AddChoice("Talk", TalkButton, true);
+        MenuManouverer.Instance.AddChoice("Run", RunButton, true);
         
         MenuManouverer.Instance.LoadNewMenu();
     }

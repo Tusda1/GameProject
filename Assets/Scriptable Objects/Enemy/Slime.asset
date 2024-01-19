@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c60f62d69cfcc64cba55964a659f792, type: 3}
-  m_Name: TestEnemy
+  m_Script: {fileID: 11500000, guid: 2e17f18800e9ab14cab0c5c801970471, type: 3}
+  m_Name: Slime
   m_EditorClassIdentifier: 
-  enemyName: TestEnemy
+  enemyName: Slime
   enemySprite: {fileID: 9075156759465972181, guid: 0c13fe633e0a3094aa3508648e915937, type: 3}
-  maxHealth: 10
+  maxHealth: 15
+  isBoss: 0
+  chanceToRun: 50
+  canTalk: 0

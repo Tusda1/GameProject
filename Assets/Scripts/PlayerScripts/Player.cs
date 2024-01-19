@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -8,17 +6,14 @@ public class Player : MonoBehaviour
     [Header("Components")]
     private Rigidbody2D _rb;
     private Animator _animator;
-
-    public LayerMask solidObjectsLayer;
-    public LayerMask interacebleLayer;
     
     private bool _interactable;
-    [HideInInspector] public static bool frozen = false;
+    public static bool frozen = false;
     private float _moveSpeed = 10;
     private Vector2 _moveVector = Vector2.zero;
 
     private Vector2 _inputAxis;
-    private Vector3 targetPos;
+    private Vector3 _targetPos;
 
     public Vector2 facing;
 
@@ -36,9 +31,13 @@ public class Player : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (frozen) return;
-        _moveVector = Input_Controller.Instance.moveDirection;
-        _rb.velocity = _moveVector * _moveSpeed;
+        if (frozen)
+            _moveVector = Vector2.zero;
+        else
+        {
+            _moveVector = Input_Controller.Instance.moveDirection;
+            _rb.velocity = _moveVector * _moveSpeed;
+        }
 
         if (_moveVector != Vector2.zero)
         {

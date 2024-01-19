@@ -11,7 +11,7 @@ public static class PlayerAttackMoves
 
     public static void PutAttackMovesInDictionary()
     {
-        attackMoves.Add("Punch", Punch);
+        attackMoves.Add("Punch", Punch);    
     }
         
     #region AttackMoves

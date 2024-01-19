@@ -13,6 +13,7 @@ public enum EquipmentGrade
 public class EquipmentScrub : ScriptableObject
 {
     public string itemName;
+    [TextArea]
     public string itemDescription;
     public Sprite itemSprite;
     public int itemValue;

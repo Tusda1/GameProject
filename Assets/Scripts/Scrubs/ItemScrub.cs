@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "New Item", fileName = "Item")]
-public class ItemScrub : ScriptableObject
+public abstract class ItemScrub : ScriptableObject
 {
     public string itemName;
     public string itemDescription;
@@ -14,4 +14,6 @@ public class ItemScrub : ScriptableObject
     public bool isItemKeyItem;
     public bool doesItemHaveSpecialEffect;
     public bool isConsumable;
+    
+    public abstract void UseItem();
 }

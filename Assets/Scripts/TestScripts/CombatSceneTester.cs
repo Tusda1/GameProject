@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CombatSceneTester : MonoBehaviour
 {
-    public EnemyScrub enemy;
+    public EnemyScrubBase enemy;
     
     private void OnTriggerEnter2D(Collider2D other)
     {
