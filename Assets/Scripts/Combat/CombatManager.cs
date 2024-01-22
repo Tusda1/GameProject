@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,6 +38,8 @@ public class CombatManager : MonoBehaviour
     private void PlayerTurnEnd()
     {
         _playerTurn = false;
+        
+        
         if (EnemyDataHolder.currentEnemyHealth > 0)
         {
             StartCoroutine(EnemyTurn());  

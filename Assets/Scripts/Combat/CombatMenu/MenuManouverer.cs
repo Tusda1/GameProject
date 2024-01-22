@@ -181,9 +181,9 @@ public class MenuManouverer : MonoBehaviour
         _choiceDictionary.Clear();
     }
     
-    public void AddChoice(string choiceName, Action choiceAction, bool isCombatMove)
+    public void AddChoice(string choiceName, Action choiceAction, bool isCombatMove, ActionType actionType)
     {
-        _choiceDictionary.Add(choiceName, new ActionInfo(choiceAction, isCombatMove));
+        _choiceDictionary.Add(choiceName, new ActionInfo(choiceAction, isCombatMove, actionType));
     }
     #endregion
 
@@ -256,6 +256,7 @@ public class MenuManouverer : MonoBehaviour
 
             if (isCombatMove)
             {
+                ClearListeners();
                 ClearMenuButtons();
                 CombatEvents.playerTurnEnd.Invoke();
             }

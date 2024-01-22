@@ -9,7 +9,7 @@ public static class ButtonScriptCombatMenu
     public static void AttackMoveButton()
     {
         MenuManouverer.Instance.ClearChoices();
-        MenuManouverer.Instance.AddChoice("Back", BackToMain, false);
+        MenuManouverer.Instance.AddChoice("Back", BackToMain, false, ActionType.Menu);
         
         Dictionary<string, object> attackMovesDict = SaveFileHandler.GetSaveFile("AttackMoves");
         
@@ -23,7 +23,7 @@ public static class ButtonScriptCombatMenu
         {
             if ((bool)attackMovesDict[key] == true)
             {
-                MenuManouverer.Instance.AddChoice(key, PlayerAttackMoves.attackMoves[key], true);
+                MenuManouverer.Instance.AddChoice(key, PlayerAttackMoves.attackMoves[key], true, ActionType.Attack);
             }
         }
         
@@ -37,7 +37,16 @@ public static class ButtonScriptCombatMenu
     
     public static void RunButton()
     {
-        
+        int random = UnityEngine.Random.Range(0, 100);
+        if (random < EnemyDataHolder.enemyData.chanceToRun)
+        {
+            Debug.Log("You ran away");
+            GameManager.Instance.EndCombat();
+        }
+        else
+        {
+            Debug.Log("You failed to run away");
+        }
     }
 
     public static void TalkButton()
@@ -49,10 +58,10 @@ public static class ButtonScriptCombatMenu
     {
         MenuManouverer.Instance.ClearChoices();
         
-        MenuManouverer.Instance.AddChoice("Attack", AttackMoveButton, false);
-        MenuManouverer.Instance.AddChoice("Inventory", InventoryButton, false);
-        MenuManouverer.Instance.AddChoice("Talk", TalkButton, true);
-        MenuManouverer.Instance.AddChoice("Run", RunButton, true);
+        MenuManouverer.Instance.AddChoice("Attack", AttackMoveButton, false, ActionType.Menu);
+        MenuManouverer.Instance.AddChoice("Inventory", InventoryButton, false, ActionType.Menu);
+        MenuManouverer.Instance.AddChoice("Talk", TalkButton, true, ActionType.Talk);
+        MenuManouverer.Instance.AddChoice("Run", RunButton, true, ActionType.Run);
         
         MenuManouverer.Instance.LoadNewMenu();
     }
