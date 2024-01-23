@@ -258,7 +258,7 @@ public class MenuManouverer : MonoBehaviour
             {
                 ClearListeners();
                 ClearMenuButtons();
-                CombatEvents.playerTurnEnd.Invoke();
+                CombatEvents.playerTurnEnd.Invoke(ActionInfo.actionType);
             }
         }
     }

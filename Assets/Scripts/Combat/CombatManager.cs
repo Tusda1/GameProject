@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
+    [Header("Player")]
     private bool _playerTurn = true;
+    [SerializeField] private AllAttackMoves allAttackMoves;
     
     [Header("Text Box")]
     [SerializeField] private TextMeshProUGUI combatTextBox;
@@ -34,10 +37,18 @@ public class CombatManager : MonoBehaviour
         //Subscribe to the playerTurnOver event
         CombatEvents.playerTurnEnd += PlayerTurnEnd;
     }
-
-    private void PlayerTurnEnd()
+    
+    private void PlayerTurnEnd(ActionType actionType)
     {
         _playerTurn = false;
+        
+        StartCoroutine(RunTurns(actionType));
+    }
+
+    #region Turns Running
+    private IEnumerator RunTurns(ActionType actionType)
+    {
+        yield return StartCoroutine(PlayerTurn(actionType));
         
         
         if (EnemyDataHolder.currentEnemyHealth > 0)
@@ -45,6 +56,50 @@ public class CombatManager : MonoBehaviour
             StartCoroutine(EnemyTurn());  
             
         }
+    }
+    
+    private IEnumerator PlayerTurn(ActionType actionType)
+    {
+        if (actionType == ActionType.Attack)
+        {
+            PlayerAttackMove attackMove = ScriptableObject.CreateInstance<PlayerAttackMove>();
+            
+            foreach (var attack in allAttackMoves.allAttackMoves)
+            {
+                if (attack.attackMoveName == PlayerAttackMoves.currentAttackMove)
+                {
+                    attackMove = attack;
+                }
+            }
+            
+            EnemyDataHolder.TakeDamage(attackMove.damage);
+
+            if (attackMove.statusEffect != StatusEffects.None)
+            {
+                Debug.Log("status effect");
+            }
+            
+            yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, attackMove.narration + " and dealt " + attackMove.damage + " damage!"));
+            yield return new WaitForSeconds(2f);
+            combatTextBox.text = "";
+        }
+        
+        else if (actionType == ActionType.Item)
+        {
+            
+        }
+        
+        else if (actionType == ActionType.Run)
+        {
+            
+        }
+        
+        else if (actionType == ActionType.Talk)
+        {
+            
+        }
+        
+        ButtonScriptCombatMenu.BackToMain();
     }
     
     private IEnumerator EnemyTurn()
@@ -58,4 +113,5 @@ public class CombatManager : MonoBehaviour
         
         ButtonScriptCombatMenu.BackToMain();
     }
+    #endregion
 }

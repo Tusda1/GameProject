@@ -4,6 +4,6 @@ using UnityEngine;
 
 public static class CombatEvents
 {
-    public delegate void CombatEvent();
-    public static CombatEvent playerTurnEnd;
+    public delegate void TurnEvent(ActionType actionType);
+    public static TurnEvent playerTurnEnd;
 }

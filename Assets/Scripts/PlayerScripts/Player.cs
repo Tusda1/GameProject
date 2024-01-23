@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public static bool frozen = false;
     private float _moveSpeed = 10;
     private Vector2 _moveVector = Vector2.zero;
+    private bool _isMoving;
 
     private Vector2 _inputAxis;
     private Vector3 _targetPos;
@@ -43,7 +44,14 @@ public class Player : MonoBehaviour
         {
             _animator.SetFloat("Horizontal", _moveVector.x);
             _animator.SetFloat("Vertical", _moveVector.y);;
+            _isMoving = true;
         }
+        else
+        {
+            _isMoving = false;
+        }
+        
+        _animator.SetBool("IsMoving", _isMoving);
     }
     
     void Interact()

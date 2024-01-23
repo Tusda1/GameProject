@@ -127,7 +127,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 185
+      y: 148
       width: 23
       height: 27
     spriteID: cc98c47144942d34aa11c5594c71b1ae
@@ -138,7 +138,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 185}
+    uvTransform: {x: 4, y: 148}
   - name: mc_walk_Frame_1
     originalName: 
     pivot: {x: 0.5217391, y: -0.035714287}
@@ -147,7 +147,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 41
+      y: 4
       width: 23
       height: 28
     spriteID: 11f10b6f98cefe34ea77c5bd97994c49
@@ -158,7 +158,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 41}
+    uvTransform: {x: 4, y: 4}
   - name: mc_walk_Frame_2
     originalName: 
     pivot: {x: 0.5217391, y: -0.11111111}
@@ -167,7 +167,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 220
+      y: 183
       width: 23
       height: 27
     spriteID: fdc6e0ef8de9ac841a7173b934f19968
@@ -178,7 +178,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 220}
+    uvTransform: {x: 4, y: 183}
   - name: mc_walk_Frame_3
     originalName: 
     pivot: {x: 0.5217391, y: -0.035714287}
@@ -187,7 +187,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 77
+      y: 40
       width: 23
       height: 28
     spriteID: b17126214e2618341b9907deaa1505ab
@@ -198,18 +198,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 77}
+    uvTransform: {x: 4, y: 40}
   - name: mc_walk_Frame_4
     originalName: 
-    pivot: {x: 0.5217391, y: -0.035714287}
+    pivot: {x: 0.5217391, y: -0.074074075}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 113
+      y: 218
       width: 23
-      height: 28
+      height: 27
     spriteID: 90c9b70c3296454428d536136e4f0771
     spriteBone: []
     spriteOutline: []
@@ -218,7 +218,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 113}
+    uvTransform: {x: 4, y: 218}
   - name: mc_walk_Frame_5
     originalName: 
     pivot: {x: 0.5217391, y: -0.071428575}
@@ -227,7 +227,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 149
+      y: 76
       width: 23
       height: 28
     spriteID: dcf064c0d6b6e5e4193c8dc38f842ae2
@@ -238,7 +238,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 149}
+    uvTransform: {x: 4, y: 76}
   - name: mc_walk_Frame_6
     originalName: 
     pivot: {x: 0.5217391, y: -0.074074075}
@@ -261,15 +261,15 @@ ScriptedImporter:
     uvTransform: {x: 35, y: 4}
   - name: mc_walk_Frame_7
     originalName: 
-    pivot: {x: 0.5217391, y: -0.03448276}
+    pivot: {x: 0.5217391, y: -0.071428575}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 4
+      y: 112
       width: 23
-      height: 29
+      height: 28
     spriteID: 3ca6ceb141bb2fc428ad0e8ad84b17b6
     spriteBone: []
     spriteOutline: []
@@ -278,7 +278,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 4, y: 112}
   - name: mc_walk_Frame_8
     originalName: 
     pivot: {x: 0.54545456, y: -0.11111111}
@@ -484,9 +484,9 @@ ScriptedImporter:
       frameIndex: 4
       cellRect:
         x: 4
-        y: 1
+        y: 2
         width: 23
-        height: 28
+        height: 27
       spriteId: 90c9b70c3296454428d536136e4f0771
     - name: mc_walk_Frame_5
       frameIndex: 5
@@ -508,9 +508,9 @@ ScriptedImporter:
       frameIndex: 7
       cellRect:
         x: 4
-        y: 1
+        y: 2
         width: 23
-        height: 29
+        height: 28
       spriteId: 3ca6ceb141bb2fc428ad0e8ad84b17b6
     - name: mc_walk_Frame_8
       frameIndex: 8
@@ -581,6 +581,7 @@ ScriptedImporter:
   platformSettings:
   - name: DefaultTexturePlatform
     overridden: 0
+    ignorePlatformSupport: 0
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -592,6 +593,7 @@ ScriptedImporter:
     androidETC2FallbackOverride: 0
   - name: Standalone
     overridden: 0
+    ignorePlatformSupport: 0
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
