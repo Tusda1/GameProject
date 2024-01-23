@@ -9,8 +9,8 @@ public abstract class EnemyScrubBase : ScriptableObject
     
     public int maxHealth;
     public bool isBoss;
-    public int chanceToRun;
-    public int canTalk;
+    public float chanceToRun;
+    public float chanceToTalk;
  
     public abstract Tuple<string, int> EnemyAttack();
 }
