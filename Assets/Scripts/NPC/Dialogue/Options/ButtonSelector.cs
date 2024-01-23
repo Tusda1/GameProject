@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,27 +7,18 @@ public class ButtonSelector : MonoBehaviour
 {
     private bool _highlighted;
 
-    private void Update()
+    private void OnEnable()
     {
-        if (NpcSpeaker.CurrentSpeaker != null)
-        {
-            if (NpcSpeaker.CurrentSpeaker.waitingForResponse == true)
-            {
-                // Keyboard input to navigate through buttons
-                if (Input_Controller.Instance.upMenu)
-                {
-                    MoveToPreviousButton();
-                }
-                else if (Input_Controller.Instance.downMenu)
-                {
-                    MoveToNextButton();
-                }
-                else if (Input_Controller.Instance.interactPressed) // Enter key to select the current button
-                {
-                    SelectButton(ButtonManager.currentButtonIndex);
-                }
-            }
-        }
+        GameEvents.leftMenu += MoveToPreviousButton;
+        GameEvents.rightMenu += MoveToNextButton;
+        GameEvents.interactPressed += SelectButton;
+    }
+    
+    private void OnDisable()
+    {
+        GameEvents.leftMenu -= MoveToPreviousButton;
+        GameEvents.rightMenu -= MoveToNextButton;
+        GameEvents.interactPressed -= SelectButton;
     }
 
     private void MoveToPreviousButton()
@@ -43,9 +35,9 @@ public class ButtonSelector : MonoBehaviour
         ButtonManager.HighlightButton(ButtonManager.currentButtonIndex);
     }
 
-    private void SelectButton(int index)
+    private void SelectButton()
     {
         // Perform the action associated with the selected button
-        ButtonManager.buttons[index].onClick.Invoke();
+        ButtonManager.buttons[ButtonManager.currentButtonIndex].onClick.Invoke();
     }
 }

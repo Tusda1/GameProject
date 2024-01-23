@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using GameObject = UnityEngine.GameObject;
 
@@ -9,10 +10,10 @@ public class DialogueBoxManager : MonoBehaviour
 {
     public static DialogueBoxManager Instance { get; private set; }
     
-    private List<GameObject> dialogueUI = new List<GameObject>();
+    private List<GameObject> _dialogueUI = new List<GameObject>();
     public Image portraitNpcImage;
     public TextMeshProUGUI nameTextBox;
-    public TextMeshProUGUI DialogueBox;
+    public TextMeshProUGUI dialogueBox;
 
     private void Awake()
     {
@@ -29,15 +30,15 @@ public class DialogueBoxManager : MonoBehaviour
 
     private void Start()
     {
-        GameObject[] UIObjects = GameObject.FindGameObjectsWithTag("DialogueUI");
-        dialogueUI.AddRange(UIObjects);
+        GameObject[] uiObjects = GameObject.FindGameObjectsWithTag("DialogueVisualBoxes");
+        _dialogueUI.AddRange(uiObjects);
         
         HideDialogueContainers();
     }
 
     public void ShowDialogueContainers(Sprite npcPortrait)
     {
-        foreach (GameObject UIElement in dialogueUI)
+        foreach (GameObject UIElement in _dialogueUI)
         {
             UIElement.SetActive(true);
         }
@@ -55,7 +56,7 @@ public class DialogueBoxManager : MonoBehaviour
 
     public void HideDialogueContainers()
     {
-        foreach (GameObject UIElement in dialogueUI)
+        foreach (GameObject UIElement in _dialogueUI)
         {
             UIElement.SetActive(false);
         }

@@ -478,6 +478,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 230757499559844207, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_TagString
+      value: DialogueVisualBoxes
+      objectReference: {fileID: 0}
+    - target: {fileID: 354634766400204171, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_TagString
+      value: DialogueVisualBoxes
+      objectReference: {fileID: 0}
     - target: {fileID: 2127893106946303115, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_Camera
       value: 
@@ -485,6 +493,14 @@ PrefabInstance:
     - target: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_Name
       value: '[DIALOGUE UI]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_TagString
+      value: DialogueUI
       objectReference: {fileID: 0}
     - target: {fileID: 4002602772519895636, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_LocalPosition.x
@@ -525,6 +541,10 @@ PrefabInstance:
     - target: {fileID: 4002602772519895636, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4374643556992448413, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_TagString
+      value: DialogueVisualBoxes
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -662,6 +682,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b629806cfc035d14589f1204127384d1, type: 3}
+--- !u!1 &1815101239 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+  m_PrefabInstance: {fileID: 1047841207}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &389645522566757099
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -714,6 +739,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[ESSENTIAL]'
       objectReference: {fileID: 0}
+    - target: {fileID: 6410197392911944496, guid: 725fd42ecabdf4a4a998c89bbb6afb06, type: 3}
+      propertyPath: DialogueUI
+      value: 
+      objectReference: {fileID: 1815101239}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

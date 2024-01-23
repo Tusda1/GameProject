@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public GameObject DialogueUI;
+    private GameObject _dialogueUI;
 
     private void Awake()
     {
@@ -23,7 +23,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        TurnOffDialogueScriptsAfterInitalized();
+        _dialogueUI = GameObject.FindGameObjectWithTag("DialogueUI");
+        
+        PlayerDataHolder.SetPlayerData();
+        
+        StartCoroutine(TurnOffDialogueScriptsAfterInitalized());
     }
 
     public void InitateCombat()
@@ -40,17 +44,18 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator TurnOffDialogueScriptsAfterInitalized()
     {
-        yield return new WaitForSeconds(0.5f);
-        DialogueUI.SetActive(false);
+        yield return new WaitForSeconds(0.01f);
+        _dialogueUI.SetActive(false);
     }
     
     public void DialogueScriptsOff()
     {
-        DialogueUI.SetActive(false);
+        _dialogueUI.SetActive(false);
+        
     }
     
     public void DialogueScriptsOn()
     {
-        DialogueUI.SetActive(true);
+        _dialogueUI.SetActive(true);
     }
 }

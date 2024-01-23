@@ -35,6 +35,12 @@ public class MenuManouverer : MonoBehaviour
     
     private void Start()
     {
+        GameEvents.leftMenu += MoveToPreviousButton;
+        GameEvents.rightMenu += MoveToNextButton;
+        GameEvents.downMenu += MoveToDownButton;
+        GameEvents.upMenu += MoveToUpButton;
+        GameEvents.interactPressed += SelectButton;
+        
         // Initialize the array of Buttons using the GameObject references
         _buttons = new Button[buttonGameObjects.Length];
 
@@ -49,30 +55,14 @@ public class MenuManouverer : MonoBehaviour
         
         HighlightButton();
     }
-    
-    private void Update()
+
+    private void OnDestroy()
     {
-        // Keyboard input to navigate through buttons
-        if (Input_Controller.Instance.upMenu)
-        {
-            MoveToUpButton();
-        }
-        else if (Input_Controller.Instance.downMenu)
-        {
-            MoveToDownButton();
-        }
-        else if (Input_Controller.Instance.leftMenu)
-        {
-            MoveToPreviousButton();
-        }
-        else if (Input_Controller.Instance.rightMenu)
-        {
-            MoveToNextButton();
-        }
-        else if (Input_Controller.Instance.interactPressed) // Enter key to select the current button
-        {
-            SelectButton(_currentButtonIndex);
-        }
+        GameEvents.leftMenu -= MoveToPreviousButton;
+        GameEvents.rightMenu -= MoveToNextButton;
+        GameEvents.downMenu -= MoveToDownButton;
+        GameEvents.upMenu -= MoveToUpButton;
+        GameEvents.interactPressed -= SelectButton;
     }
 
     #region MoveCurrentButton
@@ -165,12 +155,12 @@ public class MenuManouverer : MonoBehaviour
         _buttons[_currentButtonIndex].colors = selectedColors;
     }
 
-    private void SelectButton(int index)
+    private void SelectButton()
     {
         // Perform the action associated with the selected button
-        if (index >= 0 && index < _buttons.Length)
+        if (_currentButtonIndex >= 0 && _currentButtonIndex < _buttons.Length)
         {
-            _buttons[index].onClick.Invoke();
+            _buttons[_currentButtonIndex].onClick.Invoke();
         }
     }
 
@@ -202,6 +192,9 @@ public class MenuManouverer : MonoBehaviour
     {
         ClearMenuButtons();
         
+        _currentButtonIndex = 0;
+        HighlightButton();
+        
         _choiceCount = _choiceDictionary.Count;
         
         for (int i = 0; i < _choiceCount - _choiceIndex; i++)
@@ -212,9 +205,6 @@ public class MenuManouverer : MonoBehaviour
             }
             buttonGameObjects[i].SetActive(true);
         }
-        
-        _currentButtonIndex = 0;
-        HighlightButton();
     }
     
     //Called in LoadNewMenu

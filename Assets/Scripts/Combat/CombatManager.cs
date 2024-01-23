@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class CombatManager : MonoBehaviour
 {
     [Header("Player")]
-    private bool _playerTurn = true;
+    private bool _playerInput;
+    private bool _waitingForUserInput;
+    
     [SerializeField] private AllAttackMoves allAttackMoves;
     
     [Header("Text Box")]
@@ -37,11 +39,23 @@ public class CombatManager : MonoBehaviour
 
         //Subscribe to the playerTurnOver event
         CombatEvents.playerTurnEnd += PlayerTurnEnd;
+        GameEvents.interactPressed += UserInput;
+    }
+
+    private void OnDestroy()
+    {
+        CombatEvents.playerTurnEnd -= PlayerTurnEnd;
+        GameEvents.interactPressed -= UserInput;
+    }
+
+    private void UserInput()
+    {
+        if (_waitingForUserInput)
+            _playerInput = true;
     }
     
     private void PlayerTurnEnd(ActionType actionType, string actionName)
     {
-        _playerTurn = false;
         _actionType = actionType;
         _actionName = actionName;
         
@@ -52,12 +66,9 @@ public class CombatManager : MonoBehaviour
     private IEnumerator RunTurns()
     {
         yield return StartCoroutine(PlayerTurn());
-        
-        
-        if (EnemyDataHolder.currentEnemyHealth > 0)
-        {
-            StartCoroutine(EnemyTurn());  
-        }
+
+
+        StartCoroutine(EnemyDataHolder.currentEnemyHealth > 0 ? EnemyTurn() : OnWin());
     }
     
     private IEnumerator PlayerTurn()
@@ -82,7 +93,7 @@ public class CombatManager : MonoBehaviour
             }
             
             yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, attackMove.narration + " and dealt " + attackMove.damage + " damage!"));
-            yield return new WaitForSeconds(2f);
+            yield return StartCoroutine(WaitForUserInput());
             combatTextBox.text = "";
         }
         
@@ -97,13 +108,13 @@ public class CombatManager : MonoBehaviour
             if (random < EnemyDataHolder.enemyData.chanceToRun)
             {
                 yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You ran away!"));
-                yield return new WaitForSeconds(2f);
+                yield return StartCoroutine(WaitForUserInput());
                 GameManager.Instance.EndCombat();
             }
             else
             {
                 yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "Couldn't run away..."));
-                yield return new WaitForSeconds(2f);
+                yield return StartCoroutine(WaitForUserInput());
             }
         }
         
@@ -113,13 +124,13 @@ public class CombatManager : MonoBehaviour
             if (random < EnemyDataHolder.enemyData.chanceToTalk)
             {
                 yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You're charisma convinced them!"));
-                yield return new WaitForSeconds(2f);
+                yield return StartCoroutine(WaitForUserInput());
                 GameManager.Instance.EndCombat();
             }
             else
             {
                 yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "They're not convinced"));
-                yield return new WaitForSeconds(2f);
+                yield return StartCoroutine(WaitForUserInput());
             }
         }
     }
@@ -130,10 +141,47 @@ public class CombatManager : MonoBehaviour
         string attackNarration = enemyMoveData.Item1 + " and dealt " + enemyMoveData.Item2 + " damage!";
         
         yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, attackNarration));
-        yield return new WaitForSeconds(2f);    
+        yield return StartCoroutine(WaitForUserInput());
         combatTextBox.text = "";
-        
-        ButtonScriptCombatMenu.BackToMain();
+
+        //If player is alive go back to main menu, if player is dead be defeated
+        if (PlayerDataHolder.playerData["Health"] <= 0)
+        {
+            yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You died..."));
+            yield return StartCoroutine(WaitForUserInput());
+            GameManager.Instance.EndCombat();
+        }
+        else
+        {
+            ButtonScriptCombatMenu.BackToMain();
+        }
+    }
+    
+    private IEnumerator WaitForUserInput()
+    {
+        _waitingForUserInput = true;
+        while (!_playerInput)
+        {
+            yield return null;
+        }
+        _waitingForUserInput = false;
+        _playerInput = false;
     }
     #endregion
+    
+    private IEnumerator OnWin()
+    {
+        yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You Won!"));
+        yield return StartCoroutine(WaitForUserInput());
+        
+        yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You earned " + EnemyDataHolder.goldGiven +  " amount of gold!"));
+        yield return StartCoroutine(WaitForUserInput());
+        PlayerDataHolder.GetGold(EnemyDataHolder.goldGiven);
+        
+        yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You earned " + EnemyDataHolder.expGiven + " amount of xp!"));
+        yield return StartCoroutine(WaitForUserInput());
+        PlayerDataHolder.GetExp(EnemyDataHolder.expGiven);
+        
+        GameManager.Instance.EndCombat();
+    }
 }

@@ -33,11 +33,9 @@ public class Player : MonoBehaviour
         _horizontalParamID = Animator.StringToHash("Horizontal");
         _verticalParamID = Animator.StringToHash("Vertical");
         _isMovingParamID = Animator.StringToHash("IsMoving");
-    }
-
-    private void Update()
-    {
-        if (Input_Controller.Instance.interactPressed) Interact();
+        
+        // Subscribe to events
+        GameEvents.interactPressed += Interact;
     }
     
     private void FixedUpdate()

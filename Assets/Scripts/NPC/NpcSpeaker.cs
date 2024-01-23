@@ -14,6 +14,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     public int whichDialogue;
     [HideInInspector]
     public bool userInput;
+    private bool _waitingForUserInput;
     [HideInInspector]
     public bool waitingForResponse;
     [HideInInspector]
@@ -39,7 +40,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         NpcDialogueHandler.ResetDialogue();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = npc.sprite;
-        text = DialogueBoxManager.Instance.DialogueBox;
+        text = DialogueBoxManager.Instance.dialogueBox;
         
         _architect = new TextArchitect(text);
     }
@@ -56,7 +57,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
 
     public void Interact()
     {
-        if (!waitingForResponse)
+        if (!waitingForResponse && _waitingForUserInput)
             userInput = true;
     }
 
@@ -168,11 +169,12 @@ public class NpcSpeaker : MonoBehaviour, Interactable
 
     private IEnumerator WaitForUserInput()
     {
+        _waitingForUserInput = true;
         while (!userInput || waitingForResponse)
         {
             yield return null;
         }
-
+        _waitingForUserInput = false;
         userInput = false;
     }
 }

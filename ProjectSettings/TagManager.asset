@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - DialogueUI
+  - DialogueVisualBoxes
   layers:
   - Default
   - TransparentFX

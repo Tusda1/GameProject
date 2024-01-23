@@ -11,6 +11,10 @@ public abstract class EnemyScrubBase : ScriptableObject
     public bool isBoss;
     public float chanceToRun;
     public float chanceToTalk;
+    public int[] xpGiven;
+    public int[] goldGiven;
+    public int level;
+    
  
     public abstract Tuple<string, int> EnemyAttack();
 }
