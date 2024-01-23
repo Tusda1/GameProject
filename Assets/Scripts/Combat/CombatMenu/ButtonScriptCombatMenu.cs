@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class ButtonScriptCombatMenu
 {
-    public static void AttackMoveButton()
+    private static void AttackMoveButton()
     {
         MenuManouverer.Instance.ClearChoices();
         MenuManouverer.Instance.AddChoice("Back", BackToMain, false, ActionType.Menu);
@@ -29,27 +29,29 @@ public static class ButtonScriptCombatMenu
         
         MenuManouverer.Instance.LoadNewMenu();
     }
-    
-    public static void InventoryButton()
+
+    private static void InventoryButton()
     {
         
     }
-    
-    public static void RunButton()
+
+    private static void RunButton()
     {
-        int random = UnityEngine.Random.Range(0, 100);
-        if (random < EnemyDataHolder.enemyData.chanceToRun)
-        {
-            Debug.Log("You ran away");
-            GameManager.Instance.EndCombat();
-        }
-        else
-        {
-            Debug.Log("You failed to run away");
-        }
+        
+        
+        //int random = UnityEngine.Random.Range(0, 100);
+        //if (random < EnemyDataHolder.enemyData.chanceToRun)
+        //{
+        //    Debug.Log("You ran away");
+        //    GameManager.Instance.EndCombat();
+        //}
+        //else
+        //{
+        //    Debug.Log("You failed to run away");
+        //}
     }
 
-    public static void TalkButton()
+    private static void TalkButton()
     {
         
     }
