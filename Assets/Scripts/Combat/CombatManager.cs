@@ -16,15 +16,16 @@ public class CombatManager : MonoBehaviour
     
     [Header("Sprites")]
     [SerializeField] private Image enemyImage;
+
+    [Header("Semi temporary frequently changed variables")]
+    private ActionType _actionType;
+    private string _actionName;
     
     // Start is called before the first frame update
     void Start()
     {
         //Make sure text box is empty on start
         combatTextBox.text = "";
-        
-        //Add all the possible attack moves the player could have access to to a dictionary
-        PlayerAttackMoves.PutAttackMovesInDictionary();
         
         //Initialize the enemy data
         enemyImage.sprite = EnemyDataHolder.enemyData.enemySprite;
@@ -38,35 +39,36 @@ public class CombatManager : MonoBehaviour
         CombatEvents.playerTurnEnd += PlayerTurnEnd;
     }
     
-    private void PlayerTurnEnd(ActionType actionType)
+    private void PlayerTurnEnd(ActionType actionType, string actionName)
     {
         _playerTurn = false;
+        _actionType = actionType;
+        _actionName = actionName;
         
-        StartCoroutine(RunTurns(actionType));
+        StartCoroutine(RunTurns());
     }
 
     #region Turns Running
-    private IEnumerator RunTurns(ActionType actionType)
+    private IEnumerator RunTurns()
     {
-        yield return StartCoroutine(PlayerTurn(actionType));
+        yield return StartCoroutine(PlayerTurn());
         
         
         if (EnemyDataHolder.currentEnemyHealth > 0)
         {
             StartCoroutine(EnemyTurn());  
-            
         }
     }
     
-    private IEnumerator PlayerTurn(ActionType actionType)
+    private IEnumerator PlayerTurn()
     {
-        if (actionType == ActionType.Attack)
+        if (_actionType == ActionType.Attack)
         {
             PlayerAttackMove attackMove = ScriptableObject.CreateInstance<PlayerAttackMove>();
             
             foreach (var attack in allAttackMoves.allAttackMoves)
             {
-                if (attack.attackMoveName == PlayerAttackMoves.currentAttackMove)
+                if (attack.attackMoveName == _actionName)
                 {
                     attackMove = attack;
                 }
@@ -84,22 +86,42 @@ public class CombatManager : MonoBehaviour
             combatTextBox.text = "";
         }
         
-        else if (actionType == ActionType.Item)
+        else if (_actionType == ActionType.Item)
         {
             
         }
         
-        else if (actionType == ActionType.Run)
+        else if (_actionType == ActionType.Run)
         {
-            
+            int random = UnityEngine.Random.Range(0, 100);
+            if (random < EnemyDataHolder.enemyData.chanceToRun)
+            {
+                yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You ran away!"));
+                yield return new WaitForSeconds(2f);
+                GameManager.Instance.EndCombat();
+            }
+            else
+            {
+                yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "Couldn't run away..."));
+                yield return new WaitForSeconds(2f);
+            }
         }
         
-        else if (actionType == ActionType.Talk)
+        else if (_actionType == ActionType.Talk)
         {
-            
+            int random = UnityEngine.Random.Range(0, 100);
+            if (random < EnemyDataHolder.enemyData.chanceToTalk)
+            {
+                yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You're charisma convinced them!"));
+                yield return new WaitForSeconds(2f);
+                GameManager.Instance.EndCombat();
+            }
+            else
+            {
+                yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "They're not convinced"));
+                yield return new WaitForSeconds(2f);
+            }
         }
-        
-        ButtonScriptCombatMenu.BackToMain();
     }
     
     private IEnumerator EnemyTurn()

@@ -181,9 +181,9 @@ public class MenuManouverer : MonoBehaviour
         _choiceDictionary.Clear();
     }
     
-    public void AddChoice(string choiceName, Action choiceAction, bool isCombatMove, ActionType actionType)
+    public void AddChoice(string choiceName, Action choiceAction, string actionName, bool isCombatMove, ActionType actionType)
     {
-        _choiceDictionary.Add(choiceName, new ActionInfo(choiceAction, isCombatMove, actionType));
+        _choiceDictionary.Add(choiceName, new ActionInfo(choiceAction, actionName, isCombatMove, actionType));
     }
     #endregion
 
@@ -247,10 +247,10 @@ public class MenuManouverer : MonoBehaviour
     //Called in LoadNewMenu
     private void AddActionToButton(string actionKey)
     {
-        if (_choiceDictionary.TryGetValue(actionKey, out var ActionInfo))
+        if (_choiceDictionary.TryGetValue(actionKey, out var actionInfo))
         {
-            Action selectedAction = ActionInfo.action; 
-            bool isCombatMove = ActionInfo.isCombatMove;
+            Action selectedAction = actionInfo.action; 
+            bool isCombatMove = actionInfo.isCombatMove;
             
             selectedAction.Invoke();
 
@@ -258,7 +258,7 @@ public class MenuManouverer : MonoBehaviour
             {
                 ClearListeners();
                 ClearMenuButtons();
-                CombatEvents.playerTurnEnd.Invoke(ActionInfo.actionType);
+                CombatEvents.playerTurnEnd.Invoke(actionInfo.actionType, actionInfo.actionName);
             }
         }
     }
