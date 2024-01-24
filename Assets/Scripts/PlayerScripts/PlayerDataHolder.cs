@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class PlayerDataHolder
 {
     public static Dictionary<string, int> playerData = new Dictionary<string, int>();
+    public static float expToNextLevelMultiplier = 1.5f;
     
     public static void SetPlayerData()
     {
@@ -12,7 +14,13 @@ public static class PlayerDataHolder
         
         foreach (var key in tempDict.Keys)
         {
-            playerData.Add(key, (int)tempDict[key]);
+            if (key == "DataType")
+            {
+                // Skip the DataType property
+                continue;
+            }
+            
+            playerData.Add(key, int.TryParse(tempDict[key].ToString(), out int value) ? value : 0);
         }
     }
     
@@ -29,6 +37,18 @@ public static class PlayerDataHolder
     
     public static void GetExp(int amount)
     {
-        playerData["ExpToNextLevel"] += amount;
+        playerData["Exp"] += amount;
+
+        if (playerData["Exp"] >= playerData["ExpToNextLevel"])
+        {
+            LevelUp();
+        }
+    }
+    
+    private static void LevelUp()
+    {
+        playerData["Level"] += 1;
+        playerData["Exp"] -= playerData["ExpToNextLevel"];
+        playerData["ExpToNextLevel"] = Mathf.RoundToInt(playerData["ExpToNextLevel"] * expToNextLevelMultiplier);
     }
 }

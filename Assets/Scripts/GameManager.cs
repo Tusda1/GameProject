@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.UnloadSceneAsync("Combat");
         Player.frozen = false;
+        PlayerDataHolder.GetGold(EnemyDataHolder.goldGiven);
+        PlayerDataHolder.GetExp(EnemyDataHolder.expGiven);
     }
 
     private IEnumerator TurnOffDialogueScriptsAfterInitalized()

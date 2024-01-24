@@ -176,12 +176,11 @@ public class CombatManager : MonoBehaviour
         
         yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You earned " + EnemyDataHolder.goldGiven +  " amount of gold!"));
         yield return StartCoroutine(WaitForUserInput());
-        PlayerDataHolder.GetGold(EnemyDataHolder.goldGiven);
         
         yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You earned " + EnemyDataHolder.expGiven + " amount of xp!"));
         yield return StartCoroutine(WaitForUserInput());
-        PlayerDataHolder.GetExp(EnemyDataHolder.expGiven);
         
+        //Gold and exp given here
         GameManager.Instance.EndCombat();
     }
 }
