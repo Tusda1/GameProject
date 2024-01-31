@@ -11,6 +11,8 @@ public static class ButtonManager
     
     public static void DisplayButtons(string[] options)
     {
+        ButtonContainer.Instance.buttonSelector.SetActive(true);
+        
         for (int i = 0; i < options.Length; i++)
         {
             ButtonContainer.Instance.buttonList[i].SetActive(true);

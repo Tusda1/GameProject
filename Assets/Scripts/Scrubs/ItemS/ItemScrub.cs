@@ -7,12 +7,15 @@ using UnityEngine;
 public abstract class ItemScrub : ScriptableObject
 {
     public string itemName;
+    
+    [TextArea]
     public string itemDescription;
+    
     public Sprite itemSprite;
     public int itemValue;
     public bool isItemStackable;
     public bool isItemKeyItem;
-    public bool doesItemHaveSpecialEffect;
+    public bool doesItemHaveSpecialEffect;  
     public bool isConsumable;
     
     public abstract void UseItem();

@@ -478,14 +478,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 230757499559844207, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_TagString
-      value: DialogueVisualBoxes
-      objectReference: {fileID: 0}
-    - target: {fileID: 354634766400204171, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_TagString
-      value: DialogueVisualBoxes
-      objectReference: {fileID: 0}
     - target: {fileID: 2127893106946303115, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_Camera
       value: 
@@ -493,14 +485,6 @@ PrefabInstance:
     - target: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_Name
       value: '[DIALOGUE UI]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_TagString
-      value: DialogueUI
       objectReference: {fileID: 0}
     - target: {fileID: 4002602772519895636, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_LocalPosition.x
@@ -541,10 +525,6 @@ PrefabInstance:
     - target: {fileID: 4002602772519895636, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4374643556992448413, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_TagString
-      value: DialogueVisualBoxes
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

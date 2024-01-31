@@ -28,7 +28,8 @@
       "Armor": "Steel Armor"
     },
     {
-      "DataType": "Inventory"
+      "DataType": "Inventory",
+      "Inventory content": []
     }
   ]
 }

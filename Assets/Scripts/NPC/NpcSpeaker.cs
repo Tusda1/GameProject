@@ -48,7 +48,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     // Update is called once per frame
     void Update()
     {
-        if (userInput & !_conversationRunning)
+        if (userInput && !_conversationRunning)
         {
             userInput = false;
             StartSpeaking();
@@ -57,8 +57,17 @@ public class NpcSpeaker : MonoBehaviour, Interactable
 
     public void Interact()
     {
-        if (!waitingForResponse && _waitingForUserInput)
+        if (!_conversationRunning)
+        {
             userInput = true;
+        }
+        else
+        {
+            if (waitingForResponse)
+                return;
+            if (_waitingForUserInput)
+                userInput = true;
+        }
     }
 
     public void EndConversation()

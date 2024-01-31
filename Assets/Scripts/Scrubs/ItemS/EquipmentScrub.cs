@@ -13,14 +13,16 @@ public enum EquipmentGrade
 public class EquipmentScrub : ScriptableObject
 {
     public string itemName;
+    
     [TextArea]
     public string itemDescription;
+    
     public Sprite itemSprite;
     public int itemValue;
     public bool doesHaveSpecialEffect;
     public bool isUnique;
     public EquipmentGrade grade;
 
-    public float damage;
+    public float attack;
     public float defense;
 }

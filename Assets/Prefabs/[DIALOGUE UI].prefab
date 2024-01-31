@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4936052010718201752}
   m_Layer: 5
   m_Name: NpcPortrait
-  m_TagString: DialogueUI
+  m_TagString: DialogueVisualBoxes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 3624616722970456903}
   m_Layer: 5
   m_Name: DialogueBox
-  m_TagString: DialogueUI
+  m_TagString: DialogueVisualBoxes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -613,15 +613,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -747,15 +749,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -784,7 +788,7 @@ GameObject:
   - component: {fileID: 4002602772519895636}
   m_Layer: 0
   m_Name: '[DIALOGUE UI]'
-  m_TagString: Untagged
+  m_TagString: DialogueUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -840,6 +844,7 @@ Transform:
   - {fileID: 1151740857182179865}
   - {fileID: 5334233956869500557}
   - {fileID: 7240618308656687054}
+  - {fileID: 1736614269737545473}
   m_Father: {fileID: 4002602772519895636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4374643556992448413
@@ -855,7 +860,7 @@ GameObject:
   - component: {fileID: 7243071601312049449}
   m_Layer: 5
   m_Name: PlayerPortrait
-  m_TagString: DialogueUI
+  m_TagString: DialogueVisualBoxes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -963,7 +968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portraitNpcImage: {fileID: 4936052010718201752}
   nameTextBox: {fileID: 8568455414044653598}
-  DialogueBox: {fileID: 4733677478015542488}
+  dialogueBox: {fileID: 4733677478015542488}
 --- !u!1 &4611094233788574321
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,15 +1077,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -1098,6 +1105,50 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &5484548434764005480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1736614269737545473}
+  - component: {fileID: 1661967053913335664}
+  m_Layer: 0
+  m_Name: ButtonSelector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1736614269737545473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484548434764005480}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2231920133249721734}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1661967053913335664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484548434764005480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cc26633404c1641a4a81576078ec87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5690309830748935748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,15 +1390,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -1642,7 +1695,6 @@ GameObject:
   - component: {fileID: 1151740857182179865}
   - component: {fileID: 516621210825710557}
   - component: {fileID: 6622885032340685478}
-  - component: {fileID: 3485247465453408255}
   m_Layer: 0
   m_Name: OptionManager
   m_TagString: Untagged
@@ -1677,16 +1729,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2472c41bb3544b4e92f51bde48193cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonOne: {fileID: 7531333158971975414}
-  buttonTwo: {fileID: 1267203752626426288}
-  buttonThree: {fileID: 5690309830748935748}
-  buttonFour: {fileID: 6458945334370821225}
-  buttonOneText: {fileID: 4352006849288893699}
-  buttonTwoText: {fileID: 454959300631766683}
-  buttonThreeText: {fileID: 3815063778012175209}
-  buttonFourText: {fileID: 7286644864407613662}
-  buttonList: []
-  buttonTextList: []
+  buttonSelector: {fileID: 5484548434764005480}
+  buttonList:
+  - {fileID: 7531333158971975414}
+  - {fileID: 1267203752626426288}
+  - {fileID: 5690309830748935748}
+  - {fileID: 6458945334370821225}
+  buttonTextList:
+  - {fileID: 4352006849288893699}
+  - {fileID: 454959300631766683}
+  - {fileID: 3815063778012175209}
+  - {fileID: 7286644864407613662}
 --- !u!114 &6622885032340685478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1697,18 +1750,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e95339c633e3c3745924e2fca14e9aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3485247465453408255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7646691904107235278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23cc26633404c1641a4a81576078ec87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8243233672631334619
@@ -1754,6 +1795,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1947,15 +1989,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -2081,15 +2125,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0

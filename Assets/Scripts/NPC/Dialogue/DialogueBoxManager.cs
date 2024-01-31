@@ -38,9 +38,9 @@ public class DialogueBoxManager : MonoBehaviour
 
     public void ShowDialogueContainers(Sprite npcPortrait)
     {
-        foreach (GameObject UIElement in _dialogueUI)
+        foreach (GameObject uiElement in _dialogueUI)
         {
-            UIElement.SetActive(true);
+            uiElement.SetActive(true);
         }
 
         nameTextBox.text = NpcSpeaker.CurrentSpeaker.npc.npcName;
@@ -56,9 +56,9 @@ public class DialogueBoxManager : MonoBehaviour
 
     public void HideDialogueContainers()
     {
-        foreach (GameObject UIElement in _dialogueUI)
+        foreach (GameObject uiElement in _dialogueUI)
         {
-            UIElement.SetActive(false);
+            uiElement.SetActive(false);
         }
     }
 }

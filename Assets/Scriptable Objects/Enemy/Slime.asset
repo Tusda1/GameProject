@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Slime
   enemySprite: {fileID: 9075156759465972181, guid: 0c13fe633e0a3094aa3508648e915937, type: 3}
-  maxHealth: 5
+  maxHealth: 15
   isBoss: 0
   chanceToRun: 50
   chanceToTalk: 0

@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
     private bool _interactable;
     private Vector2 _inputAxis;
     private Vector3 _targetPos;
-    public Vector2 facing;
 
 
     private void Start()
@@ -69,7 +68,6 @@ public class Player : MonoBehaviour
     void Interact()
     {
         var facingDir = new Vector3(_animator.GetFloat(_horizontalParamID),_animator.GetFloat(_verticalParamID));
-        facing = facingDir;
         var interactPos = transform.position + facingDir;
         
         var collider = Physics2D.OverlapCircle(interactPos, 0.3f);
