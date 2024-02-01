@@ -130,8 +130,9 @@ GameObject:
   - component: {fileID: 18011009}
   - component: {fileID: 18011008}
   - component: {fileID: 18011007}
-  - component: {fileID: 18011010}
   - component: {fileID: 18011011}
+  - component: {fileID: 18011013}
+  - component: {fileID: 18011012}
   m_Layer: 0
   m_Name: Tester
   m_TagString: Untagged
@@ -254,19 +255,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &18011010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 18011006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fc642c42b368da438f739988024e466, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: d0158d580d22d38498170fa32cb33793, type: 2}
 --- !u!95 &18011011
 Animator:
   serializedVersion: 7
@@ -289,6 +277,44 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &18011012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18011006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc18f114dc693245a3e466ddfce31b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whichDialogue: 0
+  userInput: 0
+  waitingForResponse: 0
+  currentDialogueLine: 0
+  treatCommandAsDialogue: 0
+  lockedOptions: 0
+  npc: {fileID: 0}
+  sprite: {fileID: 0}
+  characterName: 
+  portrait: {fileID: 0}
+  hasPortrait: 0
+  isEnemy: 1
+  text: {fileID: 0}
+--- !u!114 &18011013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18011006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a21267cdde930149b6129b3e4371265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: {fileID: 11400000, guid: d0158d580d22d38498170fa32cb33793, type: 2}
 --- !u!1 &63951025
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +553,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4374643556992448413, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9cf911568280cd438723d84ffc26b39, type: 3}

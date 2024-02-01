@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using GameObject = UnityEngine.GameObject;
 
@@ -36,22 +34,27 @@ public class DialogueBoxManager : MonoBehaviour
         HideDialogueContainers();
     }
 
-    public void ShowDialogueContainers(Sprite npcPortrait)
+    public void ShowDialogueContainers()
     {
         foreach (GameObject uiElement in _dialogueUI)
         {
             uiElement.SetActive(true);
         }
 
-        nameTextBox.text = NpcSpeaker.CurrentSpeaker.npc.npcName;
-        portraitNpcImage.sprite = npcPortrait;
-        
+        nameTextBox.text = NpcSpeaker.CurrentSpeaker.characterName;
+        portraitNpcImage.sprite = NpcSpeaker.CurrentSpeaker.portrait;
 
-        float aspectRatio = portraitNpcImage.sprite.rect.height / portraitNpcImage.sprite.rect.width;
+        if (NpcSpeaker.CurrentSpeaker.portrait != null)
+        {
+            float aspectRatio = portraitNpcImage.sprite.rect.height / portraitNpcImage.sprite.rect.width;
 
-        // Set the height to maintain aspect ratio while changing width
-        portraitNpcImage.rectTransform.sizeDelta = new Vector2(portraitNpcImage.rectTransform.sizeDelta.y / aspectRatio, portraitNpcImage.rectTransform.sizeDelta.y);
-        
+            // Set the height to maintain aspect ratio while changing width
+            portraitNpcImage.rectTransform.sizeDelta = new Vector2(portraitNpcImage.rectTransform.sizeDelta.y / aspectRatio, portraitNpcImage.rectTransform.sizeDelta.y);   
+        }
+        else
+        {
+            portraitNpcImage.gameObject.SetActive(false);
+        }
     }
 
     public void HideDialogueContainers()

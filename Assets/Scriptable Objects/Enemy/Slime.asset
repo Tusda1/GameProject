@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Slime
   enemySprite: {fileID: 9075156759465972181, guid: 0c13fe633e0a3094aa3508648e915937, type: 3}
+  portrait: {fileID: 0}
+  hasPortrait: 0
   maxHealth: 15
   isBoss: 0
   chanceToRun: 50
-  chanceToTalk: 0
+  chanceToTalk: 100
   xpGiven: 0300000006000000
   goldGiven: 0100000002000000
   level: 3

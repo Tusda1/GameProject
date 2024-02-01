@@ -6,8 +6,7 @@ using UnityEngine.UIElements;
 [CreateAssetMenu(menuName = "New NPC")]
 public class NpcScrub : ScriptableObject
 {
+    public string npcName;
     public Sprite sprite;
     public Sprite portrait;
-    
-    public string npcName;
 }

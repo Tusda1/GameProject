@@ -125,6 +125,7 @@ public class CombatManager : MonoBehaviour
             {
                 yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You're charisma convinced them!"));
                 yield return StartCoroutine(WaitForUserInput());
+                Enemy.CurrentEnemy.TriggerDialogue();
                 GameManager.Instance.EndCombat();
             }
             else

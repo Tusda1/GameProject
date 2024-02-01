@@ -6,6 +6,7 @@ public abstract class EnemyScrubBase : ScriptableObject
 {
     public string enemyName;
     public Sprite enemySprite;
+    public Sprite portrait;
     
     public int maxHealth;
     public bool isBoss;

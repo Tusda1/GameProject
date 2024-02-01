@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,20 +27,41 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     private bool _conversationRunning;
     
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
     private TextArchitect _architect;
     
     private Coroutine _speakingCoroutine;
     
-    public NpcScrub npc;
-    [HideInInspector] 
+    [SerializeField] private NpcScrub npc;
+    private EnemyScrubBase _enemy;
+    public ScriptableObject scrub;
+    
+    [HideInInspector] public Sprite sprite;
+    [HideInInspector] public string characterName;
+    [HideInInspector] public Sprite portrait;
+    
+    [SerializeField] private bool isEnemy;
     public TextMeshProUGUI text;
     // Start is called before the first frame update
     void Start()
     {
+        if (isEnemy)
+        {
+            _enemy = EnemyDataHolder.enemyData;
+            sprite = _enemy.enemySprite;
+            characterName = _enemy.enemyName;
+            portrait = _enemy.portrait;
+        }
+        else
+        {
+            sprite = npc.sprite;
+            characterName = npc.npcName;
+            portrait = npc.portrait;
+        }
+        
         NpcDialogueHandler.ResetDialogue();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = npc.sprite;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.sprite = sprite;
         text = DialogueBoxManager.Instance.dialogueBox;
         
         _architect = new TextArchitect(text);
@@ -84,13 +106,16 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     private void StartSpeaking()
     {
-        GameManager.Instance.DialogueScriptsOn();
-        Player.frozen = true;
-        whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.npcName);
-        dialogueDict = NpcDialogueHandler.GetDialogue(npc.npcName);
         CurrentSpeaker = this;
+        GameManager.Instance.DialogueScriptsOn();
+        DialogueBoxManager.Instance.ShowDialogueContainers();
+        
+        Player.frozen = true;
+        
+        whichDialogue = NpcDialogueHandler.GetWhichDialogue(characterName);
+        dialogueDict = NpcDialogueHandler.GetDialogue(characterName);
+        
         _conversationRunning = true;
-        DialogueBoxManager.Instance.ShowDialogueContainers(npc.portrait);
         if (_speakingCoroutine == null)
         {
             _speakingCoroutine = StartCoroutine(Speaking());
