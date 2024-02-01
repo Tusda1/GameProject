@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerAttackMove : ScriptableObject
 {
     public string attackMoveName;
-    public int damage;
+    public Vector2 damageRange;
     public string narration;
     public StatusEffects statusEffect;
 }

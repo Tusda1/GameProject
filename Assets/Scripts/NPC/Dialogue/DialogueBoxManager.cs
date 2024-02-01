@@ -41,10 +41,10 @@ public class DialogueBoxManager : MonoBehaviour
             uiElement.SetActive(true);
         }
 
-        nameTextBox.text = NpcSpeaker.CurrentSpeaker.characterName;
-        portraitNpcImage.sprite = NpcSpeaker.CurrentSpeaker.portrait;
+        nameTextBox.text = NpcSpeaker.CurrentSpeaker.npc.characterName;
+        portraitNpcImage.sprite = NpcSpeaker.CurrentSpeaker.npc.portrait;
 
-        if (NpcSpeaker.CurrentSpeaker.portrait != null)
+        if (NpcSpeaker.CurrentSpeaker.npc.portrait != null)
         {
             float aspectRatio = portraitNpcImage.sprite.rect.height / portraitNpcImage.sprite.rect.width;
 

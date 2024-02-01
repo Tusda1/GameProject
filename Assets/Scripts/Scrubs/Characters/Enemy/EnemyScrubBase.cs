@@ -2,18 +2,15 @@ using System;
 using UnityEngine;
 
 
-public abstract class EnemyScrubBase : ScriptableObject
+public abstract class EnemyScrubBase : CharacterBase
 {
-    public string enemyName;
-    public Sprite enemySprite;
-    public Sprite portrait;
-    
+    public RuntimeAnimatorController animatorController;
     public int maxHealth;
     public bool isBoss;
     public float chanceToRun;
     public float chanceToTalk;
-    public int[] xpGiven;
-    public int[] goldGiven;
+    public Vector2 xpGiven;
+    public Vector2 goldGiven;
     public int level;
     
  

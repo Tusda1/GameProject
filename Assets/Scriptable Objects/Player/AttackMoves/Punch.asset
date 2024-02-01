@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Punch
   m_EditorClassIdentifier: 
   attackMoveName: Punch
-  damage: 5
+  damageRange: {x: 0, y: 2}
   narration: You Punched
   statusEffect: 0

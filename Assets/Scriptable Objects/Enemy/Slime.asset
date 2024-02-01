@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e17f18800e9ab14cab0c5c801970471, type: 3}
   m_Name: Slime
   m_EditorClassIdentifier: 
-  enemyName: Slime
-  enemySprite: {fileID: 9075156759465972181, guid: 0c13fe633e0a3094aa3508648e915937, type: 3}
+  characterName: Slime
+  sprite: {fileID: 9075156759465972181, guid: 0c13fe633e0a3094aa3508648e915937, type: 3}
   portrait: {fileID: 0}
-  hasPortrait: 0
+  animatorController: {fileID: 22100000, guid: fb02061a68d11cc439901fab05107475, type: 2}
   maxHealth: 15
   isBoss: 0
   chanceToRun: 50
   chanceToTalk: 100
-  xpGiven: 0300000006000000
-  goldGiven: 0100000002000000
+  xpGiven: {x: 0, y: 3}
+  goldGiven: {x: 0, y: 1}
   level: 3

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CombatManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI combatTextBox;
     
     [Header("Sprites")]
-    [SerializeField] private Image enemyImage;
+    [SerializeField] private Animator enemyAnimator;
 
     [Header("Semi temporary frequently changed variables")]
     private ActionType _actionType;
@@ -29,13 +30,7 @@ public class CombatManager : MonoBehaviour
         //Make sure text box is empty on start
         combatTextBox.text = "";
         
-        //Initialize the enemy data
-        enemyImage.sprite = EnemyDataHolder.enemyData.enemySprite;
-        float aspectRatio = enemyImage.sprite.rect.height / enemyImage.sprite.rect.width;
-        // Set the height to maintain aspect ratio while changing width
-        var sizeDelta = enemyImage.rectTransform.sizeDelta;
-        sizeDelta = new Vector2(sizeDelta.y / aspectRatio, sizeDelta.y);
-        enemyImage.rectTransform.sizeDelta = sizeDelta;
+        enemyAnimator.runtimeAnimatorController = EnemyDataHolder.enemyData.animatorController;
 
         //Subscribe to the playerTurnOver event
         CombatEvents.playerTurnEnd += PlayerTurnEnd;
@@ -85,14 +80,16 @@ public class CombatManager : MonoBehaviour
                 }
             }
             
-            EnemyDataHolder.TakeDamage(attackMove.damage);
+            //Determines damage dealt based on the range of the attack move
+            int damage = Random.Range((int)attackMove.damageRange.x, (int)attackMove.damageRange.y + 1);
+            EnemyDataHolder.TakeDamage(damage);
 
             if (attackMove.statusEffect != StatusEffects.None)
             {
                 Debug.Log("status effect");
             }
             
-            yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, attackMove.narration + " and dealt " + attackMove.damage + " damage!"));
+            yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, attackMove.narration + " and dealt " + damage + " damage!"));
             yield return StartCoroutine(WaitForUserInput());
             combatTextBox.text = "";
         }

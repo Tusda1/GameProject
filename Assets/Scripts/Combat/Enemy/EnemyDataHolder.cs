@@ -13,8 +13,8 @@ public static class EnemyDataHolder
     {
         enemyData = enemy;
         currentEnemyHealth = enemy.maxHealth;
-        goldGiven = Random.Range(enemyData.goldGiven[0], enemyData.goldGiven[1]+1);
-        expGiven = Random.Range(enemyData.xpGiven[0], enemyData.xpGiven[1]+1);
+        goldGiven = Random.Range((int)enemyData.goldGiven.x, (int)enemyData.goldGiven.y+1);
+        expGiven = Random.Range((int)enemyData.xpGiven.x, (int)enemyData.xpGiven.y+1);
     }
     
     public static void TakeDamage(int damage)

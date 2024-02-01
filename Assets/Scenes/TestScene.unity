@@ -265,7 +265,7 @@ Animator:
   m_GameObject: {fileID: 18011006}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2458d8bab0b31624d917fca59252f2f8, type: 2}
+  m_Controller: {fileID: 22100000, guid: fb02061a68d11cc439901fab05107475, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -295,12 +295,7 @@ MonoBehaviour:
   currentDialogueLine: 0
   treatCommandAsDialogue: 0
   lockedOptions: 0
-  npc: {fileID: 0}
-  sprite: {fileID: 0}
-  characterName: 
-  portrait: {fileID: 0}
-  hasPortrait: 0
-  isEnemy: 1
+  npc: {fileID: 11400000, guid: d0158d580d22d38498170fa32cb33793, type: 2}
   text: {fileID: 0}
 --- !u!114 &18011013
 MonoBehaviour:
@@ -314,7 +309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a21267cdde930149b6129b3e4371265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: {fileID: 11400000, guid: d0158d580d22d38498170fa32cb33793, type: 2}
 --- !u!1 &63951025
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +502,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 63951027}
+    - target: {fileID: 2127893106946303115, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127893106946303115, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_Name
       value: '[DIALOGUE UI]'
@@ -644,6 +646,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC
       objectReference: {fileID: 0}
+    - target: {fileID: 7105223492406759268, guid: b629806cfc035d14589f1204127384d1, type: 3}
+      propertyPath: npc
+      value: 
+      objectReference: {fileID: 11400000, guid: 61f187e7a616eb042a951c821e519a8b, type: 2}
     - target: {fileID: 8687867678592846048, guid: b629806cfc035d14589f1204127384d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3

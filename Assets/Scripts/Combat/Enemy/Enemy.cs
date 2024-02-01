@@ -4,20 +4,14 @@ public class Enemy : MonoBehaviour
 {
     public static Enemy CurrentEnemy { get; private set; }
     
-    [SerializeField] private EnemyScrubBase enemyType;
+    private EnemyScrubBase _enemyType;
     private NpcSpeaker _npcSpeaker;
 
-    private void Awake()
+    private void Start()
     {
         _npcSpeaker = GetComponent<NpcSpeaker>();
-        //Set the script to inactive
+        _enemyType = _npcSpeaker.npc as EnemyScrubBase;
         _npcSpeaker.enabled = false;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -30,7 +24,6 @@ public class Enemy : MonoBehaviour
     {
             if (other.CompareTag("Player"))
             {
-                EnemyDataHolder.SetEnemyData(enemyType);
                 StartCombat();
             }
     }
@@ -38,6 +31,7 @@ public class Enemy : MonoBehaviour
     private void StartCombat()
     {
         CurrentEnemy = this;
+        EnemyDataHolder.SetEnemyData(_enemyType);
         GameManager.Instance.InitateCombat();
     }
     

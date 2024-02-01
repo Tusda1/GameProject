@@ -32,36 +32,20 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     private Coroutine _speakingCoroutine;
     
-    [SerializeField] private NpcScrub npc;
-    private EnemyScrubBase _enemy;
-    public ScriptableObject scrub;
+    public CharacterBase npc;
     
-    [HideInInspector] public Sprite sprite;
-    [HideInInspector] public string characterName;
-    [HideInInspector] public Sprite portrait;
-    
-    [SerializeField] private bool isEnemy;
     public TextMeshProUGUI text;
     // Start is called before the first frame update
     void Start()
     {
-        if (isEnemy)
+        NpcDialogueHandler.ResetDialogue();
+        
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (_spriteRenderer != null)
         {
-            _enemy = EnemyDataHolder.enemyData;
-            sprite = _enemy.enemySprite;
-            characterName = _enemy.enemyName;
-            portrait = _enemy.portrait;
-        }
-        else
-        {
-            sprite = npc.sprite;
-            characterName = npc.npcName;
-            portrait = npc.portrait;
+            _spriteRenderer.sprite = npc.sprite;
         }
         
-        NpcDialogueHandler.ResetDialogue();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.sprite = sprite;
         text = DialogueBoxManager.Instance.dialogueBox;
         
         _architect = new TextArchitect(text);
@@ -83,13 +67,14 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         {
             userInput = true;
         }
-        else
-        {
-            if (waitingForResponse)
-                return;
-            if (_waitingForUserInput)
-                userInput = true;
-        }
+    }
+    
+    private void ProgressDialogue()
+    {
+        if (waitingForResponse)
+            return;
+        if (_waitingForUserInput)
+            userInput = true;
     }
 
     public void EndConversation()
@@ -102,6 +87,8 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         DialogueBoxManager.Instance.HideDialogueContainers();
         Player.frozen = false;
         GameManager.Instance.DialogueScriptsOff();
+        
+        GameEvents.interactPressed -= ProgressDialogue;
     }
     
     private void StartSpeaking()
@@ -112,14 +99,16 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         
         Player.frozen = true;
         
-        whichDialogue = NpcDialogueHandler.GetWhichDialogue(characterName);
-        dialogueDict = NpcDialogueHandler.GetDialogue(characterName);
+        whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.characterName);
+        dialogueDict = NpcDialogueHandler.GetDialogue(npc.characterName);
         
         _conversationRunning = true;
         if (_speakingCoroutine == null)
         {
             _speakingCoroutine = StartCoroutine(Speaking());
         }
+        
+        GameEvents.interactPressed += ProgressDialogue;
     }
 
     private IEnumerator Speaking()
