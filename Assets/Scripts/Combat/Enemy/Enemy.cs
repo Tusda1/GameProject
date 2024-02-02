@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -12,20 +13,9 @@ public class Enemy : MonoBehaviour
         _npcSpeaker = GetComponent<NpcSpeaker>();
         _enemyType = _npcSpeaker.npc as EnemyScrub;
         _npcSpeaker.enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        CombatEvents.combatEnd += CombatEnd;
         
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-            if (other.CompareTag("Player"))
-            {
-                StartCombat();
-            }
+        StartCombat();
     }
 
     private void StartCombat()
@@ -33,6 +23,20 @@ public class Enemy : MonoBehaviour
         CurrentEnemy = this;
         EnemyDataHolder.SetEnemyData(_enemyType);
         GameManager.Instance.InitateCombat();
+    }
+
+    private void CombatEnd()
+    {
+        if (_npcSpeaker.enabled == false)
+        {
+            SelfDestruct();
+        }
+    }
+    
+    private void SelfDestruct()
+    {
+        Destroy(gameObject);
+        CombatEvents.combatEnd -= CombatEnd;
     }
     
     public void TriggerDialogue()

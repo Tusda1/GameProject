@@ -72,7 +72,6 @@ public static class PlayerDataHolder
     
     public static void TakeDamage(int damage)
     {
-        Debug.Log("Took " + damage + " damage");
         playerData["Health"] -= damage;
     }
     

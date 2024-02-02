@@ -10,9 +10,6 @@ public class CombatManager : MonoBehaviour
     private bool _playerInput;
     private bool _waitingForUserInput;
     
-    [SerializeField] private AllAttackMoves allAttackMoves;
-    [SerializeField] private AllEquipment allEquipment;
-    
     [Header("Text Box")]
     [SerializeField] private TextMeshProUGUI combatTextBox;
     
@@ -26,7 +23,7 @@ public class CombatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ButtonScriptCombatMenu.allEquipment = allEquipment;
+        ButtonScriptCombatMenu.allEquipment = GameManager.Instance.allEquipment;
         //Make sure text box is empty on start
         combatTextBox.text = "";
         
@@ -72,7 +69,7 @@ public class CombatManager : MonoBehaviour
         {
             AttackMove attackMove = ScriptableObject.CreateInstance<AttackMove>();
             
-            foreach (var attack in allAttackMoves.allPlayerSkills)
+            foreach (var attack in GameManager.Instance.allAttackMoves.allPlayerSkills)
             {
                 if (attack.attackMoveName == _actionName)
                 {
@@ -80,7 +77,7 @@ public class CombatManager : MonoBehaviour
                 }
             }
 
-            foreach (var attack in allAttackMoves.allWeaponSkills)
+            foreach (var attack in GameManager.Instance.allAttackMoves.allWeaponSkills)
             {
                 if (attack.attackMoveName == _actionName)
                 {
@@ -114,7 +111,7 @@ public class CombatManager : MonoBehaviour
             if (random < EnemyDataHolder.enemyData.chanceToRun)
             {
                 yield return StartCoroutine(WriteTextAndWaitForUserInput("You ran away!"));
-                GameManager.Instance.EndCombat();
+                CombatEnd();
             }
             else
             {
@@ -129,7 +126,7 @@ public class CombatManager : MonoBehaviour
             {
                 yield return StartCoroutine(WriteTextAndWaitForUserInput("You're charisma convinced them!"));
                 Enemy.CurrentEnemy.TriggerDialogue();
-                GameManager.Instance.EndCombat();
+                CombatEnd();
             }
             else
             {
@@ -156,7 +153,7 @@ public class CombatManager : MonoBehaviour
         if (PlayerDataHolder.playerData["Health"] <= 0)
         {
             yield return StartCoroutine(WriteTextAndWaitForUserInput("You died..."));
-            GameManager.Instance.EndCombat();
+            OnLoss();
         }
         else
         {
@@ -176,8 +173,17 @@ public class CombatManager : MonoBehaviour
         
         yield return StartCoroutine(WriteTextAndWaitForUserInput("You earned " + EnemyDataHolder.expGiven + " xp!"));
         
-        //Gold and exp given here
-        GameManager.Instance.EndCombat();
+        CombatEnd();
+    }
+    
+    private void OnLoss()
+    {
+        CombatEnd();
+    }
+    
+    private void CombatEnd()
+    {
+        CombatEvents.combatEnd?.Invoke();
     }
     
     private IEnumerator WriteTextAndWaitForUserInput(string text)

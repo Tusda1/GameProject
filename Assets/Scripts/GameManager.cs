@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    
+    public AllEquipment allEquipment;
+    public AllAttackMoves allAttackMoves;
+    public AllEnemies allEnemies;
 
     private GameObject _dialogueUI;
 
@@ -26,6 +30,8 @@ public class GameManager : MonoBehaviour
         _dialogueUI = GameObject.FindGameObjectWithTag("DialogueUI");
         
         StartCoroutine(TurnOffDialogueScriptsAfterInitalized());
+        
+        CombatEvents.combatEnd += EndCombat;
     }
 
     public void InitateCombat()
@@ -34,7 +40,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
     }
 
-    public void EndCombat()
+    private void EndCombat()
     {
         SceneManager.UnloadSceneAsync("Combat");
         Player.frozen = false;

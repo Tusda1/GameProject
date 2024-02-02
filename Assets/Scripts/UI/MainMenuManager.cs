@@ -1,14 +1,12 @@
 using System.IO;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using File = UnityEngine.Windows.File;
 
 public class MainMenuManager : MonoBehaviour
 {
     private bool _saveFileExists;
     [SerializeField] private TextMeshProUGUI continueText;
-    [SerializeField] private AllAttackMoves allAttackMoves;
     
     // Start is called before the first frame update
     void Start()
@@ -47,6 +45,6 @@ public class MainMenuManager : MonoBehaviour
     
     private void StartGame()
     {
-        PlayerDataHolder.InitializePlayerData(allAttackMoves);
+        PlayerDataHolder.InitializePlayerData(GameManager.Instance.allAttackMoves);
     }
 }
