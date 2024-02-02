@@ -1,33 +1,35 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 public static class ButtonScriptCombatMenu
 {
-    public static void FillerMethod(){}
+    public static AllEquipment allEquipment;
+    
+    private static void FillerMethod(){}
     
     private static void AttackMoveButton()
     {
         MenuManouverer.Instance.ClearChoices();
         MenuManouverer.Instance.AddChoice("Back", BackToMain, "", false, ActionType.Menu);
         
-        Dictionary<string, object> attackMovesDict = SaveFileHandler.GetSaveFile("AttackMoves");
-        
-        if (attackMovesDict.Count > 0)
+        foreach (var attackMove in PlayerDataHolder.unlockedPlayerSkills)
         {
-            var firstKey = attackMovesDict.Keys.First();
-            attackMovesDict.Remove(firstKey);
+            MenuManouverer.Instance.AddChoice(attackMove, FillerMethod, attackMove, true, ActionType.Attack);
         }
+
         
-        foreach (var key in attackMovesDict.Keys)
+        foreach (var equipped in PlayerDataHolder.EquippedItems)
         {
-            if ((bool)attackMovesDict[key] == true)
+            foreach (var equipment in allEquipment.allEquipment)
             {
-                MenuManouverer.Instance.AddChoice(key, FillerMethod, key, true, ActionType.Attack);
+                if (equipped == equipment.name)
+                {
+                    foreach (var weaponSkill in equipment.weaponSkills)
+                    {
+                        MenuManouverer.Instance.AddChoice(weaponSkill.attackMoveName, FillerMethod, weaponSkill.attackMoveName, true, ActionType.Attack);
+                    }
+                }
             }
         }
+        
         
         MenuManouverer.Instance.LoadNewMenu();
     }

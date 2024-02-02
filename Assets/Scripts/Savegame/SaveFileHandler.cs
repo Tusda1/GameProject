@@ -111,6 +111,56 @@ public static class SaveFileHandler
         Debug.LogError($"DataType '{dataType}' not found.");
     }
     
+    //Method that updates every value under datatype. Takes in a dictionary with the new values
+    public static void UpdateDataType(string dataType, Dictionary<string, object> newValues)
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "SavegameCopy.json");
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("File does not exist at the specified path: " + filePath);
+            return;
+        }
+
+        string json = File.ReadAllText(filePath);
+        JObject jsonObject = JObject.Parse(json);
+
+        JArray saveArray = (JArray)jsonObject["SaveData"];
+
+        if (saveArray == null)
+        {
+            Debug.LogError("SaveData array not found.");
+            return;
+        }
+
+        foreach (JObject saveObj in saveArray)
+        {
+            string objDataType = (string)saveObj["DataType"];
+
+            if (objDataType == dataType)
+            {
+                foreach (var key in newValues.Keys)
+                {
+                    if (saveObj[key] != null)
+                    {
+                        saveObj[key] = JToken.FromObject(newValues[key]);
+                    }
+                    else
+                    {
+                        Debug.LogError($"Key '{key}' not found for DataType '{dataType}'.");
+                        return;
+                    }
+                }
+
+                // Write the updated JSON back to the file
+                File.WriteAllText(filePath, jsonObject.ToString());
+                return;
+            }
+        }
+
+        Debug.LogError($"DataType '{dataType}' not found.");
+    }
+    
     public static void IncrementSaveData(string dataType, string key, int incrementBy)
     {
         string filePath = Path.Combine(Application.persistentDataPath, "SavegameCopy.json");

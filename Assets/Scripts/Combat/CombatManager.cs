@@ -10,7 +10,8 @@ public class CombatManager : MonoBehaviour
     private bool _playerInput;
     private bool _waitingForUserInput;
     
-    [FormerlySerializedAs("allAttackMoves")] [SerializeField] private AllPlayerAttackMoves allPlayerAttackMoves;
+    [SerializeField] private AllAttackMoves allAttackMoves;
+    [SerializeField] private AllEquipment allEquipment;
     
     [Header("Text Box")]
     [SerializeField] private TextMeshProUGUI combatTextBox;
@@ -25,6 +26,7 @@ public class CombatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ButtonScriptCombatMenu.allEquipment = allEquipment;
         //Make sure text box is empty on start
         combatTextBox.text = "";
         
@@ -70,7 +72,15 @@ public class CombatManager : MonoBehaviour
         {
             AttackMove attackMove = ScriptableObject.CreateInstance<AttackMove>();
             
-            foreach (var attack in allPlayerAttackMoves.allAttackMoves)
+            foreach (var attack in allAttackMoves.allPlayerSkills)
+            {
+                if (attack.attackMoveName == _actionName)
+                {
+                    attackMove = attack;
+                }
+            }
+
+            foreach (var attack in allAttackMoves.allWeaponSkills)
             {
                 if (attack.attackMoveName == _actionName)
                 {

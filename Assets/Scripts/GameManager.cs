@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour
     {
         _dialogueUI = GameObject.FindGameObjectWithTag("DialogueUI");
         
-        PlayerDataHolder.SetPlayerData();
-        
         StartCoroutine(TurnOffDialogueScriptsAfterInitalized());
     }
 
@@ -40,8 +38,6 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.UnloadSceneAsync("Combat");
         Player.frozen = false;
-        PlayerDataHolder.GetGold(EnemyDataHolder.goldGiven);
-        PlayerDataHolder.GetExp(EnemyDataHolder.expGiven);
     }
 
     private IEnumerator TurnOffDialogueScriptsAfterInitalized()
