@@ -1,7 +1,4 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ButtonSelector : MonoBehaviour
 {
@@ -9,15 +6,15 @@ public class ButtonSelector : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.leftMenu += MoveToPreviousButton;
-        GameEvents.rightMenu += MoveToNextButton;
+        GameEvents.upMenu += MoveToPreviousButton;
+        GameEvents.downMenu += MoveToNextButton;
         GameEvents.interactPressed += SelectButton;
     }
     
     private void OnDisable()
     {
-        GameEvents.leftMenu -= MoveToPreviousButton;
-        GameEvents.rightMenu -= MoveToNextButton;
+        GameEvents.upMenu -= MoveToPreviousButton;
+        GameEvents.downMenu -= MoveToNextButton;
         GameEvents.interactPressed -= SelectButton;
     }
 

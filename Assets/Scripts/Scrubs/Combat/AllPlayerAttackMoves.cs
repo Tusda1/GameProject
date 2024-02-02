@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AllAttackMoves", menuName = "Player/AllAttackMoves")]
-public class AllAttackMoves : ScriptableObject
+public class AllPlayerAttackMoves : ScriptableObject
 {
-    public PlayerAttackMove[] allAttackMoves;
+    public AttackMove[] allAttackMoves;
 }

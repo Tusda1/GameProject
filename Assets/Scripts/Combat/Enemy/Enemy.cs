@@ -4,13 +4,13 @@ public class Enemy : MonoBehaviour
 {
     public static Enemy CurrentEnemy { get; private set; }
     
-    private EnemyScrubBase _enemyType;
+    private EnemyScrub _enemyType;
     private NpcSpeaker _npcSpeaker;
 
     private void Start()
     {
         _npcSpeaker = GetComponent<NpcSpeaker>();
-        _enemyType = _npcSpeaker.npc as EnemyScrubBase;
+        _enemyType = _npcSpeaker.npc as EnemyScrub;
         _npcSpeaker.enabled = false;
     }
 

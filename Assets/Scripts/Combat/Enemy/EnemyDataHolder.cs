@@ -4,12 +4,12 @@ using UnityEngine;
 
 public static class EnemyDataHolder
 {
-    public static EnemyScrubBase enemyData;
+    public static EnemyScrub enemyData;
     public static int currentEnemyHealth;
     public static int goldGiven;
     public static int expGiven;
     
-    public static void SetEnemyData(EnemyScrubBase enemy)
+    public static void SetEnemyData(EnemyScrub enemy)
     {
         enemyData = enemy;
         currentEnemyHealth = enemy.maxHealth;

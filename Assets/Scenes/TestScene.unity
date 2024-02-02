@@ -498,6 +498,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 454959300631766683, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2127893106946303115, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_Camera
       value: 
@@ -510,9 +514,21 @@ PrefabInstance:
       propertyPath: m_PlaneDistance
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3624616722970456903, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -8673756312040429146, guid: 96042c61d344dd34592aa938a1138ad5, type: 3}
+    - target: {fileID: 3646244421750339134, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 190
+      objectReference: {fileID: 0}
     - target: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_Name
       value: '[DIALOGUE UI]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815063778012175209, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4002602772519895636, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_LocalPosition.x
@@ -553,6 +569,42 @@ PrefabInstance:
     - target: {fileID: 4002602772519895636, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352006849288893699, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733677478015542488, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733677478015542488, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_fontSize
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733677478015542488, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733677478015542488, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733677478015542488, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170142111556180335, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170142111556180335, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286644864407613662, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

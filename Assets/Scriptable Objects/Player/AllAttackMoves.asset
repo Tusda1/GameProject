@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AllAttackMoves
   m_EditorClassIdentifier: 
   allAttackMoves:
-  - {fileID: 11400000, guid: be02017abdec2ec45a4014fd7c1f082f, type: 2}
+  - {fileID: 11400000, guid: 514c4fc5403dd8a4398e59766acb1daa, type: 2}
