@@ -95,7 +95,7 @@ public class CombatManager : MonoBehaviour
             }
             
             //Writes the attack narration to the combat text box
-            string attackNarration = attackMove.narration + " " + EnemyDataHolder.enemyData.characterName + " and dealt " + damage + " damage!";
+            string attackNarration = attackMove.narration + " " + EnemyDataHolder.enemyData.characterName + " and dealt " + damage + " <color=#ff0000>damage</color>!";
             yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
             combatTextBox.text = "";
         }
@@ -145,7 +145,7 @@ public class CombatManager : MonoBehaviour
         PlayerDataHolder.TakeDamage(damage);
         
         //Writes the attack narration to the combat text box
-        string attackNarration = EnemyDataHolder.enemyData.characterName + " " + enemyMoveData.narration + " and dealt " + damage + " damage!";
+        string attackNarration = EnemyDataHolder.enemyData.characterName + " " + enemyMoveData.narration + " and dealt " + damage + " <color=#ff0000>damage</color>!";
         yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
         combatTextBox.text = "";
 

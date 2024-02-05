@@ -12,6 +12,7 @@
       "MaxMana": 100,
       "Attack": 10,
       "Speed": 10,
+      "Defense": 10,
       "Magic": 10
     },
     {

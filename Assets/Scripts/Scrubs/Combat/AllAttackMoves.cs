@@ -5,5 +5,5 @@ using UnityEngine.Serialization;
 public class AllAttackMoves : ScriptableObject
 {
     public PlayerSkills[] allPlayerSkills;
-    public WeaponSkills[] allWeaponSkills;
+    public EquipmentSkill[] allWeaponSkills;
 }

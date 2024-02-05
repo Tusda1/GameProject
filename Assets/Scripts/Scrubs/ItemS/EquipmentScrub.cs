@@ -31,5 +31,5 @@ public class EquipmentScrub : ScriptableObject
     
     public StatModifier[] statModifiers;
     
-    public WeaponSkills[] weaponSkills;
+    public EquipmentSkill[] weaponSkills;
 }

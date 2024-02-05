@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerAnimation = GetComponent<PlayerAnimation>();
         _playerMovement = GetComponent<PlayerMovement>();
-        _inputController = GetComponent<Input_Controller>();
+        _inputController = GetComponent<Input_Controller>();    
         
         // Subscribe to events
         GameEvents.interactPressed += Interact;
