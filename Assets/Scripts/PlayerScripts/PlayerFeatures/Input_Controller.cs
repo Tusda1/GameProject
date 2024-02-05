@@ -3,7 +3,6 @@ using UnityEngine.Serialization;
 
 public class Input_Controller : MonoBehaviour
 {
-    public static Input_Controller Instance { get; private set; }
     private  Controls _input;
 
     [HideInInspector] public Vector2 moveDirection;
@@ -25,16 +24,6 @@ public class Input_Controller : MonoBehaviour
     }
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            // Rest of your initialization code...
-        }
-        else
-        {
-            Destroy(gameObject); // Ensures there's only one instance
-        }
-        
         _input = new Controls();
     }
     

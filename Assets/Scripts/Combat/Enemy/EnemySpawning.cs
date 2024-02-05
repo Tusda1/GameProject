@@ -7,7 +7,7 @@ public class EnemySpawning : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private float spawnChance = 0.2f;
     [SerializeField] private float spawnCheckInterval = 1f;
-    private float _timer;
+    private float _timer = 0.5f;
 
     void OnTriggerStay2D(Collider2D other)
     {

@@ -85,9 +85,8 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         _conversationRunning = false;
         CurrentSpeaker = null;
         DialogueBoxManager.Instance.HideDialogueContainers();
-        Player.frozen = false;
+        GameEvents.playerUnfrozen?.Invoke();
         GameManager.Instance.DialogueScriptsOff();
-        
         GameEvents.interactPressed -= ProgressDialogue;
     }
     
@@ -97,7 +96,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         GameManager.Instance.DialogueScriptsOn();
         DialogueBoxManager.Instance.ShowDialogueContainers();
         
-        Player.frozen = true;
+        GameEvents.playerFrozen?.Invoke();
         
         whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.characterName);
         dialogueDict = NpcDialogueHandler.GetDialogue(npc.characterName);
