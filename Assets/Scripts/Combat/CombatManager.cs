@@ -164,14 +164,14 @@ public class CombatManager : MonoBehaviour
     
     private IEnumerator OnWin()
     {
-        PlayerDataHolder.GetGold(EnemyDataHolder.goldGiven);
-        PlayerDataHolder.GetExp(EnemyDataHolder.expGiven);
-        
         yield return StartCoroutine(WriteTextAndWaitForUserInput("You Won!"));
         
         yield return StartCoroutine(WriteTextAndWaitForUserInput("You earned " + EnemyDataHolder.goldGiven +  " gold!"));
         
         yield return StartCoroutine(WriteTextAndWaitForUserInput("You earned " + EnemyDataHolder.expGiven + " xp!"));
+        
+        PlayerDataHolder.GetGold(EnemyDataHolder.goldGiven);
+        PlayerDataHolder.GetExp(EnemyDataHolder.expGiven);
         
         CombatEnd();
     }

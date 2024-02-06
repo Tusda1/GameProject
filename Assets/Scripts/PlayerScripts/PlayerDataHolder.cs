@@ -87,6 +87,7 @@ public static class PlayerDataHolder
         if (playerData["Exp"] >= playerData["ExpToNextLevel"])
         {
             LevelUp();
+            GameEvents.LevelUp?.Invoke();
         }
     }
     
