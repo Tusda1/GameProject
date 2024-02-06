@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -47,6 +45,6 @@ public class MainMenuManager : MonoBehaviour
     
     private void StartGame()
     {
-        
+        PlayerDataHolder.InitializePlayerData(GameManager.Instance.allAttackMoves);
     }
 }

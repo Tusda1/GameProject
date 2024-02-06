@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "New Item", fileName = "Item")]
-public abstract class ItemScrub : ScriptableObject
+[CreateAssetMenu(fileName = "Item", menuName = "Items/New Item")]
+public class ItemScrub : ScriptableObject
 {
     public string itemName;
     
@@ -18,5 +18,5 @@ public abstract class ItemScrub : ScriptableObject
     public bool doesItemHaveSpecialEffect;  
     public bool isConsumable;
     
-    public abstract void UseItem();
+    public void UseItem(){}
 }

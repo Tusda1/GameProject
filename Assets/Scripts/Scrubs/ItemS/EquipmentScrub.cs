@@ -9,7 +9,14 @@ public enum EquipmentGrade
     Zenith
 }
 
-[CreateAssetMenu(menuName = "New Equipment", fileName = "Equipment")]
+[System.Serializable]
+public class StatModifier
+{
+    public string statName;
+    public int modifier;
+}
+
+[CreateAssetMenu(fileName = "Equipment", menuName = "Items/Equipment/New Equipment")]
 public class EquipmentScrub : ScriptableObject
 {
     public string itemName;
@@ -19,10 +26,10 @@ public class EquipmentScrub : ScriptableObject
     
     public Sprite itemSprite;
     public int itemValue;
-    public bool doesHaveSpecialEffect;
     public bool isUnique;
     public EquipmentGrade grade;
-
-    public float attack;
-    public float defense;
+    
+    public StatModifier[] statModifiers;
+    
+    public EquipmentSkill[] weaponSkills;
 }

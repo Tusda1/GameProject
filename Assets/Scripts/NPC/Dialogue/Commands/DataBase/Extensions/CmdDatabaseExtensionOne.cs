@@ -127,7 +127,7 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
     //Used at the end of a dialogue to move on to the next dialogue.
     private static void NextDialogue()
     {
-        NpcDialogueHandler.ChangeWhichDialogue(NpcSpeaker.CurrentSpeaker.npc.npcName, 1);
+        NpcDialogueHandler.ChangeWhichDialogue(NpcSpeaker.CurrentSpeaker.npc.characterName, 1);
     }
 
     //Used if you want to move to a different scene.

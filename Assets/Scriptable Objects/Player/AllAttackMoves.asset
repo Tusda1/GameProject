@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 944031824d271eb43953aed9e7bfc4f8, type: 3}
   m_Name: AllAttackMoves
   m_EditorClassIdentifier: 
-  allAttackMoves:
-  - {fileID: 11400000, guid: be02017abdec2ec45a4014fd7c1f082f, type: 2}
+  allPlayerSkills:
+  - {fileID: 11400000, guid: 514c4fc5403dd8a4398e59766acb1daa, type: 2}
+  allWeaponSkills:
+  - {fileID: 11400000, guid: 9644eba7fbddb674e9e98d6c6faad2e9, type: 2}

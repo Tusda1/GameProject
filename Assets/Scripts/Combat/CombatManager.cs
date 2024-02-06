@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class CombatManager : MonoBehaviour
 {
@@ -11,13 +10,11 @@ public class CombatManager : MonoBehaviour
     private bool _playerInput;
     private bool _waitingForUserInput;
     
-    [SerializeField] private AllAttackMoves allAttackMoves;
-    
     [Header("Text Box")]
     [SerializeField] private TextMeshProUGUI combatTextBox;
     
     [Header("Sprites")]
-    [SerializeField] private Image enemyImage;
+    [SerializeField] private Animator enemyAnimator;
 
     [Header("Semi temporary frequently changed variables")]
     private ActionType _actionType;
@@ -26,16 +23,11 @@ public class CombatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ButtonScriptCombatMenu.allEquipment = GameManager.Instance.allEquipment;
         //Make sure text box is empty on start
         combatTextBox.text = "";
         
-        //Initialize the enemy data
-        enemyImage.sprite = EnemyDataHolder.enemyData.enemySprite;
-        float aspectRatio = enemyImage.sprite.rect.height / enemyImage.sprite.rect.width;
-        // Set the height to maintain aspect ratio while changing width
-        var sizeDelta = enemyImage.rectTransform.sizeDelta;
-        sizeDelta = new Vector2(sizeDelta.y / aspectRatio, sizeDelta.y);
-        enemyImage.rectTransform.sizeDelta = sizeDelta;
+        enemyAnimator.runtimeAnimatorController = EnemyDataHolder.enemyData.animatorController;
 
         //Subscribe to the playerTurnOver event
         CombatEvents.playerTurnEnd += PlayerTurnEnd;
@@ -75,9 +67,17 @@ public class CombatManager : MonoBehaviour
     {
         if (_actionType == ActionType.Attack)
         {
-            PlayerAttackMove attackMove = ScriptableObject.CreateInstance<PlayerAttackMove>();
+            AttackMove attackMove = ScriptableObject.CreateInstance<AttackMove>();
             
-            foreach (var attack in allAttackMoves.allAttackMoves)
+            foreach (var attack in GameManager.Instance.allAttackMoves.allPlayerSkills)
+            {
+                if (attack.attackMoveName == _actionName)
+                {
+                    attackMove = attack;
+                }
+            }
+
+            foreach (var attack in GameManager.Instance.allAttackMoves.allWeaponSkills)
             {
                 if (attack.attackMoveName == _actionName)
                 {
@@ -85,15 +85,18 @@ public class CombatManager : MonoBehaviour
                 }
             }
             
-            EnemyDataHolder.TakeDamage(attackMove.damage);
+            //Applies attack to enemy
+            int damage = Random.Range((int)attackMove.damageRange.x, (int)attackMove.damageRange.y + 1);
+            EnemyDataHolder.TakeDamage(damage);
 
             if (attackMove.statusEffect != StatusEffects.None)
             {
                 Debug.Log("status effect");
             }
             
-            yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, attackMove.narration + " and dealt " + attackMove.damage + " damage!"));
-            yield return StartCoroutine(WaitForUserInput());
+            //Writes the attack narration to the combat text box
+            string attackNarration = attackMove.narration + " " + EnemyDataHolder.enemyData.characterName + " and dealt " + damage + " <color=#ff0000>damage</color>!";
+            yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
             combatTextBox.text = "";
         }
         
@@ -104,57 +107,89 @@ public class CombatManager : MonoBehaviour
         
         else if (_actionType == ActionType.Run)
         {
-            int random = UnityEngine.Random.Range(0, 100);
+            int random = Random.Range(0, 100);
             if (random < EnemyDataHolder.enemyData.chanceToRun)
             {
-                yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You ran away!"));
-                yield return StartCoroutine(WaitForUserInput());
-                GameManager.Instance.EndCombat();
+                yield return StartCoroutine(WriteTextAndWaitForUserInput("You ran away!"));
+                CombatEnd();
             }
             else
             {
-                yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "Couldn't run away..."));
-                yield return StartCoroutine(WaitForUserInput());
+                yield return StartCoroutine(WriteTextAndWaitForUserInput("Couldn't run away..."));
             }
         }
         
         else if (_actionType == ActionType.Talk)
         {
-            int random = UnityEngine.Random.Range(0, 100);
+            int random = Random.Range(0, 100);
             if (random < EnemyDataHolder.enemyData.chanceToTalk)
             {
-                yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You're charisma convinced them!"));
-                yield return StartCoroutine(WaitForUserInput());
-                GameManager.Instance.EndCombat();
+                yield return StartCoroutine(WriteTextAndWaitForUserInput("You're charisma convinced them!"));
+                Enemy.CurrentEnemy.TriggerDialogue();
+                CombatEnd();
             }
             else
             {
-                yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "They're not convinced"));
-                yield return StartCoroutine(WaitForUserInput());
+                yield return StartCoroutine(WriteTextAndWaitForUserInput("They're not convinced"));
             }
         }
     }
     
     private IEnumerator EnemyTurn()
-    {
-        Tuple<string, int> enemyMoveData = EnemyDataHolder.enemyData.EnemyAttack();
-        string attackNarration = enemyMoveData.Item1 + " and dealt " + enemyMoveData.Item2 + " damage!";
+    {   
+        //Gets necessary information about enemy attack move
+        AttackMove enemyMoveData = EnemyDataHolder.enemyData.EnemyAttack();
+        int damage = Random.Range((int)enemyMoveData.damageRange.x, (int)enemyMoveData.damageRange.y + 1);
         
-        yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, attackNarration));
-        yield return StartCoroutine(WaitForUserInput());
+        //Applies attack to player
+        PlayerDataHolder.TakeDamage(damage);
+        
+        //Writes the attack narration to the combat text box
+        string attackNarration = EnemyDataHolder.enemyData.characterName + " " + enemyMoveData.narration + " and dealt " + damage + " <color=#ff0000>damage</color>!";
+        yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
         combatTextBox.text = "";
 
         //If player is alive go back to main menu, if player is dead be defeated
         if (PlayerDataHolder.playerData["Health"] <= 0)
         {
-            yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You died..."));
-            yield return StartCoroutine(WaitForUserInput());
-            GameManager.Instance.EndCombat();
+            yield return StartCoroutine(WriteTextAndWaitForUserInput("You died..."));
+            OnLoss();
         }
         else
         {
             ButtonScriptCombatMenu.BackToMain();
         }
+    }
+    #endregion
+    
+    private IEnumerator OnWin()
+    {
+        PlayerDataHolder.GetGold(EnemyDataHolder.goldGiven);
+        PlayerDataHolder.GetExp(EnemyDataHolder.expGiven);
+        
+        yield return StartCoroutine(WriteTextAndWaitForUserInput("You Won!"));
+        
+        yield return StartCoroutine(WriteTextAndWaitForUserInput("You earned " + EnemyDataHolder.goldGiven +  " gold!"));
+        
+        yield return StartCoroutine(WriteTextAndWaitForUserInput("You earned " + EnemyDataHolder.expGiven + " xp!"));
+        
+        CombatEnd();
+    }
+    
+    private void OnLoss()
+    {
+        CombatEnd();
+    }
+    
+    private void CombatEnd()
+    {
+        CombatEvents.combatEnd?.Invoke();
+    }
+    
+    private IEnumerator WriteTextAndWaitForUserInput(string text)
+    {
+        yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, text));
+        yield return StartCoroutine(WaitForUserInput());
     }
     
     private IEnumerator WaitForUserInput()
@@ -166,21 +201,5 @@ public class CombatManager : MonoBehaviour
         }
         _waitingForUserInput = false;
         _playerInput = false;
-    }
-    #endregion
-    
-    private IEnumerator OnWin()
-    {
-        yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You Won!"));
-        yield return StartCoroutine(WaitForUserInput());
-        
-        yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You earned " + EnemyDataHolder.goldGiven +  " amount of gold!"));
-        yield return StartCoroutine(WaitForUserInput());
-        
-        yield return StartCoroutine(GeneralWritingScript.WriteText(combatTextBox, "You earned " + EnemyDataHolder.expGiven + " amount of xp!"));
-        yield return StartCoroutine(WaitForUserInput());
-        
-        //Gold and exp given here
-        GameManager.Instance.EndCombat();
     }
 }

@@ -8,4 +8,6 @@ public static class GameEvents
     public static GameEvent upMenu;
     public static GameEvent leftMenu;
     public static GameEvent rightMenu;
+    public static GameEvent playerFrozen;
+    public static GameEvent playerUnfrozen;
 }

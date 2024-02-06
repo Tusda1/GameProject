@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,20 +27,25 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     private bool _conversationRunning;
     
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
     private TextArchitect _architect;
     
     private Coroutine _speakingCoroutine;
     
-    public NpcScrub npc;
-    [HideInInspector] 
+    public CharacterBase npc;
+    
     public TextMeshProUGUI text;
     // Start is called before the first frame update
     void Start()
     {
         NpcDialogueHandler.ResetDialogue();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = npc.sprite;
+        
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.sprite = npc.sprite;
+        }
+        
         text = DialogueBoxManager.Instance.dialogueBox;
         
         _architect = new TextArchitect(text);
@@ -61,13 +67,14 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         {
             userInput = true;
         }
-        else
-        {
-            if (waitingForResponse)
-                return;
-            if (_waitingForUserInput)
-                userInput = true;
-        }
+    }
+    
+    private void ProgressDialogue()
+    {
+        if (waitingForResponse)
+            return;
+        if (_waitingForUserInput)
+            userInput = true;
     }
 
     public void EndConversation()
@@ -78,23 +85,29 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         _conversationRunning = false;
         CurrentSpeaker = null;
         DialogueBoxManager.Instance.HideDialogueContainers();
-        Player.frozen = false;
+        GameEvents.playerUnfrozen?.Invoke();
         GameManager.Instance.DialogueScriptsOff();
+        GameEvents.interactPressed -= ProgressDialogue;
     }
     
     private void StartSpeaking()
     {
-        GameManager.Instance.DialogueScriptsOn();
-        Player.frozen = true;
-        whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.npcName);
-        dialogueDict = NpcDialogueHandler.GetDialogue(npc.npcName);
         CurrentSpeaker = this;
+        GameManager.Instance.DialogueScriptsOn();
+        DialogueBoxManager.Instance.ShowDialogueContainers();
+        
+        GameEvents.playerFrozen?.Invoke();
+        
+        whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.characterName);
+        dialogueDict = NpcDialogueHandler.GetDialogue(npc.characterName);
+        
         _conversationRunning = true;
-        DialogueBoxManager.Instance.ShowDialogueContainers(npc.portrait);
         if (_speakingCoroutine == null)
         {
             _speakingCoroutine = StartCoroutine(Speaking());
         }
+        
+        GameEvents.interactPressed += ProgressDialogue;
     }
 
     private IEnumerator Speaking()

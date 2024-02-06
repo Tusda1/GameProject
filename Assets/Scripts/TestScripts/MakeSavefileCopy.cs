@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MakeSavefileCopy : MonoBehaviour
@@ -9,5 +7,6 @@ public class MakeSavefileCopy : MonoBehaviour
     {
         SaveFileHandler.CopySaveDataToPersistentPath();
         Debug.Log(Application.persistentDataPath);
+        PlayerDataHolder.InitializePlayerData(GameManager.Instance.allAttackMoves);
     }
 }
