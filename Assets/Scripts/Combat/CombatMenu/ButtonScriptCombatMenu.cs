@@ -1,8 +1,6 @@
 
 public static class ButtonScriptCombatMenu
 {
-    public static AllEquipment allEquipment;
-    
     private static void FillerMethod(){}
     
     private static void AttackMoveButton()
@@ -18,7 +16,7 @@ public static class ButtonScriptCombatMenu
         
         foreach (var equipped in PlayerDataHolder.EquippedItems)
         {
-            foreach (var equipment in allEquipment.allEquipment)
+            foreach (var equipment in ScrubHolder.Instance.allEquipment.allEquipment)
             {
                 if (equipped == equipment.name)
                 {

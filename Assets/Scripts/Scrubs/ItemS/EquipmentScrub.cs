@@ -12,7 +12,7 @@ public enum EquipmentGrade
 [System.Serializable]
 public class StatModifier
 {
-    public string statName;
+    public StatEnum statName;
     public int modifier;
 }
 

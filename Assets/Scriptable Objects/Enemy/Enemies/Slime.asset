@@ -16,12 +16,23 @@ MonoBehaviour:
   sprite: {fileID: 0}
   portrait: {fileID: 0}
   animatorController: {fileID: 22100000, guid: fb02061a68d11cc439901fab05107475, type: 2}
-  maxHealth: 10
   isBoss: 0
   chanceToRun: 50
   chanceToTalk: 100
-  xpGiven: {x: 1, y: 3}
-  goldGiven: {x: 0, y: 1}
   level: 3
+  maxHealth: 10
+  enemyStats:
+  - statName: 0
+    modifier: 3
+  - statName: 1
+    modifier: 0
+  - statName: 2
+    modifier: 1
+  - statName: 3
+    modifier: 0
+  xpGiven: {x: 15, y: 15}
+  goldGiven: {x: 0, y: 1}
   attackMoves:
   - {fileID: 11400000, guid: 1629c69b8c83e8c4a89eef1d2e97b034, type: 2}
+  itemDrops: []
+  equipmentDrops: []

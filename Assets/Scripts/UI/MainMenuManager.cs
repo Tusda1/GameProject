@@ -45,6 +45,6 @@ public class MainMenuManager : MonoBehaviour
     
     private void StartGame()
     {
-        PlayerDataHolder.InitializePlayerData(GameManager.Instance.allAttackMoves);
+        PlayerDataHolder.InitializePlayerData(ScrubHolder.Instance.allAttackMoves);
     }
 }

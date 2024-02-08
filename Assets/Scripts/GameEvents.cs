@@ -10,5 +10,6 @@ public static class GameEvents
     public static GameEvent rightMenu;
     public static GameEvent playerFrozen;
     public static GameEvent playerUnfrozen;
-    public static GameEvent LevelUp;
+    public static GameEvent levelUp;
+    public static GameEvent endLevelUp;
 }

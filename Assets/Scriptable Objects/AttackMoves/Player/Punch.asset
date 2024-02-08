@@ -9,8 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eed14ca9577d10458a13732799b8c21, type: 3}
-  m_Name: AllEnemies
+  m_Script: {fileID: 11500000, guid: 79b7b2cf9fb481a40b8c26591bc33e74, type: 3}
+  m_Name: Punch
   m_EditorClassIdentifier: 
-  allEnemies:
-  - {fileID: 11400000, guid: d0158d580d22d38498170fa32cb33793, type: 2}
+  attackMoveName: Punch
+  attackModifier:
+    statName: 0
+    modifier: {x: 0.5, y: 0}
+  narration: You punched
+  statusEffect: 0
+  chanceToApplyStatusEffect: 0
+  levelUnlocked: 1

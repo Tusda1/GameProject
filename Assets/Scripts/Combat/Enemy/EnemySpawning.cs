@@ -27,6 +27,26 @@ public class EnemySpawning : MonoBehaviour
         GameObject newEnemy = Instantiate(enemyPrefab);
         
         NpcSpeaker enemySpeaker = newEnemy.GetComponent<NpcSpeaker>();
-        enemySpeaker.npc = GameManager.Instance.allEnemies.allEnemies[Random.Range(0, GameManager.Instance.allEnemies.allEnemies.Length)];
+        
+        //Create a combined enemy spawn chance that is the sum of all the spawn chances of the enemies in the region
+        float combinedSpawnChance = 0f;
+        foreach (var enemy in RegionScript.Instance.region.enemies)
+        {
+            combinedSpawnChance += enemy.spawnChance;
+        }
+        
+        //Select a random number between 0 and the combined spawn chance
+        float randomSpawnChance = Random.Range(0f, combinedSpawnChance);
+        
+        //Select the enemy to spawn based on the random number
+        foreach (var enemy in RegionScript.Instance.region.enemies)
+        {
+            if (randomSpawnChance < enemy.spawnChance)
+            {
+                enemySpeaker.npc = enemy.enemy;
+                break;
+            }
+            randomSpawnChance -= enemy.spawnChance;
+        }
     }
 }

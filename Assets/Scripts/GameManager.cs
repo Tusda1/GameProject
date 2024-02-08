@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,13 +6,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    
-    public AllEquipment allEquipment;
-    public AllAttackMoves allAttackMoves;
-    public AllEnemies allEnemies;
 
     private GameObject _dialogueUI;
 
+    [Header("Variables")] 
+    private bool _levelingUp;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -29,12 +29,21 @@ public class GameManager : MonoBehaviour
     {
         _dialogueUI = GameObject.FindGameObjectWithTag("DialogueUI");
         
-        StartCoroutine(TurnOffDialogueScriptsAfterInitalized());
+        StartCoroutine(TurnOffDialogueScriptsAfterInitialized());
         
         CombatEvents.combatEnd += EndCombat;
+        GameEvents.levelUp += LevelUp;
+        GameEvents.endLevelUp += EndLevelUp;
     }
 
-    public void InitateCombat()
+    private void OnDestroy()
+    {
+        CombatEvents.combatEnd -= EndCombat;
+        GameEvents.levelUp -= LevelUp;
+        GameEvents.endLevelUp -= EndLevelUp;
+    }
+
+    public void InitiateCombat()
     {
         GameEvents.playerFrozen?.Invoke();
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
@@ -43,10 +52,27 @@ public class GameManager : MonoBehaviour
     private void EndCombat()
     {
         SceneManager.UnloadSceneAsync("Combat");
+        if (!_levelingUp)
+        {
+            GameEvents.playerUnfrozen?.Invoke();
+        }
+    }
+    
+    private void LevelUp()
+    {
+        SceneManager.LoadSceneAsync("LevelUpScene", LoadSceneMode.Additive);
+        _levelingUp = true;
+        GameEvents.playerFrozen?.Invoke();
+    }
+
+    private void EndLevelUp()
+    {
+        SceneManager.UnloadSceneAsync("LevelUpScene");
+        _levelingUp = false;
         GameEvents.playerUnfrozen?.Invoke();
     }
 
-    private IEnumerator TurnOffDialogueScriptsAfterInitalized()
+    private IEnumerator TurnOffDialogueScriptsAfterInitialized()
     {
         yield return new WaitForSeconds(0.01f);
         _dialogueUI.SetActive(false);

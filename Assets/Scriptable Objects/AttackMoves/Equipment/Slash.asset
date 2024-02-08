@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Slash
   m_EditorClassIdentifier: 
   attackMoveName: Slash
-  damageRange: {x: 3, y: 5}
+  attackModifier:
+    statName: 0
+    modifier: {x: 0.8, y: 1.2}
   narration: You slashed
   statusEffect: 0
   chanceToApplyStatusEffect: 0

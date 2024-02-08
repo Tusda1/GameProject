@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Slimed
   m_EditorClassIdentifier: 
   attackMoveName: Sliming
-  damageRange: {x: 1, y: 2}
+  attackModifier:
+    statName: 0
+    modifier: {x: 0.8, y: 1.2}
   narration: slimed you
   statusEffect: 0
   chanceToApplyStatusEffect: 0

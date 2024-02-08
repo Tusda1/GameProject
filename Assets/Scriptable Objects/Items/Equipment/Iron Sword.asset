@@ -18,6 +18,8 @@ MonoBehaviour:
   itemValue: 1
   isUnique: 0
   grade: 0
-  statModifiers: []
+  statModifiers:
+  - statName: 0
+    modifier: 0
   weaponSkills:
   - {fileID: 11400000, guid: 9644eba7fbddb674e9e98d6c6faad2e9, type: 2}

@@ -15,6 +15,6 @@ public class CombatSceneTester : MonoBehaviour
 
     private void StartCombat()
     {
-        GameManager.Instance.InitateCombat();
+        GameManager.Instance.InitiateCombat();
     }
 }

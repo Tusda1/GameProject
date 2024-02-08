@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     {
         CurrentEnemy = this;
         EnemyDataHolder.SetEnemyData(_enemyType);
-        GameManager.Instance.InitateCombat();
+        GameManager.Instance.InitiateCombat();
     }
 
     private void CombatEnd()

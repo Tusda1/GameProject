@@ -5,5 +5,4 @@ using UnityEngine.Serialization;
 public class AllAttackMoves : ScriptableObject
 {
     public PlayerSkills[] allPlayerSkills;
-    public EquipmentSkill[] allWeaponSkills;
 }

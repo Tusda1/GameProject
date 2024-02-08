@@ -20,5 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SituationScenes/Combat.unity
     guid: f9cfd0c086fe73e49b477c14304e1716
+  - enabled: 1
+    path: Assets/Scenes/UI/LevelUpScene.unity
+    guid: 50f8adbae53976b48871e1794e75e5e8
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

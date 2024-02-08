@@ -7,6 +7,6 @@ public class MakeSavefileCopy : MonoBehaviour
     {
         SaveFileHandler.CopySaveDataToPersistentPath();
         Debug.Log(Application.persistentDataPath);
-        PlayerDataHolder.InitializePlayerData(GameManager.Instance.allAttackMoves);
+        PlayerDataHolder.InitializePlayerData(ScrubHolder.Instance.allAttackMoves);
     }
 }

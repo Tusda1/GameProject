@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -23,7 +24,6 @@ public class CombatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ButtonScriptCombatMenu.allEquipment = GameManager.Instance.allEquipment;
         //Make sure text box is empty on start
         combatTextBox.text = "";
         
@@ -67,9 +67,10 @@ public class CombatManager : MonoBehaviour
     {
         if (_actionType == ActionType.Attack)
         {
+            //Iterates through all the players innate attack moves and finds the attack move that matches the action name
             AttackMove attackMove = ScriptableObject.CreateInstance<AttackMove>();
-            
-            foreach (var attack in GameManager.Instance.allAttackMoves.allPlayerSkills)
+
+            foreach (var attack in ScrubHolder.Instance.allAttackMoves.allPlayerSkills)
             {
                 if (attack.attackMoveName == _actionName)
                 {
@@ -77,16 +78,27 @@ public class CombatManager : MonoBehaviour
                 }
             }
 
-            foreach (var attack in GameManager.Instance.allAttackMoves.allWeaponSkills)
+            //Iterates through all the player's equipped items and finds the attack move that matches the action name
+            foreach (var equipped in PlayerDataHolder.EquippedItems)
             {
-                if (attack.attackMoveName == _actionName)
+                foreach (var equipment in ScrubHolder.Instance.allEquipment.allEquipment)
                 {
-                    attackMove = attack;
+                    if (equipped == equipment.name)
+                    {
+                        foreach (var weaponSkill in equipment.weaponSkills)
+                        {
+                            if (weaponSkill.attackMoveName == _actionName)
+                            {
+                                attackMove = weaponSkill;
+                            }
+                        }
+                    }
                 }
             }
             
             //Applies attack to enemy
-            int damage = Random.Range((int)attackMove.damageRange.x, (int)attackMove.damageRange.y + 1);
+            float modifier = Random.Range(attackMove.attackModifier.modifier.x, attackMove.attackModifier.modifier.y);
+            int damage = (int)Math.Round(modifier * PlayerDataHolder.playerData[attackMove.attackModifier.statName.ToString()]);
             EnemyDataHolder.TakeDamage(damage);
 
             if (attackMove.statusEffect != StatusEffects.None)
@@ -139,7 +151,8 @@ public class CombatManager : MonoBehaviour
     {   
         //Gets necessary information about enemy attack move
         AttackMove enemyMoveData = EnemyDataHolder.enemyData.EnemyAttack();
-        int damage = Random.Range((int)enemyMoveData.damageRange.x, (int)enemyMoveData.damageRange.y + 1);
+        float modifier = Random.Range(enemyMoveData.attackModifier.modifier.x, enemyMoveData.attackModifier.modifier.y);
+        int damage = (int)Math.Round(modifier * EnemyDataHolder.enemyStats[enemyMoveData.attackModifier.statName]);
         
         //Applies attack to player
         PlayerDataHolder.TakeDamage(damage);
@@ -183,6 +196,7 @@ public class CombatManager : MonoBehaviour
     
     private void CombatEnd()
     {
+        EnemyDataHolder.ClearEnemyData();
         CombatEvents.combatEnd?.Invoke();
     }
     

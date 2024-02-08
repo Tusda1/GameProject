@@ -87,7 +87,6 @@ public static class PlayerDataHolder
         if (playerData["Exp"] >= playerData["ExpToNextLevel"])
         {
             LevelUp();
-            GameEvents.LevelUp?.Invoke();
         }
     }
     
@@ -96,6 +95,12 @@ public static class PlayerDataHolder
         playerData["Level"] += 1;
         playerData["Exp"] -= playerData["ExpToNextLevel"];
         playerData["ExpToNextLevel"] = Mathf.RoundToInt(playerData["ExpToNextLevel"] * _expToNextLevelMultiplier);
+        GameEvents.levelUp?.Invoke();
+    }
+    
+    public static void IncreaseStat(string statName, int amount)
+    {
+        playerData[statName] += amount;
     }
     
     public static void WriteToSaveFile()
