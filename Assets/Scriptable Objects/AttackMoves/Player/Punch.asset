@@ -13,10 +13,17 @@ MonoBehaviour:
   m_Name: Punch
   m_EditorClassIdentifier: 
   attackMoveName: Punch
+  narration: You punched
   attackModifier:
     statName: 0
     modifier: {x: 0.5, y: 0}
-  narration: You punched
+  manaCost: 0
+  critChance: 0
+  critMultiplier: 0
+  accuracy: 0
+  accuracyScalesWithSpeed: 1
+  alwaysHits: 0
   statusEffect: 0
   chanceToApplyStatusEffect: 0
+  statusEffectDuration: 0
   levelUnlocked: 1

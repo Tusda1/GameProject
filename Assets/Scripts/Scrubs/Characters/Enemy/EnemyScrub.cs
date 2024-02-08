@@ -42,7 +42,7 @@ public class EnemyScrub : CharacterBase
     
     public AttackMove EnemyAttack()
     {
-        AttackMove chosenAttackMove = attackMoves[UnityEngine.Random.Range(0, attackMoves.Length)];
+        AttackMove chosenAttackMove = attackMoves[Random.Range(0, attackMoves.Length)];
         return chosenAttackMove;
     }
 }

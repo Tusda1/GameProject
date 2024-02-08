@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: Slimed
   m_EditorClassIdentifier: 
   attackMoveName: Sliming
+  narration: slimed you
   attackModifier:
     statName: 0
     modifier: {x: 0.8, y: 1.2}
-  narration: slimed you
+  manaCost: 0
+  critChance: 0
+  critMultiplier: 0
+  accuracy: 10
+  accuracyScalesWithSpeed: 0
+  alwaysHits: 0
   statusEffect: 0
   chanceToApplyStatusEffect: 0
+  statusEffectDuration: 0

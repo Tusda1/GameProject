@@ -57,10 +57,18 @@ public class CombatManager : MonoBehaviour
     #region Turns Running
     private IEnumerator RunTurns()
     {
-        yield return StartCoroutine(PlayerTurn());
-
-
-        StartCoroutine(EnemyDataHolder.currentEnemyHealth > 0 ? EnemyTurn() : OnWin());
+        if (PlayerDataHolder.playerData["Speed"] > EnemyDataHolder.enemyStats[StatEnum.Speed])
+        {
+            yield return StartCoroutine(PlayerTurn());
+            yield return StartCoroutine(EnemyTurn());
+        }
+        else
+        {
+            yield return StartCoroutine(EnemyTurn());
+            yield return StartCoroutine(PlayerTurn());
+        }
+        
+        ButtonScriptCombatMenu.BackToMain();
     }
     
     private IEnumerator PlayerTurn()
@@ -96,19 +104,32 @@ public class CombatManager : MonoBehaviour
                 }
             }
             
+            //Calculate if attack hits
+            bool attackHit = DidAttackHit(attackMove.accuracy, PlayerDataHolder.playerData["Speed"], EnemyDataHolder.enemyStats[StatEnum.Speed], attackMove.accuracyScalesWithSpeed);
+            
             //Applies attack to enemy
-            float modifier = Random.Range(attackMove.attackModifier.modifier.x, attackMove.attackModifier.modifier.y);
-            int damage = (int)Math.Round(modifier * PlayerDataHolder.playerData[attackMove.attackModifier.statName.ToString()]);
-            EnemyDataHolder.TakeDamage(damage);
-
-            if (attackMove.statusEffect != StatusEffects.None)
+            if (attackHit)
             {
-                Debug.Log("status effect");
+                float modifier = Random.Range(attackMove.attackModifier.modifier.x, attackMove.attackModifier.modifier.y);
+                int damage = (int)Math.Round(modifier * PlayerDataHolder.playerData[attackMove.attackModifier.statName.ToString()]);
+                EnemyDataHolder.TakeDamage(damage);
+
+
+                if (attackMove.statusEffect != StatusEffects.None)
+                {
+                    Debug.Log("status effect");
+                }
+
+                //Writes the attack narration to the combat text box
+                string attackNarration = attackMove.narration + " " + EnemyDataHolder.enemyData.characterName + " and dealt " + damage + " <color=#ff0000>damage</color>!";
+                yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
+                
+            }
+            else
+            {
+                yield return StartCoroutine(WriteTextAndWaitForUserInput("Attack missed!"));
             }
             
-            //Writes the attack narration to the combat text box
-            string attackNarration = attackMove.narration + " " + EnemyDataHolder.enemyData.characterName + " and dealt " + damage + " <color=#ff0000>damage</color>!";
-            yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
             combatTextBox.text = "";
         }
         
@@ -145,21 +166,40 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(WriteTextAndWaitForUserInput("They're not convinced"));
             }
         }
+
+        if (EnemyDataHolder.currentEnemyHealth <= 0)
+        {
+            yield return StartCoroutine(OnWin());
+        }
     }
     
     private IEnumerator EnemyTurn()
     {   
         //Gets necessary information about enemy attack move
         AttackMove enemyMoveData = EnemyDataHolder.enemyData.EnemyAttack();
-        float modifier = Random.Range(enemyMoveData.attackModifier.modifier.x, enemyMoveData.attackModifier.modifier.y);
-        int damage = (int)Math.Round(modifier * EnemyDataHolder.enemyStats[enemyMoveData.attackModifier.statName]);
         
-        //Applies attack to player
-        PlayerDataHolder.TakeDamage(damage);
+        //Calculate if attack hits
+        bool attackHit = DidAttackHit(enemyMoveData.accuracy, EnemyDataHolder.enemyStats[StatEnum.Speed], PlayerDataHolder.playerData["Speed"], enemyMoveData.accuracyScalesWithSpeed);
+
+        //Commence attack if attack hit
+        if (attackHit)
+        {
+            //Calculate damage
+            float modifier = Random.Range(enemyMoveData.attackModifier.modifier.x, enemyMoveData.attackModifier.modifier.y);
+            int damage = (int)Math.Round(modifier * EnemyDataHolder.enemyStats[enemyMoveData.attackModifier.statName]);
+
+            //Applies attack to player
+            PlayerDataHolder.TakeDamage(damage);
+
+            //Writes the attack narration to the combat text box
+            string attackNarration = EnemyDataHolder.enemyData.characterName + " " + enemyMoveData.narration + " and dealt " + damage + " <color=#ff0000>damage</color>!";
+            yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
+        }
+        else
+        {
+            yield return StartCoroutine(WriteTextAndWaitForUserInput("Enemy missed!"));
+        }
         
-        //Writes the attack narration to the combat text box
-        string attackNarration = EnemyDataHolder.enemyData.characterName + " " + enemyMoveData.narration + " and dealt " + damage + " <color=#ff0000>damage</color>!";
-        yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
         combatTextBox.text = "";
 
         //If player is alive go back to main menu, if player is dead be defeated
@@ -168,12 +208,24 @@ public class CombatManager : MonoBehaviour
             yield return StartCoroutine(WriteTextAndWaitForUserInput("You died..."));
             OnLoss();
         }
-        else
-        {
-            ButtonScriptCombatMenu.BackToMain();
-        }
     }
     #endregion
+    
+    private bool DidAttackHit(int accuracy, int speed, int hostileSpeed, bool accuracyScalesWithSpeed)
+    {
+        int hostileSpeedRandom = Random.Range(0, hostileSpeed);
+
+        if (accuracyScalesWithSpeed)
+        {
+            int speedRandom = Random.Range(0, speed);
+            return speedRandom > hostileSpeedRandom;
+        }
+        else
+        {
+            int accuracyRandom = Random.Range(0, accuracy);
+            return accuracyRandom > hostileSpeedRandom;
+        }
+    }
     
     private IEnumerator OnWin()
     {
@@ -196,6 +248,7 @@ public class CombatManager : MonoBehaviour
     
     private void CombatEnd()
     {
+        StopAllCoroutines();
         EnemyDataHolder.ClearEnemyData();
         CombatEvents.combatEnd?.Invoke();
     }

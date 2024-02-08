@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: Slash
   m_EditorClassIdentifier: 
   attackMoveName: Slash
+  narration: You slashed
   attackModifier:
     statName: 0
     modifier: {x: 0.8, y: 1.2}
-  narration: You slashed
+  manaCost: 0
+  critChance: 0
+  critMultiplier: 0
+  accuracy: 0
+  accuracyScalesWithSpeed: 1
+  alwaysHits: 0
   statusEffect: 0
   chanceToApplyStatusEffect: 0
+  statusEffectDuration: 0

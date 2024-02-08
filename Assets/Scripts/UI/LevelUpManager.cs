@@ -13,6 +13,7 @@ public class LevelUpManager : MonoBehaviour
     private int _currentButtonIndex; // Index of the currently selected button
     
     private Dictionary<StatEnum, int> _statDictionary = new Dictionary<StatEnum, int>();
+    private int _totalStatPoints = 5;
     private int _remainingStatPoints = 5;
     [SerializeField] private TextMeshProUGUI remainingPointsText;
 
@@ -21,21 +22,16 @@ public class LevelUpManager : MonoBehaviour
         _statDictionary.Add(StatEnum.Attack, 0);
         _statDictionary.Add(StatEnum.Magic, 0);
         _statDictionary.Add(StatEnum.Speed, 0);
-        _statDictionary.Add(StatEnum.Defense, 0);
         
         HighlightButton();
         
-        //Set all textvalues to their respective values
-        for (int i = 0; i < buttons.Length; i++)
+        //Set all text values to their respective values
+        foreach (var element in _statDictionary)
         {
-            buttons[i].GetComponentInChildren<TextMeshProUGUI>().text = _statDictionary[(StatEnum)i].ToString();
-            if (i == 3)
-            {
-                break;
-            }
+            buttons[(int) element.Key].GetComponentInChildren<TextMeshProUGUI>().text = element.Value.ToString();
         }
         
-        remainingPointsText.text = _remainingStatPoints.ToString();
+        remainingPointsText.text = _totalStatPoints.ToString();
     }
 
     private void OnEnable()
@@ -111,7 +107,7 @@ public class LevelUpManager : MonoBehaviour
             _statDictionary[stat] = 0;
             buttons[(int) stat].GetComponentInChildren<TextMeshProUGUI>().text = "0";
         }
-        _remainingStatPoints = 10;
+        _remainingStatPoints = _totalStatPoints;
         remainingPointsText.text = _remainingStatPoints.ToString();
     }
     

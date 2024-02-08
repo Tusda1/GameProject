@@ -12,8 +12,21 @@ public class AttackModifier
 public class AttackMove : ScriptableObject
 {
     public string attackMoveName;
-    public AttackModifier attackModifier;
     public string narration;
+    
+    [Header("Attack stats")]
+    public AttackModifier attackModifier;
+    public int manaCost;
+    public int critChance;
+    public int critMultiplier;
+    
+    [Header("Accuracy")]
+    public int accuracy;
+    public bool accuracyScalesWithSpeed;
+    public bool alwaysHits;
+    
+    [Header("Status Effect")]
     public StatusEffects statusEffect;
     public float chanceToApplyStatusEffect;
+    public int statusEffectDuration;
 }

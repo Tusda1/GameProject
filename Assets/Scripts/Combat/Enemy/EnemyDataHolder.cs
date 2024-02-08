@@ -33,6 +33,7 @@ public static class EnemyDataHolder
     
     public static void TakeDamage(int damage)
     {
-        currentEnemyHealth -= damage;
+        int trueDamage = damage * (1 - (enemyStats[StatEnum.Defense] / 100));
+        currentEnemyHealth -= trueDamage;
     }
 }
