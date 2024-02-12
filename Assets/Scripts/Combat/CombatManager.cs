@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class CombatManager : MonoBehaviour
@@ -112,14 +111,15 @@ public class CombatManager : MonoBehaviour
             {
                 float modifier = Random.Range(attackMove.attackModifier.modifier.x, attackMove.attackModifier.modifier.y);
                 int damage = (int)Math.Round(modifier * PlayerDataHolder.playerData[attackMove.attackModifier.statName.ToString()]);
-                EnemyDataHolder.TakeDamage(damage);
-
 
                 if (attackMove.statusEffect != StatusEffects.None)
                 {
                     Debug.Log("status effect");
                 }
 
+                EnemyDataHolder.TakeDamage(damage);
+                CombatEvents.updateHealthUI?.Invoke();
+                
                 //Writes the attack narration to the combat text box
                 string attackNarration = attackMove.narration + " " + EnemyDataHolder.enemyData.characterName + " and dealt " + damage + " <color=#ff0000>damage</color>!";
                 yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
@@ -190,7 +190,8 @@ public class CombatManager : MonoBehaviour
 
             //Applies attack to player
             PlayerDataHolder.TakeDamage(damage);
-
+            CombatEvents.updateHealthUI?.Invoke();
+            
             //Writes the attack narration to the combat text box
             string attackNarration = EnemyDataHolder.enemyData.characterName + " " + enemyMoveData.narration + " and dealt " + damage + " <color=#ff0000>damage</color>!";
             yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
@@ -213,18 +214,33 @@ public class CombatManager : MonoBehaviour
     
     private bool DidAttackHit(int accuracy, int speed, int hostileSpeed, bool accuracyScalesWithSpeed)
     {
-        int hostileSpeedRandom = Random.Range(0, hostileSpeed);
+        int attackAccuracy;
 
         if (accuracyScalesWithSpeed)
         {
-            int speedRandom = Random.Range(0, speed);
-            return speedRandom > hostileSpeedRandom;
+            attackAccuracy = speed;
         }
         else
         {
-            int accuracyRandom = Random.Range(0, accuracy);
-            return accuracyRandom > hostileSpeedRandom;
+            attackAccuracy = accuracy;
         }
+        
+        int hostileSpeedRandom = Random.Range(0, hostileSpeed);
+        
+        //Rolls for attackAccuracy 4 times to give advantage to attacker
+        int accuracyRandom = 0;
+        int attackAccuracyRolls = 10;
+        
+        for (int i = 0; i < attackAccuracyRolls; i++)
+        {
+            int tempAccuracyRandom = Random.Range(0, attackAccuracy);
+            if (tempAccuracyRandom > accuracyRandom)
+            {
+                accuracyRandom = tempAccuracyRandom;
+            }
+        }
+        
+        return accuracyRandom > hostileSpeedRandom;
     }
     
     private IEnumerator OnWin()
