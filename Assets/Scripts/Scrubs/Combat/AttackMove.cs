@@ -8,6 +8,14 @@ public class AttackModifier
     public Vector2 modifier;
 }
 
+[System.Serializable]
+public class StatusEffect
+{
+    public StatusEffects statusEffect;
+    public int duration;
+    public float chanceToApply;
+}
+
 [CreateAssetMenu(fileName = "AttackMove", menuName = "Combat/AttackMove")]
 public class AttackMove : ScriptableObject
 {
@@ -26,7 +34,5 @@ public class AttackMove : ScriptableObject
     public bool alwaysHits;
     
     [Header("Status Effect")]
-    public StatusEffects statusEffect;
-    public float chanceToApplyStatusEffect;
-    public int statusEffectDuration;
+    public StatusEffect[] statusEffects;
 }

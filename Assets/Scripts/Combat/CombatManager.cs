@@ -112,10 +112,7 @@ public class CombatManager : MonoBehaviour
                 float modifier = Random.Range(attackMove.attackModifier.modifier.x, attackMove.attackModifier.modifier.y);
                 int damage = (int)Math.Round(modifier * PlayerDataHolder.playerData[attackMove.attackModifier.statName.ToString()]);
 
-                if (attackMove.statusEffect != StatusEffects.None)
-                {
-                    Debug.Log("status effect");
-                }
+                // TODO: Status effects
 
                 EnemyDataHolder.TakeDamage(damage);
                 CombatEvents.updateHealthUI?.Invoke();
@@ -241,6 +238,18 @@ public class CombatManager : MonoBehaviour
         }
         
         return accuracyRandom > hostileSpeedRandom;
+    }
+
+    private void ApplyStatusEffects(StatusEffect[] statusEffects)
+    {
+        foreach (var statusEffect in statusEffects)
+        {
+            int random = Random.Range(0, 100);
+            if (random < statusEffect.chanceToApply)
+            {
+                
+            }
+        }
     }
     
     private IEnumerator OnWin()

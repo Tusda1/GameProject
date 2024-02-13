@@ -1,6 +1,5 @@
 public enum StatusEffects
 {
-    None,
     Poison,
     Freeze,
     Paralyze,
