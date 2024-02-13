@@ -35,5 +35,9 @@ public static class EnemyDataHolder
     {
         int trueDamage = damage * (1 - (enemyStats[StatEnum.Defense] / 100));
         currentEnemyHealth -= trueDamage;
+        if (currentEnemyHealth < 0)
+        {
+            currentEnemyHealth = 0;
+        }
     }
 }

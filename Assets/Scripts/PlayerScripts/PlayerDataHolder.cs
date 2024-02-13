@@ -74,6 +74,10 @@ public static class PlayerDataHolder
     {
         int trueDamage = damage * (1 - (playerData["Defense"] / 100));
         playerData["Health"] -= trueDamage;
+        if (playerData["Health"] < 0)
+        {
+            playerData["Health"] = 0;
+        }
     }
     
     public static void GetGold(int amount)
