@@ -8,14 +8,6 @@ public class AttackModifier
     public Vector2 modifier;
 }
 
-[System.Serializable]
-public class StatusEffect
-{
-    public StatusEffects statusEffect;
-    public int duration;
-    public float chanceToApply;
-}
-
 [CreateAssetMenu(fileName = "AttackMove", menuName = "Combat/AttackMove")]
 public class AttackMove : ScriptableObject
 {

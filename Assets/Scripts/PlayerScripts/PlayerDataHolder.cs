@@ -9,6 +9,8 @@ public static class PlayerDataHolder
     public static Dictionary<string, int> playerData = new Dictionary<string, int>();
     public static List<string> unlockedPlayerSkills;
     public static List<string> EquippedItems;
+    public static List<string> InventoryItems;
+    public static Dictionary<StatusEffectScrub, int> playerStatusEffects = new Dictionary<StatusEffectScrub, int>();
     private const float _expToNextLevelMultiplier = 1.5f;
 
     public static void InitializePlayerData(AllAttackMoves allAttackMoves)
