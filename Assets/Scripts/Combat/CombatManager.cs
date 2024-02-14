@@ -60,6 +60,11 @@ public class CombatManager : MonoBehaviour
     #region Turns Running
     private IEnumerator RunTurns()
     {
+        yield return StartCoroutine(TriggerStatusEffect(result => { _playerCanMove = result; }, PlayerDataHolder.playerStatusEffects, PlayerDataHolder.playerData["MaxHealth"], PlayerDataHolder.TakeDamage));
+        yield return StartCoroutine(TriggerStatusEffect(result => { _enemyCanMove = result; }, EnemyDataHolder.enemyStatusEffects, EnemyDataHolder.enemyData.maxHealth, EnemyDataHolder.TakeDamage));
+        PlayerDataHolder.playerStatusEffects = DecreaseStatusEffectDuration(PlayerDataHolder.playerStatusEffects);
+        EnemyDataHolder.enemyStatusEffects = DecreaseStatusEffectDuration(EnemyDataHolder.enemyStatusEffects);
+        
         if (PlayerDataHolder.playerData["Speed"] > EnemyDataHolder.enemyStats[StatEnum.Speed])
         {
             yield return StartCoroutine(PlayerTurn());
@@ -76,6 +81,12 @@ public class CombatManager : MonoBehaviour
     
     private IEnumerator PlayerTurn()
     {
+        if (!_playerCanMove)
+        {
+            yield return StartCoroutine(WriteTextAndWaitForUserInput("You're stunned!"));
+            yield break;
+        }
+        
         if (_actionType == ActionType.Attack)
         {
             //Iterates through all the players innate attack moves and finds the attack move that matches the action name
@@ -186,6 +197,12 @@ public class CombatManager : MonoBehaviour
     
     private IEnumerator EnemyTurn()
     {   
+        if (!_enemyCanMove)
+        {
+            yield return StartCoroutine(WriteTextAndWaitForUserInput("Enemy is stunned!"));
+            yield break;
+        }
+        
         //Gets necessary information about enemy attack move
         AttackMove enemyMoveData = EnemyDataHolder.enemyData.EnemyAttack();
         
@@ -290,36 +307,34 @@ public class CombatManager : MonoBehaviour
         return appliedStatusEffects;
     }
     
-    private void TriggerStatusEffect(Dictionary<StatusEffectScrub, int> statusEffects, bool targetIsPlayer)
+    private IEnumerator TriggerStatusEffect(Action<bool> onComplete, Dictionary<StatusEffectScrub, int> statusEffects, int targetMaxHealth, Action<int> takeDamage)
     {
         bool canMove = true;
         
         foreach (var statusEffect in statusEffects)
         {
+            //If the status effect is a stun effect, apply the stun
             int random = Random.Range(0, 100);
             if (random < statusEffect.Key.chanceToStun)
             {
                 canMove = false;
             }
             
-            if (targetIsPlayer)
-            {
-                _playerCanMove = canMove;
-                PlayerDataHolder.TakeDamage(statusEffect.Key.damage 
-                                            + (statusEffect.Key.maxHealthPercentDamage/100) 
-                                            * PlayerDataHolder.playerData["MaxHealth"]);
-            }
-            else
-            {
-                _enemyCanMove = canMove;
-                EnemyDataHolder.TakeDamage(statusEffect.Key.damage 
-                                           + (statusEffect.Key.maxHealthPercentDamage/100) 
-                                           * EnemyDataHolder.enemyData.maxHealth);
-            }
+            //If the status effect is a damage over time effect, apply the damage
+            int damage = statusEffect.Key.damage 
+                         + (statusEffect.Key.maxHealthPercentDamage/100) 
+                         * targetMaxHealth;
+            
+            takeDamage(damage);
+            
+            //Narrate the status effect
+            yield return StartCoroutine(WriteTextAndWaitForUserInput(statusEffect.Key.statusEffectName.ToString() + " dealt " + damage + " damage!"));
         }
+            
+        onComplete?.Invoke(canMove);
     }
     
-    private void DecreaseStatusEffectDuration(Dictionary<StatusEffectScrub, int> statusEffects)
+    private Dictionary<StatusEffectScrub, int> DecreaseStatusEffectDuration(Dictionary<StatusEffectScrub, int> statusEffects)
     {
         List<StatusEffectScrub> statusEffectToRemove = new List<StatusEffectScrub>();
         
@@ -339,6 +354,8 @@ public class CombatManager : MonoBehaviour
         {
             statusEffects.Remove(statusEffect);
         }
+        
+        return statusEffects;
     }
     
     private IEnumerator OnWin()
