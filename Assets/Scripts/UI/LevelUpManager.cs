@@ -36,15 +36,15 @@ public class LevelUpManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.up += MoveToPreviousButton;
-        GameEvents.down += MoveToNextButton;
+        GameEvents.upMenu += MoveToPreviousButton;
+        GameEvents.downMenu += MoveToNextButton;
         GameEvents.interactPressed += SelectButton;
     }
     
     private void OnDisable()
     {
-        GameEvents.up -= MoveToPreviousButton;
-        GameEvents.down -= MoveToNextButton;
+        GameEvents.upMenu -= MoveToPreviousButton;
+        GameEvents.downMenu -= MoveToNextButton;
         GameEvents.interactPressed -= SelectButton;
     }
 

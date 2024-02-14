@@ -18,12 +18,9 @@ MonoBehaviour:
     statName: 0
     modifier: {x: 0.8, y: 1.2}
   manaCost: 0
-  critChance: 0
-  critMultiplier: 0
+  critChance: 1
+  critMultiplier: 2
   accuracy: 0
   accuracyScalesWithSpeed: 1
   alwaysHits: 0
-  statusEffects:
-  - statusEffectScrub: {fileID: 0}
-    duration: 3
-    chanceToApply: 100
+  statusEffects: []

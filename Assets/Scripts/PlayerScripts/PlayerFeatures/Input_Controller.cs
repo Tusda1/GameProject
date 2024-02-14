@@ -13,6 +13,16 @@ public class Input_Controller : MonoBehaviour
 
         if (_input.Player.Interact.WasPressedThisFrame())
             GameEvents.interactPressed?.Invoke();
+        
+        if (_input.Player.Down.WasPressedThisFrame())
+            GameEvents.downMenu?.Invoke();
+        if (_input.Player.Up.WasPressedThisFrame())
+            GameEvents.upMenu?.Invoke();
+        if (_input.Player.Left.WasPressedThisFrame())
+            GameEvents.leftMenu?.Invoke();
+        if (_input.Player.Right.WasPressedThisFrame())
+            GameEvents.rightMenu?.Invoke();
+        
         if (_input.Player.Down.IsPressed())
             GameEvents.down?.Invoke();
         if (_input.Player.Up.IsPressed())

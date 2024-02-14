@@ -1,11 +1,10 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement variables")] 
-    private static bool _frozen = false;
+    private static bool _frozen;
     private float _moveDuration = 0.15f;
     private float _gridSize = 0.5f;
     private bool _isMoving;
@@ -17,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
         GameEvents.playerFrozen += FreezePlayer;
         GameEvents.playerUnfrozen += UnfreezePlayer;
         
-        GameEvents.up += MoveUp;
         GameEvents.down += MoveDown;
+        GameEvents.up += MoveUp;
         GameEvents.left += MoveLeft;
         GameEvents.right += MoveRight;
     }
@@ -28,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
         GameEvents.playerFrozen -= FreezePlayer;
         GameEvents.playerUnfrozen -= UnfreezePlayer;
         
-        GameEvents.up -= MoveUp;
         GameEvents.down -= MoveDown;
+        GameEvents.up -= MoveUp;
         GameEvents.left -= MoveLeft;
         GameEvents.right -= MoveRight;
     }
@@ -74,6 +73,13 @@ public class PlayerMovement : MonoBehaviour
         Vector2 startPosition = transform.position;
         Vector2 endPosition = startPosition + (direction * _gridSize);
         
+        if (CheckForCollision(endPosition))
+        {
+            _isMoving = false;
+            StartCoroutine(TurnOffMovement());
+            yield break;
+        }
+        
         float elapsedTime = 0;
         while (elapsedTime < _moveDuration)
         {
@@ -84,10 +90,33 @@ public class PlayerMovement : MonoBehaviour
         
         transform.position = endPosition;
         
-        moveVector = Vector2.zero;
+        StartCoroutine(TurnOffMovement());
         _isMoving = false; 
     }
 
+    private bool CheckForCollision(Vector2 direction)
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(direction, 0.2f);
+        foreach (var hit in hits)
+        {
+            if (!hit.CompareTag("Player") && !hit.isTrigger)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private IEnumerator TurnOffMovement()
+    {
+        yield return new WaitForSeconds(0.05f);
+        if (_isMoving)
+        {
+            yield break;
+        }
+        moveVector = Vector2.zero;
+    }
+    
     private void FreezePlayer()
     {
         _frozen = true;

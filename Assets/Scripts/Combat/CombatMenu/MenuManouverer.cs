@@ -35,10 +35,10 @@ public class MenuManouverer : MonoBehaviour
     
     private void Start()
     {
-        GameEvents.left += MoveToPreviousButton;
-        GameEvents.right += MoveToNextButton;
-        GameEvents.down += MoveToDownButton;
-        GameEvents.up += MoveToUpButton;
+        GameEvents.leftMenu += MoveToPreviousButton;
+        GameEvents.rightMenu += MoveToNextButton;
+        GameEvents.downMenu += MoveToDownButton;
+        GameEvents.upMenu += MoveToUpButton;
         GameEvents.interactPressed += SelectButton;
         
         // Initialize the array of Buttons using the GameObject references
@@ -58,10 +58,10 @@ public class MenuManouverer : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEvents.left -= MoveToPreviousButton;
-        GameEvents.right -= MoveToNextButton;
-        GameEvents.down -= MoveToDownButton;
-        GameEvents.up -= MoveToUpButton;
+        GameEvents.leftMenu -= MoveToPreviousButton;
+        GameEvents.rightMenu -= MoveToNextButton;
+        GameEvents.downMenu -= MoveToDownButton;
+        GameEvents.upMenu -= MoveToUpButton;
         GameEvents.interactPressed -= SelectButton;
     }
 

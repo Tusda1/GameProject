@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Poison
   m_EditorClassIdentifier: 
   statusEffectName: 0
-  damage: 0
+  damage: 1
   maxHealthPercentDamage: 0
   chanceToStun: 0
