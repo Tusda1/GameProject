@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -19,6 +20,9 @@ public class CombatManager : MonoBehaviour
     [Header("Semi temporary frequently changed variables")]
     private ActionType _actionType;
     private string _actionName;
+    private bool _playerCanMove;
+    private bool _enemyCanMove;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -109,12 +113,14 @@ public class CombatManager : MonoBehaviour
             //Applies attack to enemy
             if (attackHit)
             {
-                float modifier = Random.Range(attackMove.attackModifier.modifier.x, attackMove.attackModifier.modifier.y);
-                int damage = (int)Math.Round(modifier * PlayerDataHolder.playerData[attackMove.attackModifier.statName.ToString()]);
-
-                if (attackMove.statusEffect != StatusEffects.None)
+                int damage = ExecuteAttack(attackMove, PlayerDataHolder.playerData[attackMove.attackModifier.statName.ToString()]);
+                PlayerDataHolder.playerData["Mana"] -= attackMove.manaCost;
+                
+                //Calculate if status effects are applied then applies them
+                List<StatusEffect> statusEffectsToApply = ApplyStatusEffects(attackMove.statusEffects);
+                foreach (var statusEffect in statusEffectsToApply)
                 {
-                    Debug.Log("status effect");
+                    EnemyDataHolder.enemyStatusEffects.Add(statusEffect.statusEffectScrub, statusEffect.duration);
                 }
 
                 EnemyDataHolder.TakeDamage(damage);
@@ -123,7 +129,12 @@ public class CombatManager : MonoBehaviour
                 //Writes the attack narration to the combat text box
                 string attackNarration = attackMove.narration + " " + EnemyDataHolder.enemyData.characterName + " and dealt " + damage + " <color=#ff0000>damage</color>!";
                 yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
-                
+
+                //Narrate status effects applied to enemy
+                foreach (var statusEffect in EnemyDataHolder.enemyStatusEffects)
+                {
+                    yield return StartCoroutine(WriteTextAndWaitForUserInput(statusEffect.Key.statusEffectName.ToString() + " applied to " + EnemyDataHolder.enemyData.characterName));
+                }
             }
             else
             {
@@ -184,10 +195,16 @@ public class CombatManager : MonoBehaviour
         //Commence attack if attack hit
         if (attackHit)
         {
-            //Calculate damage
-            float modifier = Random.Range(enemyMoveData.attackModifier.modifier.x, enemyMoveData.attackModifier.modifier.y);
-            int damage = (int)Math.Round(modifier * EnemyDataHolder.enemyStats[enemyMoveData.attackModifier.statName]);
-
+            //Calculates damage
+            int damage = ExecuteAttack(enemyMoveData, EnemyDataHolder.enemyStats[enemyMoveData.attackModifier.statName]);
+            
+            //Calculate if status effects are applied then applies them
+            List<StatusEffect> statusEffectsToApply = ApplyStatusEffects(enemyMoveData.statusEffects);
+            foreach (var statusEffect in statusEffectsToApply)
+            {
+                PlayerDataHolder.playerStatusEffects.Add(statusEffect.statusEffectScrub, statusEffect.duration);
+            }
+            
             //Applies attack to player
             PlayerDataHolder.TakeDamage(damage);
             CombatEvents.updateHealthUI?.Invoke();
@@ -195,6 +212,12 @@ public class CombatManager : MonoBehaviour
             //Writes the attack narration to the combat text box
             string attackNarration = EnemyDataHolder.enemyData.characterName + " " + enemyMoveData.narration + " and dealt " + damage + " <color=#ff0000>damage</color>!";
             yield return StartCoroutine(WriteTextAndWaitForUserInput(attackNarration));
+            
+            //Narrate status effects applied to player
+            foreach (var statusEffect in PlayerDataHolder.playerStatusEffects)
+            {
+                yield return StartCoroutine(WriteTextAndWaitForUserInput(statusEffect.Key.statusEffectName.ToString() + " applied to " + "you"));
+            }
         }
         else
         {
@@ -216,14 +239,7 @@ public class CombatManager : MonoBehaviour
     {
         int attackAccuracy;
 
-        if (accuracyScalesWithSpeed)
-        {
-            attackAccuracy = speed;
-        }
-        else
-        {
-            attackAccuracy = accuracy;
-        }
+        attackAccuracy = accuracyScalesWithSpeed ? speed : accuracy;
         
         int hostileSpeedRandom = Random.Range(0, hostileSpeed);
         
@@ -241,6 +257,88 @@ public class CombatManager : MonoBehaviour
         }
         
         return accuracyRandom > hostileSpeedRandom;
+    }
+    
+    private int ExecuteAttack(AttackMove attackMove, int scalingStat)
+    {
+        float modifier = Random.Range(attackMove.attackModifier.modifier.x, attackMove.attackModifier.modifier.y);
+        int damage = (int)Math.Round(modifier * scalingStat);
+        
+        //Rolls for crit chance
+        int critRandom = Random.Range(0, 100);
+        if (critRandom < attackMove.critChance)
+        {
+            damage *= attackMove.critMultiplier;
+        }
+        
+        return damage;
+    }
+
+    private List<StatusEffect> ApplyStatusEffects(StatusEffect[] statusEffects)
+    {
+        List<StatusEffect> appliedStatusEffects = new List<StatusEffect>();
+        
+        foreach (var statusEffect in statusEffects)
+        {
+            int random = Random.Range(0, 100);
+            if (random < statusEffect.chanceToApply)
+            {
+                appliedStatusEffects.Add(statusEffect);
+            }
+        }
+        
+        return appliedStatusEffects;
+    }
+    
+    private void TriggerStatusEffect(Dictionary<StatusEffectScrub, int> statusEffects, bool targetIsPlayer)
+    {
+        bool canMove = true;
+        
+        foreach (var statusEffect in statusEffects)
+        {
+            int random = Random.Range(0, 100);
+            if (random < statusEffect.Key.chanceToStun)
+            {
+                canMove = false;
+            }
+            
+            if (targetIsPlayer)
+            {
+                _playerCanMove = canMove;
+                PlayerDataHolder.TakeDamage(statusEffect.Key.damage 
+                                            + (statusEffect.Key.maxHealthPercentDamage/100) 
+                                            * PlayerDataHolder.playerData["MaxHealth"]);
+            }
+            else
+            {
+                _enemyCanMove = canMove;
+                EnemyDataHolder.TakeDamage(statusEffect.Key.damage 
+                                           + (statusEffect.Key.maxHealthPercentDamage/100) 
+                                           * EnemyDataHolder.enemyData.maxHealth);
+            }
+        }
+    }
+    
+    private void DecreaseStatusEffectDuration(Dictionary<StatusEffectScrub, int> statusEffects)
+    {
+        List<StatusEffectScrub> statusEffectToRemove = new List<StatusEffectScrub>();
+        
+        foreach (var statusEffect in statusEffects)
+        {
+            if (statusEffect.Value <= 0)
+            {
+                statusEffectToRemove.Add(statusEffect.Key);
+            }
+            else
+            {
+                statusEffects[statusEffect.Key] = statusEffect.Value - 1;
+            }
+        }
+        
+        foreach (var statusEffect in statusEffectToRemove)
+        {
+            statusEffects.Remove(statusEffect);
+        }
     }
     
     private IEnumerator OnWin()

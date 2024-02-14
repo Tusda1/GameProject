@@ -9,6 +9,7 @@ public static class EnemyDataHolder
     public static int goldGiven;
     public static int expGiven;
     public static Dictionary<StatEnum, int> enemyStats = new Dictionary<StatEnum, int>();
+    public static Dictionary<StatusEffectScrub, int> enemyStatusEffects = new Dictionary<StatusEffectScrub, int>();
     
     public static void SetEnemyData(EnemyScrub enemy)
     {

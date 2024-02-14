@@ -26,7 +26,5 @@ public class AttackMove : ScriptableObject
     public bool alwaysHits;
     
     [Header("Status Effect")]
-    public StatusEffects statusEffect;
-    public float chanceToApplyStatusEffect;
-    public int statusEffectDuration;
+    public StatusEffect[] statusEffects;
 }
