@@ -24,25 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "NextDialogueOption",
-                    "type": "Button",
-                    "id": "19e8e6d3-b16d-4e23-8929-5c7464db7515",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "PreviousDialogueOption",
-                    "type": "Button",
-                    "id": "59c7ec63-1f30-41b4-abc7-ec8615242c67",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MenuDown",
+                    "name": "Down",
                     "type": "Button",
                     "id": "f2515db4-3e83-4412-a0ee-1608ed8457bb",
                     "expectedControlType": "Button",
@@ -51,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MenuUp",
+                    "name": "Up",
                     "type": "Button",
                     "id": "739c9a33-a8dc-426d-8bca-5564cc5f4d2c",
                     "expectedControlType": "Button",
@@ -60,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MenuLeft",
+                    "name": "Left",
                     "type": "Button",
                     "id": "f09b3b15-1575-4df8-9823-ee67d540cf2b",
                     "expectedControlType": "Button",
@@ -69,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MenuRight",
+                    "name": "Right",
                     "type": "Button",
                     "id": "d83fd16e-a7dc-4cf9-99e4-5a9e68e3059e",
                     "expectedControlType": "Button",
@@ -235,56 +217,12 @@
                 },
                 {
                     "name": "",
-                    "id": "0c83c1cc-1d0d-4584-854f-6378c2133316",
-                    "path": "<Keyboard>/#(S)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "NextDialogueOption",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c597137f-a021-437f-bc1b-8308405c484c",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "NextDialogueOption",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "99b12e81-b7da-459d-a9d9-ba468559a9d8",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PreviousDialogueOption",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9edb35ab-06f1-4dc5-833b-999df1ae99cc",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PreviousDialogueOption",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1c4f5401-bc44-467e-b85e-c853497ff156",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MenuDown",
+                    "action": "Down",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -295,7 +233,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MenuDown",
+                    "action": "Down",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -306,7 +244,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MenuUp",
+                    "action": "Up",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -317,7 +255,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MenuUp",
+                    "action": "Up",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -328,7 +266,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MenuLeft",
+                    "action": "Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -339,7 +277,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MenuLeft",
+                    "action": "Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -350,7 +288,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MenuRight",
+                    "action": "Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -361,7 +299,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MenuRight",
+                    "action": "Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     {
         _playerAnimation = GetComponent<PlayerAnimation>();
         _playerMovement = GetComponent<PlayerMovement>();
-        _inputController = GetComponent<Input_Controller>();    
         
         // Subscribe to events
         GameEvents.interactPressed += Interact;
@@ -27,11 +26,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         _playerAnimation.UpdateAnimation(_playerMovement.moveVector);
-    }
-
-    private void FixedUpdate()
-    {
-        _playerMovement.UpdateMovement(_inputController.moveDirection);
     }
 
     void Interact()

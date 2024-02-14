@@ -13,14 +13,14 @@ public class Input_Controller : MonoBehaviour
 
         if (_input.Player.Interact.WasPressedThisFrame())
             GameEvents.interactPressed?.Invoke();
-        if (_input.Player.MenuDown.WasPressedThisFrame())
-            GameEvents.downMenu?.Invoke();
-        if (_input.Player.MenuUp.WasPressedThisFrame())
-            GameEvents.upMenu?.Invoke();
-        if (_input.Player.MenuLeft.WasPressedThisFrame())
-            GameEvents.leftMenu?.Invoke();
-        if (_input.Player.MenuRight.WasPressedThisFrame())
-            GameEvents.rightMenu?.Invoke();
+        if (_input.Player.Down.IsPressed())
+            GameEvents.down?.Invoke();
+        if (_input.Player.Up.IsPressed())
+            GameEvents.up?.Invoke();
+        if (_input.Player.Left.IsPressed())
+            GameEvents.left?.Invoke();
+        if (_input.Player.Right.IsPressed())
+            GameEvents.right?.Invoke();
     }
     private void Awake()
     {
