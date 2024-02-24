@@ -92,7 +92,7 @@ public class CombatManager : MonoBehaviour
             //Iterates through all the players innate attack moves and finds the attack move that matches the action name
             AttackMove attackMove = ScriptableObject.CreateInstance<AttackMove>();
 
-            foreach (var attack in ScrubHolder.Instance.allAttackMoves.allPlayerSkills)
+            foreach (var attack in DataBase.allPlayerSkills)
             {
                 if (attack.attackMoveName == _actionName)
                 {
@@ -103,7 +103,7 @@ public class CombatManager : MonoBehaviour
             //Iterates through all the player's equipped items and finds the attack move that matches the action name
             foreach (var equipped in PlayerDataHolder.EquippedItems)
             {
-                foreach (var equipment in ScrubHolder.Instance.allEquipment.allEquipment)
+                foreach (var equipment in DataBase.allEquipment)
                 {
                     if (equipped == equipment.name)
                     {
@@ -144,7 +144,7 @@ public class CombatManager : MonoBehaviour
                 //Narrate status effects applied to enemy
                 foreach (var statusEffect in EnemyDataHolder.enemyStatusEffects)
                 {
-                    yield return StartCoroutine(WriteTextAndWaitForUserInput(statusEffect.Key.statusEffectName.ToString() + " applied to " + EnemyDataHolder.enemyData.characterName));
+                    yield return StartCoroutine(WriteTextAndWaitForUserInput(statusEffect.Key.statusEffectName + " applied to " + EnemyDataHolder.enemyData.characterName));
                 }
             }
             else
@@ -233,7 +233,7 @@ public class CombatManager : MonoBehaviour
             //Narrate status effects applied to player
             foreach (var statusEffect in PlayerDataHolder.playerStatusEffects)
             {
-                yield return StartCoroutine(WriteTextAndWaitForUserInput(statusEffect.Key.statusEffectName.ToString() + " applied to " + "you"));
+                yield return StartCoroutine(WriteTextAndWaitForUserInput(statusEffect.Key.statusEffectName + " applied to " + "you"));
             }
         }
         else
@@ -254,9 +254,7 @@ public class CombatManager : MonoBehaviour
     
     private bool DidAttackHit(int accuracy, int speed, int hostileSpeed, bool accuracyScalesWithSpeed)
     {
-        int attackAccuracy;
-
-        attackAccuracy = accuracyScalesWithSpeed ? speed : accuracy;
+        var attackAccuracy = accuracyScalesWithSpeed ? speed : accuracy;
         
         int hostileSpeedRandom = Random.Range(0, hostileSpeed);
         
@@ -328,7 +326,7 @@ public class CombatManager : MonoBehaviour
             takeDamage(damage);
             
             //Narrate the status effect
-            yield return StartCoroutine(WriteTextAndWaitForUserInput(statusEffect.Key.statusEffectName.ToString() + " dealt " + damage + " damage!"));
+            yield return StartCoroutine(WriteTextAndWaitForUserInput(statusEffect.Key.statusEffectName + " dealt " + damage + " damage!"));
         }
             
         onComplete?.Invoke(canMove);

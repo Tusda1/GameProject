@@ -44,8 +44,9 @@ public static class SaveFileHandler
             return null;
         }
 
-        foreach (JObject saveObj in saveArray)
+        foreach (var jToken in saveArray)
         {
+            var saveObj = (JObject)jToken;
             string objDataType = (string)saveObj["DataType"];
 
             if (objDataType == dataType)
@@ -86,8 +87,9 @@ public static class SaveFileHandler
             return;
         }
 
-        foreach (JObject saveObj in saveArray)
+        foreach (var jToken in saveArray)
         {
+            var saveObj = (JObject)jToken;
             string objDataType = (string)saveObj["DataType"];
 
             if (objDataType == dataType)
@@ -133,8 +135,9 @@ public static class SaveFileHandler
             return;
         }
 
-        foreach (JObject saveObj in saveArray)
+        foreach (var jToken in saveArray)
         {
+            var saveObj = (JObject)jToken;
             string objDataType = (string)saveObj["DataType"];
 
             if (objDataType == dataType)
@@ -182,8 +185,9 @@ public static class SaveFileHandler
             return;
         }
 
-        foreach (JObject saveObj in saveArray)
+        foreach (var jToken in saveArray)
         {
+            var saveObj = (JObject)jToken;
             string objDataType = (string)saveObj["DataType"];
 
             if (objDataType == dataType)

@@ -6,7 +6,9 @@ public class MakeSavefileCopy : MonoBehaviour
     void Start()
     {
         SaveFileHandler.CopySaveDataToPersistentPath();
+        NpcDialogueHandler.CopyDialogueDataToPersistentPath();
         Debug.Log(Application.persistentDataPath);
-        PlayerDataHolder.InitializePlayerData(ScrubHolder.Instance.allAttackMoves);
+        DataBase.InitializeData();
+        PlayerDataHolder.InitializePlayerData(DataBase.allPlayerSkills);
     }
 }

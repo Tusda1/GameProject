@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -11,6 +12,7 @@ public class MenuManouverer : MonoBehaviour
     
     [SerializeField] private GameObject[] buttonGameObjects;
     private Button[] _buttons;
+    private int _activeButtons;
     private int _currentButtonIndex; // Index of the currently selected button
     
     private bool _highlighted;
@@ -19,6 +21,8 @@ public class MenuManouverer : MonoBehaviour
     private List<string> _keys = new List<string>();
     private int _choiceIndex;
     private int _choiceCount;
+    
+    private bool _canMove = true;
 
     private void Awake()
     {
@@ -35,10 +39,10 @@ public class MenuManouverer : MonoBehaviour
     
     private void Start()
     {
-        GameEvents.leftMenu += MoveToPreviousButton;
-        GameEvents.rightMenu += MoveToNextButton;
-        GameEvents.downMenu += MoveToDownButton;
-        GameEvents.upMenu += MoveToUpButton;
+        GameEvents.left += MoveToPreviousButton;
+        GameEvents.right += MoveToNextButton;
+        GameEvents.down += MoveToDownButton;
+        GameEvents.up += MoveToUpButton;
         GameEvents.interactPressed += SelectButton;
         
         // Initialize the array of Buttons using the GameObject references
@@ -58,16 +62,28 @@ public class MenuManouverer : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEvents.leftMenu -= MoveToPreviousButton;
-        GameEvents.rightMenu -= MoveToNextButton;
-        GameEvents.downMenu -= MoveToDownButton;
-        GameEvents.upMenu -= MoveToUpButton;
+        GameEvents.left -= MoveToPreviousButton;
+        GameEvents.right -= MoveToNextButton;
+        GameEvents.down -= MoveToDownButton;
+        GameEvents.up -= MoveToUpButton;
         GameEvents.interactPressed -= SelectButton;
     }
 
     #region MoveCurrentButton
+    private IEnumerator MoveCooldown()
+    {
+        _canMove = false;
+        yield return new WaitForSeconds(0.2f);
+        _canMove = true;
+    }
+    
     private void MoveToPreviousButton()
     {
+        if (!_canMove)
+        {
+            return;
+        }
+
         // Move to the previous button in the array
         if (_currentButtonIndex > 0)
         {
@@ -80,12 +96,19 @@ public class MenuManouverer : MonoBehaviour
             LoadNewMenu();
             _currentButtonIndex = 3;
         }
+        
+        StartCoroutine(MoveCooldown());
     }
 
     private void MoveToNextButton()
     {
+        if (!_canMove)
+        {
+            return;
+        }
+        
         // Move to the next button in the array
-        if (_currentButtonIndex < _buttons.Length - 1)
+        if (_currentButtonIndex < _activeButtons - 1)
         {
             _currentButtonIndex += 1;
             HighlightButton();
@@ -95,12 +118,19 @@ public class MenuManouverer : MonoBehaviour
             _choiceIndex += 4;
             LoadNewMenu();
         }
+        
+        StartCoroutine(MoveCooldown());
     }
     
     private void MoveToDownButton()
     {
+        if (!_canMove)
+        {
+            return;
+        }
+        
         // Move to the previous button in the array
-        if (_currentButtonIndex < _buttons.Length - 2)
+        if (_currentButtonIndex < _activeButtons - 2)
         {
             _currentButtonIndex += 2;
             HighlightButton();
@@ -117,10 +147,17 @@ public class MenuManouverer : MonoBehaviour
             _choiceIndex += 4;
             LoadNewMenu();
         }
+        
+        StartCoroutine(MoveCooldown());
     }
     
     private void MoveToUpButton()
     {
+        if (!_canMove)
+        {
+            return;
+        }
+        
         // Move to the next button in the array
         if (_currentButtonIndex > 1)
         {
@@ -136,6 +173,8 @@ public class MenuManouverer : MonoBehaviour
             else if (_currentButtonIndex == 1)
                 _currentButtonIndex = 3;
         }
+
+        StartCoroutine(MoveCooldown());
     }
     #endregion
 
@@ -184,6 +223,7 @@ public class MenuManouverer : MonoBehaviour
         foreach (var buttonGameObject in buttonGameObjects)
         {
             buttonGameObject.SetActive(false);
+            _activeButtons = 0;
         }
     }
     
@@ -204,6 +244,7 @@ public class MenuManouverer : MonoBehaviour
                 break;
             }
             buttonGameObjects[i].SetActive(true);
+            _activeButtons++;
         }
     }
     

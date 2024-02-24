@@ -129,6 +129,8 @@ public class NpcSpeaker : MonoBehaviour, Interactable
                 treatCommandAsDialogue = false;
             }
         }
+        
+        EndConversation();
     }
     
     IEnumerator Line_RunDialogue(DIALOGUE_LINES line)
@@ -172,7 +174,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         else
             _architect.Append(dialogue);
             
-        while (_architect.isBuilding)
+        while (_architect.IsBuilding)
         {
             yield return null;
         }

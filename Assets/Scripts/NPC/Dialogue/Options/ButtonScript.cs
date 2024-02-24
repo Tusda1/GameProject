@@ -7,7 +7,7 @@ public class ButtonScript : MonoBehaviour
 {
     private void Start()
     {
-        ButtonManager.HideButtons();
+        ButtonManager.Instance.HideButtons();
     }
 
     //This is the script that is going to be put on the buttons. The buttons need to be marked 1-4 by using the parameters.
@@ -15,9 +15,9 @@ public class ButtonScript : MonoBehaviour
     public void Pressed(int buttonPressed)
     {
         //This is a workaround as unity wont allow a method with an enum as a parameter to be attached to a button
-        ButtonManager.buttonPressed = buttonPressed;
+        ButtonManager.Instance.buttonPressed = buttonPressed;
         
-        ButtonManager.HideButtons();
+        ButtonManager.Instance.HideButtons();
         NpcSpeaker.CurrentSpeaker.userInput = true;
         NpcSpeaker.CurrentSpeaker.waitingForResponse = false;
     }

@@ -1,55 +1,60 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public static class ButtonManager
+public class ButtonManager : MonoBehaviour
 {
-    public static int currentButtonIndex = 0; // Index of the currently selected button
+    public static ButtonManager Instance { get; private set; }
     
-    public static int buttonPressed;
-    public static Button[] buttons; // Array to store all the buttons
+    public int buttonPressed;
+    [SerializeField] private GameObject[] buttonList; //
+    [SerializeField] private TextMeshProUGUI[] buttonTextList; 
+    private Button[] _buttons; // Array to store all the buttons
     
-    public static void DisplayButtons(string[] options)
+    
+    private ButtonManouverer _buttonManouverer;
+    
+    private void Awake()
     {
-        ButtonContainer.Instance.buttonSelector.SetActive(true);
-        
+        if (Instance == null)
+        {
+            Instance = this;
+            // Rest of your initialization code...
+        }
+        else
+        {
+            Destroy(gameObject); // Ensures there's only one instance
+        }
+    }
+    
+    public void DisplayButtons(string[] options)
+    {
         for (int i = 0; i < options.Length; i++)
         {
-            ButtonContainer.Instance.buttonList[i].SetActive(true);
-            ButtonContainer.Instance.buttonTextList[i].text = options[i];
+            buttonList[i].SetActive(true);
+            buttonTextList[i].text = options[i];
         }
         
-        buttons = new Button[options.Length];
+        _buttons = new Button[options.Length];
         for (int i = 0; i < options.Length; i++)
         {
-            buttons[i] = ButtonContainer.Instance.buttonList[i].GetComponent<Button>();
+            _buttons[i] = buttonList[i].GetComponent<Button>();
         }
 
-        currentButtonIndex = 0;
-        HighlightButton(currentButtonIndex);
+        _buttonManouverer = new ButtonManouverer(_buttons, this);
     }
 
-    public static void HideButtons()
+    public void HideButtons()
     {
-        foreach (GameObject button in ButtonContainer.Instance.buttonList)
+        foreach (GameObject button in buttonList)
         {
             button.SetActive(false);
         }
-    }
-    
-    public static void HighlightButton(int index)
-    {
-        // Unhighlight all buttons
-        foreach (Button button in buttons)
+        
+        if (_buttonManouverer != null)
         {
-            ColorBlock colors = button.colors;
-            colors.normalColor = Color.white; // Change this color to suit your needs
-            button.colors = colors;
+            _buttonManouverer.CleanUp();
+            _buttonManouverer = null;
         }
-
-        // Highlight the selected button
-        ColorBlock selectedColors = buttons[index].colors;
-        selectedColors.normalColor = Color.blue; // Change this color to suit your needs
-        buttons[index].colors = selectedColors;
     }
 }

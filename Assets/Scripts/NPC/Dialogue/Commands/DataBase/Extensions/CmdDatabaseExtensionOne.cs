@@ -12,7 +12,7 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         
         database.AddCommand("Choices", new Action<string[]>(Choices));
         
-        database.AddCommand("DeleteLines",new Action<string[]>(DeleteLines));
+        database.AddCommand("KeepLines",new Action<string[]>(KeepLines));
         
         database.AddCommand("CheckRequirements",new Action<string[]>(CheckRequirements));
         
@@ -41,13 +41,13 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
             Array.Copy(options, limitedOptions, newSize);
 
             // Use truncatedOptions for further processing or assign it back to options if needed
-            ButtonManager.DisplayButtons(limitedOptions);
+            ButtonManager.Instance.DisplayButtons(limitedOptions);
 
             NpcSpeaker.CurrentSpeaker.lockedOptions = 0;
         }
         else
         {
-            ButtonManager.DisplayButtons(options);
+            ButtonManager.Instance.DisplayButtons(options);
         }
         
         NpcSpeaker.CurrentSpeaker.text.text = "";
@@ -57,10 +57,10 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
     
     //Used for deleting the route that wasn't chosen after a choice.
     //The parameter is an array of the starts and lengths of the different routes. It will use this to delete the routes that weren't chosen.
-    private static void DeleteLines(string[] deleteStartAndAmount)
+    private static void KeepLines(string[] deleteStartAndAmount)
     {
         //Decrements buttonPressed by 1 so that the first button becomes 0 in order to match the index of an array.
-        int optionChosen = ButtonManager.buttonPressed - 1;
+        int optionChosen = ButtonManager.Instance.buttonPressed - 1;
         
         //For loops that deletes all routes except the one chosen
         for (int i = 0; i < (deleteStartAndAmount.Length/2); i++)

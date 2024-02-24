@@ -13,7 +13,7 @@ public static class PlayerDataHolder
     public static Dictionary<StatusEffectScrub, int> playerStatusEffects = new Dictionary<StatusEffectScrub, int>();
     private const float _expToNextLevelMultiplier = 1.5f;
 
-    public static void InitializePlayerData(AllAttackMoves allAttackMoves)
+    public static void InitializePlayerData(PlayerSkills[] allAttackMoves)
     {
         // Load Unlocked attack moves from save file
         Dictionary<string, object> attackMovesDict = SaveFileHandler.GetSaveFile("AttackMoves");
@@ -60,10 +60,10 @@ public static class PlayerDataHolder
         }
     }
     
-    private static void AddUnlockedAttackMoves(AllAttackMoves allAttackMoves)
+    private static void AddUnlockedAttackMoves(PlayerSkills[] allAttackMoves)
     {
         // Add all unlocked attack moves to the list
-        foreach (var attackMove in allAttackMoves.allPlayerSkills)
+        foreach (var attackMove in allAttackMoves)
         {
             if (attackMove.levelUnlocked <= playerData["Level"] && unlockedPlayerSkills.All(skill => skill != attackMove.attackMoveName))
             {
@@ -108,6 +108,26 @@ public static class PlayerDataHolder
     public static void IncreaseStat(string statName, int amount)
     {
         playerData[statName] += amount;
+    }
+    
+    public static void AddItemToInventory(string itemName)
+    {
+        InventoryItems.Add(itemName);
+    }
+    
+    public static void RemoveItemFromInventory(string itemName)
+    {
+        InventoryItems.Remove(itemName);
+    }
+    
+    public static void AddEquippedItem(string itemName)
+    {
+        
+    }
+    
+    public static void RemoveEquippedItem(string itemName)
+    {
+        EquippedItems.Remove(itemName);
     }
     
     public static void WriteToSaveFile()
