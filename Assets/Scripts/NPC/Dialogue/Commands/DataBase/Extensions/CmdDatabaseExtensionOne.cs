@@ -17,6 +17,10 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         
         database.AddCommand("MoveNpc",new Action<string[]>(MoveNpc));
         
+        database.AddCommand("MovePlayer",new Action<string[]>(MovePlayer));
+        
+        database.AddCommand("SpawnEnemy",new Action<string>(SpawnEnemy));
+        
         database.AddCommand("NextDialogue",new Action(NextDialogue));
         
         database.AddCommand("NextScene", new Action<string>(NextScene));
@@ -126,6 +130,11 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
     {
         NpcSpeaker.CurrentSpeaker.treatCommandAsDialogue = true;
         GameEvents.movePlayer?.Invoke(int.Parse(moveParameters[0]), int.Parse(moveParameters[1]));
+    }
+
+    private static void SpawnEnemy(string enemyName)
+    {
+        GameManager.Instance.SpawnEnemyByName(enemyName);
     }
 
     //Used at the end of a dialogue to move on to the next dialogue.

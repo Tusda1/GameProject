@@ -84,7 +84,6 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     private void StartConversation()
     {
         CurrentSpeaker = this;
-        GameManager.Instance.DialogueScriptsOn();
         DisplayDialogueUI();
         
         GameEvents.playerFrozen?.Invoke();
@@ -110,7 +109,6 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         CurrentSpeaker = null;
         HideDialogueUI();
         GameEvents.playerUnfrozen?.Invoke();
-        GameManager.Instance.DialogueScriptsOff();
         GameEvents.interactPressed -= ProgressDialogue;
     }
 
