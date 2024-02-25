@@ -121,6 +121,12 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         NpcSpeaker.CurrentSpeaker.treatCommandAsDialogue = true;
         NpcSpeaker.CurrentSpeaker.npcMovement.MoveNpc(int.Parse(moveParameters[0]), int.Parse(moveParameters[1]), int.Parse(moveParameters[2]));
     }
+    
+    private static void MovePlayer(string[] moveParameters)
+    {
+        NpcSpeaker.CurrentSpeaker.treatCommandAsDialogue = true;
+        GameEvents.movePlayer?.Invoke(int.Parse(moveParameters[0]), int.Parse(moveParameters[1]));
+    }
 
     //Used at the end of a dialogue to move on to the next dialogue.
     private static void NextDialogue()

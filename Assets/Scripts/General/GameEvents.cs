@@ -18,4 +18,7 @@ public static class GameEvents
     
     //Sound
     public static GameEvent playWritingSound;
+    
+    public delegate void MovePlayer(int x, int y);
+    public static MovePlayer movePlayer;
 }

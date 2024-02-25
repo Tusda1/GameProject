@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
         GameEvents.up += MoveUp;
         GameEvents.left += MoveLeft;
         GameEvents.right += MoveRight;
+        
+        GameEvents.movePlayer += StartScriptedMovement;
     }
 
     private void OnDestroy()
@@ -31,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
         GameEvents.up -= MoveUp;
         GameEvents.left -= MoveLeft;
         GameEvents.right -= MoveRight;
+        
+        GameEvents.movePlayer -= StartScriptedMovement; 
     }
 
     private void MoveUp()
@@ -62,6 +66,19 @@ public class PlayerMovement : MonoBehaviour
         if (!_isMoving && !_frozen)
         {
             StartCoroutine(Move(Vector2.right));
+        }
+    }
+    
+    private void StartScriptedMovement(int x, int y)
+    {
+        StartCoroutine(ScriptedMovement(new Vector2(x, y)));
+    }
+
+    private IEnumerator ScriptedMovement(Vector2 direction)
+    {
+        for (int i = 0; i < direction.magnitude; i++)
+        {
+            yield return StartCoroutine(Move(direction.normalized));
         }
     }
     

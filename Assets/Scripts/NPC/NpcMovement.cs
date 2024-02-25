@@ -13,6 +13,7 @@ public class NpcMovement : MonoBehaviour
     private IEnumerator Move(Vector2 direction)
     {
         NpcSpeaker.CurrentSpeaker.waitingForSignal = true;
+        NpcSpeaker.CurrentSpeaker.HideDialogueUI();
         
         Vector2 startPosition = transform.position;
         Vector2 endPosition = startPosition + (direction * _gridSize);
@@ -29,6 +30,8 @@ public class NpcMovement : MonoBehaviour
         
         transform.position = endPosition;
         
+        NpcSpeaker.CurrentSpeaker.DisplayDialogueUI();
         NpcSpeaker.CurrentSpeaker.waitingForSignal = false;
+        NpcSpeaker.CurrentSpeaker.ProgressDialogue();
     }
 }

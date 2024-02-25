@@ -6,7 +6,7 @@ using UnityEngine;
 public class DL_COMMAND_DATA
 {
     public List<Command> commands;
-    private const char COMMANDSPLITTER_ID = '-';
+    private const char COMMANDSPLITTER_ID = '+';
     private const char ARGUMENTSCONTAINER_ID = '(';
     
     public struct Command

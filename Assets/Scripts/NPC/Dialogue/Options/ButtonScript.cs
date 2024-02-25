@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
@@ -18,7 +15,7 @@ public class ButtonScript : MonoBehaviour
         ButtonManager.Instance.buttonPressed = buttonPressed;
         
         ButtonManager.Instance.HideButtons();
-        NpcSpeaker.CurrentSpeaker.userInput = true;
         NpcSpeaker.CurrentSpeaker.waitingForSignal = false;
+        NpcSpeaker.CurrentSpeaker.ProgressDialogue();
     }
 }

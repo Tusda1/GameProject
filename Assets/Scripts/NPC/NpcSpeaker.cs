@@ -44,8 +44,6 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     {
         npcMovement = GetComponent<NpcMovement>();
         
-        NpcDialogueHandler.ResetDialogue();
-        
         _spriteRenderer = GetComponent<SpriteRenderer>();
         if (_spriteRenderer != null)
         {
@@ -57,50 +55,37 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         _architect = new TextArchitect(text);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (userInput && !_conversationRunning)
-        {
-            userInput = false;
-            StartSpeaking();
-        }
-    }
-
     public void Interact()
     {
         if (!_conversationRunning)
         {
-            userInput = true;
+            StartConversation();
         }
     }
     
-    private void ProgressDialogue()
+    public void ProgressDialogue()
     {
         if (waitingForSignal)
             return;
         if (_waitingForUserInput)
             userInput = true;
     }
-
-    public void EndConversation()
+    
+    public void DisplayDialogueUI()
     {
-        StopCoroutine(_speakingCoroutine);
-        text.text = "";
-        _speakingCoroutine = null;
-        _conversationRunning = false;
-        CurrentSpeaker = null;
-        DialogueBoxManager.Instance.HideDialogueContainers();
-        GameEvents.playerUnfrozen?.Invoke();
-        GameManager.Instance.DialogueScriptsOff();
-        GameEvents.interactPressed -= ProgressDialogue;
+        DialogueBoxManager.Instance.ShowDialogueContainers();
     }
     
-    private void StartSpeaking()
+    public void HideDialogueUI()
+    {
+        DialogueBoxManager.Instance.HideDialogueContainers();
+    }
+    
+    private void StartConversation()
     {
         CurrentSpeaker = this;
         GameManager.Instance.DialogueScriptsOn();
-        DialogueBoxManager.Instance.ShowDialogueContainers();
+        DisplayDialogueUI();
         
         GameEvents.playerFrozen?.Invoke();
         
@@ -114,6 +99,19 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         }
         
         GameEvents.interactPressed += ProgressDialogue;
+    }
+    
+    public void EndConversation()
+    {
+        StopCoroutine(_speakingCoroutine);
+        text.text = "";
+        _speakingCoroutine = null;
+        _conversationRunning = false;
+        CurrentSpeaker = null;
+        HideDialogueUI();
+        GameEvents.playerUnfrozen?.Invoke();
+        GameManager.Instance.DialogueScriptsOff();
+        GameEvents.interactPressed -= ProgressDialogue;
     }
 
     private IEnumerator Speaking()
