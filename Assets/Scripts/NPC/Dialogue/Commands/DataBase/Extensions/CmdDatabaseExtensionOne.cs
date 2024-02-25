@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using DIALOGUE;
 using UnityEngine;
 
 public class CmdDatabaseExtensionOne : CMD_Database_Extension
 {
-    new public static void Extend(CommandDatabase database)
+    public new static void Extend(CommandDatabase database)
     {
         //Add Command with no parameters
         database.AddCommand("Print",new Action(PrintDefaultMessage));
@@ -16,7 +15,7 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         
         database.AddCommand("CheckRequirements",new Action<string[]>(CheckRequirements));
         
-        database.AddCommand("Leave", new Action(LeaveConversation));
+        database.AddCommand("MoveNpc",new Action<string[]>(MoveNpc));
         
         database.AddCommand("NextDialogue",new Action(NextDialogue));
         
@@ -51,7 +50,7 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         }
         
         NpcSpeaker.CurrentSpeaker.text.text = "";
-        NpcSpeaker.CurrentSpeaker.waitingForResponse = true;
+        NpcSpeaker.CurrentSpeaker.waitingForSignal = true;
         NpcSpeaker.CurrentSpeaker.treatCommandAsDialogue = true;
     }
     
@@ -108,8 +107,6 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
             case "<=":
                 conditionMet = requiredVariable <= int.Parse(dataCheckparameters[3]);
                 break;
-            default:
-                break;
         }
 
         if (!conditionMet)
@@ -117,11 +114,12 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
             NpcSpeaker.CurrentSpeaker.lockedOptions = int.Parse(dataCheckparameters[4]);
         }
     }
-
-    //Ends the conversation allowing you to move around again
-    private static void LeaveConversation()
+    
+    //arg1 = x, arg2 = y, arg3 = speed
+    private static void MoveNpc(string[] moveParameters)
     {
-        NpcSpeaker.CurrentSpeaker.EndConversation();
+        NpcSpeaker.CurrentSpeaker.treatCommandAsDialogue = true;
+        NpcSpeaker.CurrentSpeaker.npcMovement.MoveNpc(int.Parse(moveParameters[0]), int.Parse(moveParameters[1]), int.Parse(moveParameters[2]));
     }
 
     //Used at the end of a dialogue to move on to the next dialogue.

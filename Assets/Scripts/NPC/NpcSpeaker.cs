@@ -1,15 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 using TMPro;
-using UnityEngine.Serialization;
 
 public class NpcSpeaker : MonoBehaviour, Interactable
 {
     public static NpcSpeaker CurrentSpeaker { get; private set; }
 
+    [Header("Conversation Management")]
     public List<List<string>> dialogueDict;
     [HideInInspector]
     public int whichDialogue;
@@ -17,7 +16,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     public bool userInput;
     private bool _waitingForUserInput;
     [HideInInspector]
-    public bool waitingForResponse;
+    public bool waitingForSignal;
     [HideInInspector]
     public int currentDialogueLine;
     [HideInInspector]
@@ -27,17 +26,24 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     private bool _conversationRunning;
     
+    [Header("Components")]
     private SpriteRenderer _spriteRenderer;
     private TextArchitect _architect;
     
+    [Header("Coroutines")]
     private Coroutine _speakingCoroutine;
     
+    [Header("External References")]
     public CharacterBase npc;
-    
     public TextMeshProUGUI text;
+    
+    [Header("OtherScripts")]
+    [HideInInspector] public NpcMovement npcMovement;
     // Start is called before the first frame update
     void Start()
     {
+        npcMovement = GetComponent<NpcMovement>();
+        
         NpcDialogueHandler.ResetDialogue();
         
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -71,7 +77,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     private void ProgressDialogue()
     {
-        if (waitingForResponse)
+        if (waitingForSignal)
             return;
         if (_waitingForUserInput)
             userInput = true;
@@ -194,7 +200,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     private IEnumerator WaitForUserInput()
     {
         _waitingForUserInput = true;
-        while (!userInput || waitingForResponse)
+        while (!userInput || waitingForSignal)
         {
             yield return null;
         }
