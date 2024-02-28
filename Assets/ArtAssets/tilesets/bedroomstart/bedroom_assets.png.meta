@@ -58,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -96,7 +96,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -137,10 +137,10 @@ TextureImporter:
       name: bedroom_assets_0
       rect:
         serializedVersion: 2
-        x: 40
-        y: 134
-        width: 43
-        height: 25
+        x: 41
+        y: 153
+        width: 41
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,10 +158,10 @@ TextureImporter:
       name: bedroom_assets_1
       rect:
         serializedVersion: 2
-        x: 41
-        y: 64
-        width: 43
-        height: 71
+        x: 89
+        y: 141
+        width: 29
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,10 +179,10 @@ TextureImporter:
       name: bedroom_assets_2
       rect:
         serializedVersion: 2
-        x: 88
+        x: 130
         y: 128
-        width: 31
-        height: 35
+        width: 24
+        height: 37
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,10 +200,10 @@ TextureImporter:
       name: bedroom_assets_3
       rect:
         serializedVersion: 2
-        x: 129
-        y: 115
-        width: 26
-        height: 39
+        x: 159
+        y: 117
+        width: 38
+        height: 54
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,10 +221,10 @@ TextureImporter:
       name: bedroom_assets_4
       rect:
         serializedVersion: 2
-        x: 158
-        y: 104
-        width: 40
-        height: 56
+        x: 42
+        y: 77
+        width: 41
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,10 +242,10 @@ TextureImporter:
       name: bedroom_assets_5
       rect:
         serializedVersion: 2
-        x: 40
-        y: 42
-        width: 43
-        height: 26
+        x: 153
+        y: 65
+        width: 17
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,10 +263,10 @@ TextureImporter:
       name: bedroom_assets_6
       rect:
         serializedVersion: 2
-        x: 156
-        y: 52
-        width: 19
-        height: 25
+        x: 175
+        y: 34
+        width: 24
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -284,19 +284,19 @@ TextureImporter:
       name: bedroom_assets_7
       rect:
         serializedVersion: 2
-        x: 174
-        y: 21
-        width: 26
-        height: 55
+        x: 41
+        y: 38
+        width: 41
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 138f41a307d19e0b0800000000000000
-      internalID: -5698991485612656591
+      spriteID: 9330086f0db07d7429ec7a85d7ce3c99
+      internalID: -1125733318
       vertices: []
       indices: 
       edges: []
@@ -304,14 +304,22 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: bbf4b0b9b079fc7478712558d8558b55
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bedroom_assets_0: -8390935924684944511
+      bedroom_assets_1: -6555938776798974374
+      bedroom_assets_2: 4376297875211559434
+      bedroom_assets_3: 3656826302729766613
+      bedroom_assets_4: 8221095562499630678
+      bedroom_assets_5: 2142520439579356994
+      bedroom_assets_6: 1448891066823119964
+      bedroom_assets_7: -1125733318
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
