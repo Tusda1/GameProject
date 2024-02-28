@@ -1,22 +1,25 @@
 using System;
 using System.Collections.Generic;
-using DIALOGUE;
 using UnityEngine;
 
 public class CmdDatabaseExtensionOne : CMD_Database_Extension
 {
-    new public static void Extend(CommandDatabase database)
+    public new static void Extend(CommandDatabase database)
     {
         //Add Command with no parameters
         database.AddCommand("Print",new Action(PrintDefaultMessage));
         
         database.AddCommand("Choices", new Action<string[]>(Choices));
         
-        database.AddCommand("DeleteLines",new Action<string[]>(DeleteLines));
+        database.AddCommand("KeepLines",new Action<string[]>(KeepLines));
         
         database.AddCommand("CheckRequirements",new Action<string[]>(CheckRequirements));
         
-        database.AddCommand("Leave", new Action(LeaveConversation));
+        database.AddCommand("MoveNpc",new Action<string[]>(MoveNpc));
+        
+        database.AddCommand("MovePlayer",new Action<string[]>(MovePlayer));
+        
+        database.AddCommand("SpawnEnemy",new Action<string>(SpawnEnemy));
         
         database.AddCommand("NextDialogue",new Action(NextDialogue));
         
@@ -41,26 +44,26 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
             Array.Copy(options, limitedOptions, newSize);
 
             // Use truncatedOptions for further processing or assign it back to options if needed
-            ButtonManager.DisplayButtons(limitedOptions);
+            ButtonManager.Instance.DisplayButtons(limitedOptions);
 
             NpcSpeaker.CurrentSpeaker.lockedOptions = 0;
         }
         else
         {
-            ButtonManager.DisplayButtons(options);
+            ButtonManager.Instance.DisplayButtons(options);
         }
         
         NpcSpeaker.CurrentSpeaker.text.text = "";
-        NpcSpeaker.CurrentSpeaker.waitingForResponse = true;
+        NpcSpeaker.CurrentSpeaker.waitingForSignal = true;
         NpcSpeaker.CurrentSpeaker.treatCommandAsDialogue = true;
     }
     
     //Used for deleting the route that wasn't chosen after a choice.
     //The parameter is an array of the starts and lengths of the different routes. It will use this to delete the routes that weren't chosen.
-    private static void DeleteLines(string[] deleteStartAndAmount)
+    private static void KeepLines(string[] deleteStartAndAmount)
     {
         //Decrements buttonPressed by 1 so that the first button becomes 0 in order to match the index of an array.
-        int optionChosen = ButtonManager.buttonPressed - 1;
+        int optionChosen = ButtonManager.Instance.buttonPressed - 1;
         
         //For loops that deletes all routes except the one chosen
         for (int i = 0; i < (deleteStartAndAmount.Length/2); i++)
@@ -108,8 +111,6 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
             case "<=":
                 conditionMet = requiredVariable <= int.Parse(dataCheckparameters[3]);
                 break;
-            default:
-                break;
         }
 
         if (!conditionMet)
@@ -117,11 +118,23 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
             NpcSpeaker.CurrentSpeaker.lockedOptions = int.Parse(dataCheckparameters[4]);
         }
     }
-
-    //Ends the conversation allowing you to move around again
-    private static void LeaveConversation()
+    
+    //arg1 = x, arg2 = y, arg3 = speed
+    private static void MoveNpc(string[] moveParameters)
     {
-        NpcSpeaker.CurrentSpeaker.EndConversation();
+        NpcSpeaker.CurrentSpeaker.treatCommandAsDialogue = true;
+        NpcSpeaker.CurrentSpeaker.npcMovement.MoveNpc(int.Parse(moveParameters[0]), int.Parse(moveParameters[1]), int.Parse(moveParameters[2]));
+    }
+    
+    private static void MovePlayer(string[] moveParameters)
+    {
+        NpcSpeaker.CurrentSpeaker.treatCommandAsDialogue = true;
+        GameEvents.movePlayer?.Invoke(int.Parse(moveParameters[0]), int.Parse(moveParameters[1]));
+    }
+
+    private static void SpawnEnemy(string enemyName)
+    {
+        GameManager.Instance.SpawnEnemyByName(enemyName);
     }
 
     //Used at the end of a dialogue to move on to the next dialogue.

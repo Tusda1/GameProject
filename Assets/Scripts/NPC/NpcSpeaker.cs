@@ -1,15 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 using TMPro;
-using UnityEngine.Serialization;
 
 public class NpcSpeaker : MonoBehaviour, Interactable
 {
     public static NpcSpeaker CurrentSpeaker { get; private set; }
 
+    [Header("Conversation Management")]
     public List<List<string>> dialogueDict;
     [HideInInspector]
     public int whichDialogue;
@@ -17,7 +16,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     public bool userInput;
     private bool _waitingForUserInput;
     [HideInInspector]
-    public bool waitingForResponse;
+    public bool waitingForSignal;
     [HideInInspector]
     public int currentDialogueLine;
     [HideInInspector]
@@ -27,18 +26,23 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     private bool _conversationRunning;
     
+    [Header("Components")]
     private SpriteRenderer _spriteRenderer;
     private TextArchitect _architect;
     
+    [Header("Coroutines")]
     private Coroutine _speakingCoroutine;
     
+    [Header("External References")]
     public CharacterBase npc;
-    
     public TextMeshProUGUI text;
+    
+    [Header("OtherScripts")]
+    [HideInInspector] public NpcMovement npcMovement;
     // Start is called before the first frame update
     void Start()
     {
-        NpcDialogueHandler.ResetDialogue();
+        npcMovement = GetComponent<NpcMovement>();
         
         _spriteRenderer = GetComponent<SpriteRenderer>();
         if (_spriteRenderer != null)
@@ -51,50 +55,36 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         _architect = new TextArchitect(text);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (userInput && !_conversationRunning)
-        {
-            userInput = false;
-            StartSpeaking();
-        }
-    }
-
     public void Interact()
     {
         if (!_conversationRunning)
         {
-            userInput = true;
+            StartConversation();
         }
     }
     
-    private void ProgressDialogue()
+    public void ProgressDialogue()
     {
-        if (waitingForResponse)
+        if (waitingForSignal)
             return;
         if (_waitingForUserInput)
             userInput = true;
     }
-
-    public void EndConversation()
+    
+    public void DisplayDialogueUI()
     {
-        StopCoroutine(_speakingCoroutine);
-        text.text = "";
-        _speakingCoroutine = null;
-        _conversationRunning = false;
-        CurrentSpeaker = null;
-        DialogueBoxManager.Instance.HideDialogueContainers();
-        GameEvents.playerUnfrozen?.Invoke();
-        GameManager.Instance.DialogueScriptsOff();
-        GameEvents.interactPressed -= ProgressDialogue;
+        DialogueBoxManager.Instance.ShowDialogueContainers();
     }
     
-    private void StartSpeaking()
+    public void HideDialogueUI()
+    {
+        DialogueBoxManager.Instance.HideDialogueContainers();
+    }
+    
+    private void StartConversation()
     {
         CurrentSpeaker = this;
-        GameManager.Instance.DialogueScriptsOn();
-        DialogueBoxManager.Instance.ShowDialogueContainers();
+        DisplayDialogueUI();
         
         GameEvents.playerFrozen?.Invoke();
         
@@ -108,6 +98,18 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         }
         
         GameEvents.interactPressed += ProgressDialogue;
+    }
+    
+    public void EndConversation()
+    {
+        StopCoroutine(_speakingCoroutine);
+        text.text = "";
+        _speakingCoroutine = null;
+        _conversationRunning = false;
+        CurrentSpeaker = null;
+        HideDialogueUI();
+        GameEvents.playerUnfrozen?.Invoke();
+        GameEvents.interactPressed -= ProgressDialogue;
     }
 
     private IEnumerator Speaking()
@@ -129,6 +131,8 @@ public class NpcSpeaker : MonoBehaviour, Interactable
                 treatCommandAsDialogue = false;
             }
         }
+        
+        EndConversation();
     }
     
     IEnumerator Line_RunDialogue(DIALOGUE_LINES line)
@@ -172,7 +176,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         else
             _architect.Append(dialogue);
             
-        while (_architect.isBuilding)
+        while (_architect.IsBuilding)
         {
             yield return null;
         }
@@ -192,7 +196,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     private IEnumerator WaitForUserInput()
     {
         _waitingForUserInput = true;
-        while (!userInput || waitingForResponse)
+        while (!userInput || waitingForSignal)
         {
             yield return null;
         }

@@ -16,7 +16,7 @@ public static class ButtonScriptCombatMenu
         
         foreach (var equipped in PlayerDataHolder.EquippedItems)
         {
-            foreach (var equipment in ScrubHolder.Instance.allEquipment.allEquipment)
+            foreach (var equipment in DataBase.allEquipment)
             {
                 if (equipped == equipment.name)
                 {

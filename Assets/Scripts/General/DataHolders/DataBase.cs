@@ -1,0 +1,15 @@
+using UnityEngine;
+
+public static class DataBase
+{
+    public static EquipmentScrub[] allEquipment;
+    public static PlayerSkills[] allPlayerSkills;
+    public static EnemyScrub[] allEnemies;
+    
+    public static void InitializeData()
+    {
+        allEquipment = Resources.LoadAll<EquipmentScrub>("Scrubs/Items/Equipment");
+        allPlayerSkills = Resources.LoadAll<PlayerSkills>("Scrubs/Combat/AttackMoves/Player");
+        allEnemies = Resources.LoadAll<EnemyScrub>("Scrubs/Combat/Enemy/Enemies");
+    }
+}
