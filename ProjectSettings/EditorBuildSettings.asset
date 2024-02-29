@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/GameScenes/BedRoom.unity
+    guid: 9ca0f02aa72f11145bfd36fa7b71f58f
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/BedRoomNight.unity
+    guid: 9af7fcca54b036040b5cbaf13869dce1
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/StartingArea.unity
+    guid: c5b0b89ad37300249ad2e31fc948fbae
+  - enabled: 1
     path: Assets/Scenes/TestScene.unity
     guid: 743b07f7de309aa4ca1aff111ae48734
   - enabled: 1
@@ -15,13 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/GameScenes/StartingArea.unity
-    guid: c5b0b89ad37300249ad2e31fc948fbae
-  - enabled: 1
     path: Assets/Scenes/SituationScenes/Combat.unity
     guid: f9cfd0c086fe73e49b477c14304e1716
   - enabled: 1
     path: Assets/Scenes/UI/LevelUpScene.unity
     guid: 50f8adbae53976b48871e1794e75e5e8
   m_configObjects: {}
-  m_UseUCBPForAssetBundles: 0
