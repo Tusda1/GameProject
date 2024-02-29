@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CheckForCollision(Vector2 direction)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(direction, 0.2f);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(direction, 0.1f);
         foreach (var hit in hits)
         {
             if (!hit.CompareTag("Player") && !hit.isTrigger)

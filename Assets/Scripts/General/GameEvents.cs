@@ -21,4 +21,16 @@ public static class GameEvents
     
     public delegate void MovePlayer(int x, int y);
     public static MovePlayer movePlayer;
+    
+    public delegate void PromptEvent(string prompt);
+    public static PromptEvent showPrompt;
+    public static PromptEvent hidePrompt;
+    
+    public delegate void SceneEvent(string sceneName, bool additive, string doorName);
+    public static SceneEvent loadScene;
+    public delegate void DoorEvent(string doorName);
+    public static DoorEvent lookForDoor;
+    
+    public delegate void ReturnDoor(Vector2 position);
+    public static ReturnDoor returnDoor;
 }

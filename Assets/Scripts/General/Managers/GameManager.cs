@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
@@ -25,20 +26,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         CombatEvents.combatEnd += EndCombat;
         GameEvents.levelUp += LevelUp;
         GameEvents.endLevelUp += EndLevelUp;
     }
-
-    private void OnDestroy()
+    
+    private void OnDisable()
     {
         CombatEvents.combatEnd -= EndCombat;
         GameEvents.levelUp -= LevelUp;
         GameEvents.endLevelUp -= EndLevelUp;
     }
-    
+
     public void SpawnEnemy()
     {
         //Create a combined enemy spawn chance that is the sum of all the spawn chances of the enemies in the region
