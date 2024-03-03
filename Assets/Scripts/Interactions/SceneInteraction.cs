@@ -11,6 +11,11 @@ public class SceneInteraction : MonoBehaviour, Interactable
     {
         GameEvents.lookForDoor += CheckForDoor;
     }
+    
+    private void OnDisable()
+    {
+        GameEvents.lookForDoor -= CheckForDoor;
+    }
 
     public void Interact()
     {

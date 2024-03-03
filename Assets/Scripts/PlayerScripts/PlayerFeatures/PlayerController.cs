@@ -30,13 +30,18 @@ public class PlayerController : MonoBehaviour
 
     void Interact()
     {
-        var facingDir = _playerAnimation.GetFacingDirection()/2;
+        var facingDir = _playerAnimation.GetFacingDirection()/1.5f;
         var interactPos = transform.position + facingDir;
         
-        var collider = Physics2D.OverlapCircle(interactPos, 0.2f);
-        if (collider != null)
+        // Trigger interactable interact in every object in overlapcircle
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(interactPos, 0.2f);
+        foreach (var collider in colliders)
         {
-            collider.GetComponent<Interactable>()?.Interact();
+            var interactable = collider.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                interactable.Interact();
+            }
         }
     }
 }
