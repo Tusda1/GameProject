@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement variables")] 
-    private static bool _frozen;
+    public static bool frozen;
     private float _moveDuration = 0.15f;
     private float _gridSize = 0.5f;
     private bool _isMoving;
@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveUp()
     {
-        if (!_isMoving && !_frozen)
+        if (!_isMoving && !frozen)
         {
             StartCoroutine(Move(Vector2.up));
         }
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void MoveDown()
     {
-        if (!_isMoving && !_frozen)
+        if (!_isMoving && !frozen)
         {
             StartCoroutine(Move(Vector2.down));
         }   
@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void MoveLeft()
     {
-        if (!_isMoving && !_frozen)
+        if (!_isMoving && !frozen)
         {
             StartCoroutine(Move(Vector2.left));
         }
@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void MoveRight()
     {
-        if (!_isMoving && !_frozen)
+        if (!_isMoving && !frozen)
         {
             StartCoroutine(Move(Vector2.right));
         }
@@ -136,11 +136,11 @@ public class PlayerMovement : MonoBehaviour
     
     private void FreezePlayer()
     {
-        _frozen = true;
+        frozen = true;
     }
 
     private void UnfreezePlayer()
     {
-        _frozen = false;
+        frozen = false;
     }
 }

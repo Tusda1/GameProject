@@ -30,6 +30,9 @@ public static class GameEvents
     public static SceneEvent loadScene;
     public delegate void DoorEvent(string doorName);
     public static DoorEvent lookForDoor;
+
+    public static GameEvent SceneFadeOut;
+    public static GameEvent SceneFadeIn;
     
     public delegate void ReturnDoor(Vector2 position);
     public static ReturnDoor returnDoor;

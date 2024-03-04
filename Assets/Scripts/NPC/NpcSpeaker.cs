@@ -23,6 +23,10 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     public bool treatCommandAsDialogue;
     [HideInInspector] 
     public int lockedOptions;
+    [HideInInspector]
+    public int keepLinesValue;
+    [HideInInspector] 
+    public bool waitingForCombat;
     
     private bool _conversationRunning;
     
@@ -53,6 +57,16 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         text = DialogueBoxManager.Instance.dialogueBox;
         
         _architect = new TextArchitect(text);
+    }
+
+    private void OnEnable()
+    {
+        CombatEvents.combatEnd += OnCombatEnd;
+    }
+    
+    private void OnDisable()
+    {
+        CombatEvents.combatEnd -= OnCombatEnd;
     }
 
     public void Interact()
@@ -92,10 +106,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         dialogueDict = NpcDialogueHandler.GetDialogue(npc.characterName);
         
         _conversationRunning = true;
-        if (_speakingCoroutine == null)
-        {
-            _speakingCoroutine = StartCoroutine(Speaking());
-        }
+        _speakingCoroutine ??= StartCoroutine(Speaking());
         
         GameEvents.interactPressed += ProgressDialogue;
     }
@@ -108,8 +119,34 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         _conversationRunning = false;
         CurrentSpeaker = null;
         HideDialogueUI();
-        GameEvents.playerUnfrozen?.Invoke();
         GameEvents.interactPressed -= ProgressDialogue;
+        if (!GameManager.Instance.inCombat)
+            GameEvents.playerUnfrozen?.Invoke();
+    }
+    
+    public void StartNextDialogue()
+    {
+        StopCoroutine(_speakingCoroutine);
+        text.text = "";
+        _speakingCoroutine = null;
+        
+        whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.characterName);
+        dialogueDict = NpcDialogueHandler.GetDialogue(npc.characterName);
+        _speakingCoroutine ??= StartCoroutine(Speaking());
+    }
+    
+    private void OnCombatEnd()
+    {
+        if (!waitingForCombat)
+            return;
+        
+        waitingForCombat = false;
+        StartConversation();
+    }
+    
+    public void DestroyNpc()
+    {
+        Destroy(gameObject);
     }
 
     private IEnumerator Speaking()
@@ -142,10 +179,8 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     IEnumerator BuildLineSegments(DL_DialogueData line)
     {
-        for (int i = 0; i < line.Segments.Count; i++)
+        foreach (var segment in line.Segments)
         {
-            DL_DialogueData.DIALOGUE_SEGMENT segment = line.Segments[i];
-
             yield return WaitForDialogueSegmentSignalToBeTriggered(segment);
 
             yield return BuildDialogue(segment.dialogue, segment.appendText);
@@ -163,8 +198,6 @@ public class NpcSpeaker : MonoBehaviour, Interactable
             case DL_DialogueData.DIALOGUE_SEGMENT.StartSignal.WC:
             case DL_DialogueData.DIALOGUE_SEGMENT.StartSignal.WA:
                 yield return new WaitForSeconds(segment.signalDelay);
-                break;
-            default:
                 break;
         }
     }

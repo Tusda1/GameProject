@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class SceneInteraction : MonoBehaviour, Interactable
+public class DoorInteraction : MonoBehaviour, Interactable
 {
     [SerializeField] private string sceneName;
     [SerializeField] private string doorName;
     [SerializeField] private bool additive;
     [SerializeField] private GameObject spawnPosition;
+    [SerializeField] private bool locked;
 
     private void OnEnable()
     {
@@ -19,6 +20,10 @@ public class SceneInteraction : MonoBehaviour, Interactable
 
     public void Interact()
     {
+        if (locked)
+            return;
+        
+        GameEvents.playerFrozen?.Invoke();
         GameEvents.loadScene?.Invoke(sceneName, additive, doorName);
     }
 

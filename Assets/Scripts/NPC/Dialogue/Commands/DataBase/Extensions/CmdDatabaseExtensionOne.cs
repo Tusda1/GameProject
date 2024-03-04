@@ -21,9 +21,17 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         
         database.AddCommand("SpawnEnemy",new Action<string>(SpawnEnemy));
         
+        database.AddCommand("DisplayName",new Action<string>(DisplayName));
+        
+        database.AddCommand("DestroyNpc",new Action(DestroyNpc));
+        
         database.AddCommand("NextDialogue",new Action(NextDialogue));
         
+        database.AddCommand("StartNextDialogue",new Action(StartNextDialogue));
+        
         database.AddCommand("NextScene", new Action<string>(NextScene));
+        
+        database.AddCommand("Leave", new Action(LeaveConversation));
     }
 
     //Used only for testing
@@ -63,7 +71,7 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
     private static void KeepLines(string[] deleteStartAndAmount)
     {
         //Decrements buttonPressed by 1 so that the first button becomes 0 in order to match the index of an array.
-        int optionChosen = ButtonManager.Instance.buttonPressed - 1;
+        int optionChosen = NpcSpeaker.CurrentSpeaker.keepLinesValue - 1;
         
         //For loops that deletes all routes except the one chosen
         for (int i = 0; i < (deleteStartAndAmount.Length/2); i++)
@@ -134,7 +142,18 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
 
     private static void SpawnEnemy(string enemyName)
     {
+        NpcSpeaker.CurrentSpeaker.waitingForCombat = true;
         GameManager.Instance.SpawnEnemyByName(enemyName);
+    }
+    
+    private static void DisplayName(string currentName)
+    {
+        DialogueBoxManager.Instance.DisplayName(currentName);
+    }
+    
+    private static void DestroyNpc()
+    {
+        NpcSpeaker.CurrentSpeaker.DestroyNpc();
     }
 
     //Used at the end of a dialogue to move on to the next dialogue.
@@ -142,10 +161,20 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
     {
         NpcDialogueHandler.ChangeWhichDialogue(NpcSpeaker.CurrentSpeaker.npc.characterName, 1);
     }
+    
+    private static void StartNextDialogue()
+    {
+        NpcSpeaker.CurrentSpeaker.StartNextDialogue();
+    }
 
     //Used if you want to move to a different scene.
     private static void NextScene(string nextSceneInGame)
     {
 
+    }
+    
+    private static void LeaveConversation()
+    {
+        NpcSpeaker.CurrentSpeaker.EndConversation();
     }
 }

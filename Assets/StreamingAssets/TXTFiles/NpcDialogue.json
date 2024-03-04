@@ -59,7 +59,7 @@
           "\"option 2 third\"",
           "\"That's great to hear\"",
           "\"I am so sorry\"",
-          "\"Dialogue 3 for NPC 1\" NextDialogue()",
+          "\"Dialogue 3 for NPC 1\" NextDialogue()"
         ],
         "dialogue2": [
           "\"Dialogue2 1 for NPC 1\"",
@@ -69,18 +69,52 @@
       }
     },
     {
-      "name": "Slim",
+      "name": "Levi",
       "WhichDialogue": 0,
       "dialogue": {
         "dialogue1": [
-          "Dialogue 1 for NPC 3",
-          "Dialogue 2 for NPC 3",
-          "Dialogue 3 for NPC 3"
+            "DisplayName(\"Unknown\")",
+            "\"Hi there, did you come out of that mystical door right deeper in the forest?\"",
+            "Choices(\"Yes\" \"No\")",
+            "KeepLines(\"1\" \"3\" \"4\" \"1\")",
+            
+            "\"I've been looking for you! I need your help to save this kingdom!\"",
+            "NextDialogue()",
+            "StartNextDialogue()",
+            
+            "\"I'm sorry, I must have mistaken you for someone else.\""
         ],
         "dialogue2": [
-          "Dialogue2 1 for NPC 3",
-          "Dialogue2 2 for NPC 3",
-          "Dialogue2 3 for NPC 3"
+            "DisplayName(\"Guide\")",
+            "\"My name is Levi, you could say I am a guide for people like you\"",
+            "\"In order to save this land you need to defeat an evil king and end his tyranny\"",
+            "\"Do you know how to fight?\"",
+            "Choices(\"Yes\" \"No\")",
+            "KeepLines(\"1\" \"4\" \"5\" \"10\")",
+            
+            "\"That amazing! However I would still like to watch you in action\"",
+            "\"Try defeating this slime, it should be an easy task for you\"",
+            "SpawnEnemy(\"Slime\")",
+            "NextDialogue()",
+            
+            "\"Well let me tell you how combat works\"",
+            "\"The combat is turn based, you can attack, use items, run away, or try to reason with the enemy\"",
+            "\"You can also use magic, but you need to find a spell book first\"",
+            "\"Attacks have different effects, crit chance, crit modifier, damage and accuracy\"",
+            "\"If the attack you are using has accuracy that scales with speed you speed replaces accuracy\"",
+            "\"The chance of the attack hitting is dependent on the accuracy of the attack and the speed of the defender\"",
+            "\"The person with the highest speed goes first\"",
+            "\"Now its time for a test, try to defeat this simple slime\"",
+            "SpawnEnemy(\"Slime\")",
+            "NextDialogue()"
+        ],
+        "dialogue3": [
+            "DisplayName(\"Guide\")",
+            "\"You did it!\"",
+            "\"You show great promise. I will meet you in the nearby village. Come there when you are ready\"",
+            "MoveNpc(\"-10\" \"0\" \"0\")",
+            "nextDialogue()",
+            "DestroyNpc()"
         ]
       }
     }

@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
@@ -23,18 +25,28 @@ public class SceneController : MonoBehaviour
         
         if (additive)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
         else
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+            StartCoroutine(LoadRegularScene(sceneName));
         }
-        
+    }
+    
+    private IEnumerator LoadRegularScene(string sceneName)
+    {
+        GameEvents.SceneFadeIn?.Invoke();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(sceneName);
+        yield return new WaitForSeconds(0.2f);
         GameEvents.lookForDoor?.Invoke(_currentDoor);
+        yield return new WaitForSeconds(0.3f);
+        GameEvents.SceneFadeOut?.Invoke();
     }
     
     private void ReturnDoor(Vector2 position)
     {
         player.transform.position = position;
+        GameEvents.playerUnfrozen?.Invoke();
     }
 }

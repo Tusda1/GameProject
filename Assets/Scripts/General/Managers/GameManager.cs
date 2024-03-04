@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Variables")] 
     private bool _levelingUp;
+    public bool inCombat;
     
     private void Awake()
     {
@@ -87,12 +88,14 @@ public class GameManager : MonoBehaviour
 
     public void InitiateCombat()
     {
+        inCombat = true;
         GameEvents.playerFrozen?.Invoke();
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
     }
 
     private void EndCombat()
     {
+        inCombat = false;
         SceneManager.UnloadSceneAsync("Combat");
         if (!_levelingUp)
         {

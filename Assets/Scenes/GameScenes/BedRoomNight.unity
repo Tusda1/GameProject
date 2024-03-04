@@ -338,6 +338,7 @@ MonoBehaviour:
   doorName: BedroomDoor
   additive: 0
   spawnPosition: {fileID: 1715613299}
+  locked: 0
 --- !u!1 &241388345
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,6 +350,7 @@ GameObject:
   - component: {fileID: 241388346}
   - component: {fileID: 241388347}
   - component: {fileID: 241388348}
+  - component: {fileID: 241388350}
   - component: {fileID: 241388349}
   m_Layer: 0
   m_Name: Bed
@@ -369,7 +371,8 @@ Transform:
   m_LocalPosition: {x: -4.816, y: 2.63, z: -0.0061411895}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 545243024}
   m_Father: {fileID: 1766715}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &241388347
@@ -482,6 +485,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uselessText: You're not tired
+--- !u!114 &241388350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241388345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4590e81c841fa8e408a80350f9618291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorName: Bed
+  spawnPosition: {fileID: 545243023}
 --- !u!1001 &437776313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -543,6 +560,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9041de67f3a04c641af0efecadce79de, type: 3}
+--- !u!1 &545243023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 545243024}
+  m_Layer: 0
+  m_Name: BedSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &545243024
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545243023}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.84095955, y: -0.12870312, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 241388346}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &556026491
 GameObject:
   m_ObjectHideFlags: 0
