@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class NpcSpeaker : MonoBehaviour, Interactable
 {
@@ -26,7 +27,9 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     [HideInInspector]
     public int keepLinesValue;
     [HideInInspector] 
-    public bool waitingForCombat;
+    public bool waitingForCombatEnd;
+    [HideInInspector] 
+    public bool DialogueUIStatusLocked;
     
     private bool _conversationRunning;
     
@@ -39,6 +42,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     [Header("External References")]
     public CharacterBase npc;
+    [HideInInspector]
     public TextMeshProUGUI text;
     
     [Header("OtherScripts")]
@@ -87,11 +91,17 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     public void DisplayDialogueUI()
     {
+        if (DialogueUIStatusLocked)
+            return;
+        
         DialogueBoxManager.Instance.ShowDialogueContainers();
     }
     
     public void HideDialogueUI()
     {
+        if (DialogueUIStatusLocked)
+            return;
+        
         DialogueBoxManager.Instance.HideDialogueContainers();
     }
     
@@ -100,7 +110,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         CurrentSpeaker = this;
         DisplayDialogueUI();
         
-        GameEvents.playerFrozen?.Invoke();
+        PlayerEvents.playerFrozen?.Invoke();
         
         whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.characterName);
         dialogueDict = NpcDialogueHandler.GetDialogue(npc.characterName);
@@ -121,7 +131,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         HideDialogueUI();
         GameEvents.interactPressed -= ProgressDialogue;
         if (!GameManager.Instance.inCombat)
-            GameEvents.playerUnfrozen?.Invoke();
+            PlayerEvents.playerUnfrozen?.Invoke();
     }
     
     public void StartNextDialogue()
@@ -137,15 +147,16 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     private void OnCombatEnd()
     {
-        if (!waitingForCombat)
+        if (!waitingForCombatEnd)
             return;
         
-        waitingForCombat = false;
+        waitingForCombatEnd = false;
         StartConversation();
     }
     
     public void DestroyNpc()
     {
+        EndConversation();
         Destroy(gameObject);
     }
 

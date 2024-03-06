@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,6 +6,7 @@ public class PlayerController : MonoBehaviour
     private bool _interactable;
     private Vector2 _inputAxis;
     private Vector3 _targetPos;
+    private bool _canInteract = true;
     
     [Header("Scripts")]
     private PlayerAnimation _playerAnimation;
@@ -23,14 +23,36 @@ public class PlayerController : MonoBehaviour
         GameEvents.interactPressed += Interact;
     }
 
+    private void OnEnable()
+    {
+        PlayerEvents.playerCantInteract += TurnOffInteraction;
+        PlayerEvents.playerCanInteract += TurnOnInteraction;
+    }
+    
+    private void OnDisable()
+    {
+        PlayerEvents.playerCantInteract -= TurnOffInteraction;
+        PlayerEvents.playerCanInteract -= TurnOnInteraction;
+    }
+
     private void Update()
     {
         _playerAnimation.UpdateAnimation(_playerMovement.moveVector);
     }
 
+    private void TurnOffInteraction()
+    {
+        _canInteract = false;
+    }
+    
+    private void TurnOnInteraction()
+    {
+        _canInteract = true;
+    }
+
     void Interact()
     {
-        if (PlayerMovement.frozen)
+        if (!_canInteract)
             return;
         
         var facingDir = _playerAnimation.GetFacingDirection()/1.5f;

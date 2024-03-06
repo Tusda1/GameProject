@@ -23,6 +23,10 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         
         database.AddCommand("DisplayName",new Action<string>(DisplayName));
         
+        database.AddCommand("HideDialogueUI",new Action(HideDialogueUI));
+        
+        database.AddCommand("DisplayDialogueUI",new Action(DisplayDialogueUI));
+        
         database.AddCommand("DestroyNpc",new Action(DestroyNpc));
         
         database.AddCommand("NextDialogue",new Action(NextDialogue));
@@ -142,13 +146,24 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
 
     private static void SpawnEnemy(string enemyName)
     {
-        NpcSpeaker.CurrentSpeaker.waitingForCombat = true;
+        NpcSpeaker.CurrentSpeaker.waitingForCombatEnd = true;
         GameManager.Instance.SpawnEnemyByName(enemyName);
     }
     
     private static void DisplayName(string currentName)
     {
         DialogueBoxManager.Instance.DisplayName(currentName);
+    }
+    
+    private static void HideDialogueUI()
+    {
+        NpcSpeaker.CurrentSpeaker.HideDialogueUI();
+    }
+    
+    private static void DisplayDialogueUI()
+    {
+        NpcSpeaker.CurrentSpeaker.DisplayDialogueUI();
+        NpcSpeaker.CurrentSpeaker.ProgressDialogue();
     }
     
     private static void DestroyNpc()

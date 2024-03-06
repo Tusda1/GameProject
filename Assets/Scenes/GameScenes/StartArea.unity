@@ -3501,6 +3501,7 @@ MonoBehaviour:
   doorName: BedroomDoor
   additive: 0
   spawnPosition: {fileID: 1763500460}
+  locked: 0
 --- !u!61 &1941982009
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3558,10 +3559,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC
       objectReference: {fileID: 0}
-    - target: {fileID: 7105223492406759268, guid: b629806cfc035d14589f1204127384d1, type: 3}
-      propertyPath: npc
-      value: 
-      objectReference: {fileID: 11400000, guid: 63aa5cbb1cb3c294f9047ce1f9ab5704, type: 2}
     - target: {fileID: 8687867678592846048, guid: b629806cfc035d14589f1204127384d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8

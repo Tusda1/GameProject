@@ -13,8 +13,8 @@ public class PlayerMovement : MonoBehaviour
     
     private void Start()
     {
-        GameEvents.playerFrozen += FreezePlayer;
-        GameEvents.playerUnfrozen += UnfreezePlayer;
+        PlayerEvents.playerFrozen += FreezePlayer;
+        PlayerEvents.playerUnfrozen += UnfreezePlayer;
         
         GameEvents.down += MoveDown;
         GameEvents.up += MoveUp;
@@ -26,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEvents.playerFrozen -= FreezePlayer;
-        GameEvents.playerUnfrozen -= UnfreezePlayer;
+        PlayerEvents.playerFrozen -= FreezePlayer;
+        PlayerEvents.playerUnfrozen -= UnfreezePlayer;
         
         GameEvents.down -= MoveDown;
         GameEvents.up -= MoveUp;

@@ -482,6 +482,7 @@ MonoBehaviour:
   doorName: Bed
   additive: 0
   spawnPosition: {fileID: 1404228395}
+  locked: 0
 --- !u!1 &510416381
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,17 +1841,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3136590520839450714, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_Name
       value: '[DIALOGUE UI]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3704890752932895955, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4002602772519895636, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1892,47 +1885,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4377265143256929497, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5358211562237465379, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7365672370457958385, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 9212173405281716729, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1329978343}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
---- !u!1 &1329978342 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3674729379861848447, guid: c9cf911568280cd438723d84ffc26b39, type: 3}
-  m_PrefabInstance: {fileID: 1329978341}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1329978343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329978342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd39194cdcd8947439b59fe7890201a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1340906564
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,6 +2906,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1911955662866959472, guid: 70c4a98426745e74ea2a0d5482fc17d3, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 119
+      objectReference: {fileID: 0}
     - target: {fileID: 6340705728325261108, guid: 70c4a98426745e74ea2a0d5482fc17d3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3157,6 +3118,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[ACTUALSCREEN]'
       objectReference: {fileID: 0}
+    - target: {fileID: 4587151806544396795, guid: 9041de67f3a04c641af0efecadce79de, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6161936467940884595, guid: 9041de67f3a04c641af0efecadce79de, type: 3}
       propertyPath: m_LocalPosition.x
       value: -50
@@ -3196,6 +3161,10 @@ PrefabInstance:
     - target: {fileID: 6161936467940884595, guid: 9041de67f3a04c641af0efecadce79de, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820677832257901616, guid: 9041de67f3a04c641af0efecadce79de, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

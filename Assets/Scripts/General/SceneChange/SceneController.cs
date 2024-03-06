@@ -47,6 +47,5 @@ public class SceneController : MonoBehaviour
     private void ReturnDoor(Vector2 position)
     {
         player.transform.position = position;
-        GameEvents.playerUnfrozen?.Invoke();
     }
 }

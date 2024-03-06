@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -8,22 +9,31 @@ public class PromptManager : MonoBehaviour
     
     private void Start()
     {
+        HidePrompt();
+    }
+
+    private void OnEnable()
+    {
         GameEvents.showPrompt += ShowPrompt;
         GameEvents.hidePrompt += HidePrompt;
-        
-        HidePrompt("");
+    }
+    
+    private void OnDisable()
+    {
+        GameEvents.showPrompt -= ShowPrompt;
+        GameEvents.hidePrompt -= HidePrompt;
     }
 
     private void ShowPrompt(string prompt)
     {
-        GameEvents.playerFrozen?.Invoke();
+        PlayerEvents.playerFrozen?.Invoke();
         promptText.text = prompt;
         promptPanel.SetActive(true);
     }
     
-    private void HidePrompt(string prompt)
+    private void HidePrompt()
     {
-        GameEvents.playerUnfrozen?.Invoke();
+        PlayerEvents.playerUnfrozen?.Invoke();
         promptPanel.SetActive(false);
     }
 }

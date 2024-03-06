@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8687867678592846048}
   - component: {fileID: 9101284806564717863}
   - component: {fileID: 7105223492406759268}
+  - component: {fileID: 5428994916597426175}
   - component: {fileID: 5140662743380200506}
   m_Layer: 6
   m_Name: NPC
@@ -104,9 +105,23 @@ MonoBehaviour:
   currentDialogueLine: 0
   treatCommandAsDialogue: 0
   lockedOptions: 0
-  npc: {fileID: 11400000, guid: 61f187e7a616eb042a951c821e519a8b, type: 2}
+  keepLinesValue: 0
+  waitingForCombat: 0
+  npc: {fileID: 11400000, guid: 63aa5cbb1cb3c294f9047ce1f9ab5704, type: 2}
   text: {fileID: 0}
   npcMovement: {fileID: 0}
+--- !u!114 &5428994916597426175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6230670494056434956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c1e2dfb2a30a6458a57d949be2c0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &5140662743380200506
 BoxCollider2D:
   m_ObjectHideFlags: 0

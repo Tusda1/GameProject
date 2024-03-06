@@ -23,6 +23,4 @@ MonoBehaviour:
   accuracy: 10
   accuracyScalesWithSpeed: 0
   alwaysHits: 0
-  statusEffect: 0
-  chanceToApplyStatusEffect: 0
-  statusEffectDuration: 0
+  statusEffects: []

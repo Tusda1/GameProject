@@ -1,3 +1,4 @@
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 [System.Serializable]
@@ -43,6 +44,15 @@ public class EnemyScrub : CharacterBase
     public AttackMove EnemyAttack()
     {
         AttackMove chosenAttackMove = attackMoves[Random.Range(0, attackMoves.Length)];
+        if (chosenAttackMove == null)
+        {
+            Debug.Log("Attack move is null");
+        }
+
+        if (chosenAttackMove.statusEffects == null)
+        {
+            Debug.Log("Status effects are null");
+        }
         return chosenAttackMove;
     }
 }

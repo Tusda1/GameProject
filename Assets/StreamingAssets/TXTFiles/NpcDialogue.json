@@ -112,8 +112,9 @@
             "DisplayName(\"Guide\")",
             "\"You did it!\"",
             "\"You show great promise. I will meet you in the nearby village. Come there when you are ready\"",
-            "MoveNpc(\"-10\" \"0\" \"0\")",
-            "nextDialogue()",
+            "HideDialogueUI()",
+            "MoveNpc(\"-15\" \"0\" \"0\")",
+            "NextDialogue()",
             "DestroyNpc()"
         ]
       }

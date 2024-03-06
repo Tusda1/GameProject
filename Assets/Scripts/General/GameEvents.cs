@@ -11,8 +11,6 @@ public static class GameEvents
     public static GameEvent right;
     
     //Player
-    public static GameEvent playerFrozen;
-    public static GameEvent playerUnfrozen;
     public static GameEvent levelUp;
     public static GameEvent endLevelUp;
     
@@ -24,7 +22,7 @@ public static class GameEvents
     
     public delegate void PromptEvent(string prompt);
     public static PromptEvent showPrompt;
-    public static PromptEvent hidePrompt;
+    public static GameEvent hidePrompt;
     
     public delegate void SceneEvent(string sceneName, bool additive, string doorName);
     public static SceneEvent loadScene;

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Variables")] 
     private bool _levelingUp;
+    [HideInInspector]
     public bool inCombat;
     
     private void Awake()
@@ -69,7 +70,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var enemy in DataBase.allEnemies)
         {
-            if (enemy.name == enemyName)
+            if (enemy.characterName == enemyName)
             {
                 InstantiateEnemy(enemy);
                 break;
@@ -89,7 +90,8 @@ public class GameManager : MonoBehaviour
     public void InitiateCombat()
     {
         inCombat = true;
-        GameEvents.playerFrozen?.Invoke();
+        PlayerEvents.playerFrozen?.Invoke();
+        PlayerEvents.playerCantInteract?.Invoke();
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
     }
 
@@ -99,7 +101,8 @@ public class GameManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("Combat");
         if (!_levelingUp)
         {
-            GameEvents.playerUnfrozen?.Invoke();
+            PlayerEvents.playerUnfrozen?.Invoke();
+            PlayerEvents.playerCanInteract?.Invoke();
         }
     }
     
@@ -107,13 +110,15 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("LevelUpScene", LoadSceneMode.Additive);
         _levelingUp = true;
-        GameEvents.playerFrozen?.Invoke();
+        PlayerEvents.playerFrozen?.Invoke();
+        PlayerEvents.playerCantInteract?.Invoke();
     }
 
     private void EndLevelUp()
     {
         SceneManager.UnloadSceneAsync("LevelUpScene");
         _levelingUp = false;
-        GameEvents.playerUnfrozen?.Invoke();
+        PlayerEvents.playerUnfrozen?.Invoke();
+        PlayerEvents.playerCanInteract?.Invoke();
     }
 }
