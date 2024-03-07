@@ -6,7 +6,6 @@ public class ButtonManager : MonoBehaviour
 {
     public static ButtonManager Instance { get; private set; }
     
-    public int buttonPressed;
     [SerializeField] private GameObject[] buttonList; //
     [SerializeField] private TextMeshProUGUI[] buttonTextList; 
     private Button[] _buttons; // Array to store all the buttons

@@ -12,7 +12,7 @@ public class ButtonScript : MonoBehaviour
     public void Pressed(int buttonPressed)
     {
         //This is a workaround as unity wont allow a method with an enum as a parameter to be attached to a button
-        ButtonManager.Instance.buttonPressed = buttonPressed;
+        NpcSpeaker.CurrentSpeaker.keepLinesValue = buttonPressed;
         
         ButtonManager.Instance.HideButtons();
         NpcSpeaker.CurrentSpeaker.waitingForSignal = false;

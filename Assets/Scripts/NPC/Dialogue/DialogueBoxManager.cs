@@ -56,6 +56,16 @@ public class DialogueBoxManager : MonoBehaviour
             portraitNpcImage.gameObject.SetActive(false);
         }
     }
+    
+    public void DisplayName(string currentName)
+    {
+        nameTextBox.text = currentName;
+    }
+    
+    public void DisplayPortrait(Sprite portrait)
+    {
+        portraitNpcImage.sprite = portrait;
+    }
 
     public void HideDialogueContainers()
     {

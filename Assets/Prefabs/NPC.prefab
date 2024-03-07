@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8687867678592846048}
   - component: {fileID: 9101284806564717863}
   - component: {fileID: 7105223492406759268}
-  - component: {fileID: 466729786219167665}
+  - component: {fileID: 5428994916597426175}
+  - component: {fileID: 5140662743380200506}
   m_Layer: 6
   m_Name: NPC
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -899592591245013844, guid: 5a079cd62c9592a4eb25d65952b79e79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,13 +101,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whichDialogue: 0
   userInput: 0
-  waitingForResponse: 0
+  waitingForSignal: 0
   currentDialogueLine: 0
   treatCommandAsDialogue: 0
   lockedOptions: 0
-  npc: {fileID: 11400000, guid: 61f187e7a616eb042a951c821e519a8b, type: 2}
+  keepLinesValue: 0
+  waitingForCombat: 0
+  npc: {fileID: 11400000, guid: 63aa5cbb1cb3c294f9047ce1f9ab5704, type: 2}
   text: {fileID: 0}
---- !u!61 &466729786219167665
+  npcMovement: {fileID: 0}
+--- !u!114 &5428994916597426175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6230670494056434956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c1e2dfb2a30a6458a57d949be2c0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &5140662743380200506
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,7 +130,6 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6230670494056434956}
   m_Enabled: 1
-  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -138,17 +153,17 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.8125, y: 1.375}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  serializedVersion: 2
+  m_Size: {x: 0.8125, y: 1.375}
   m_EdgeRadius: 0

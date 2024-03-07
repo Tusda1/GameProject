@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,6 +6,7 @@ public class PlayerController : MonoBehaviour
     private bool _interactable;
     private Vector2 _inputAxis;
     private Vector3 _targetPos;
+    private bool _canInteract = true;
     
     [Header("Scripts")]
     private PlayerAnimation _playerAnimation;
@@ -23,20 +23,51 @@ public class PlayerController : MonoBehaviour
         GameEvents.interactPressed += Interact;
     }
 
+    private void OnEnable()
+    {
+        PlayerEvents.playerCantInteract += TurnOffInteraction;
+        PlayerEvents.playerCanInteract += TurnOnInteraction;
+    }
+    
+    private void OnDisable()
+    {
+        PlayerEvents.playerCantInteract -= TurnOffInteraction;
+        PlayerEvents.playerCanInteract -= TurnOnInteraction;
+    }
+
     private void Update()
     {
         _playerAnimation.UpdateAnimation(_playerMovement.moveVector);
     }
 
+    private void TurnOffInteraction()
+    {
+        _canInteract = false;
+    }
+    
+    private void TurnOnInteraction()
+    {
+        _canInteract = true;
+    }
+
     void Interact()
     {
-        var facingDir = _playerAnimation.GetFacingDirection()/2;
+        if (!_canInteract)
+            return;
+        
+        var facingDir = _playerAnimation.GetFacingDirection()/1.5f;
         var interactPos = transform.position + facingDir;
         
-        var collider = Physics2D.OverlapCircle(interactPos, 0.2f);
-        if (collider != null)
+        // Trigger interactable interact in every object in overlapcircle
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(interactPos, 0.1f);
+        foreach (var collider in colliders)
         {
-            collider.GetComponent<Interactable>()?.Interact();
+            var interactable = collider.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                interactable.Interact();
+                break;
+            }
         }
     }
 }
