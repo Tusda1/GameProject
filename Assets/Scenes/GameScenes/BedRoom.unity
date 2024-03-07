@@ -478,10 +478,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af010d548661db945bc6abc33fbbd8e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: BedroomNight
   doorName: Bed
-  additive: 0
   spawnPosition: {fileID: 1404228395}
+  sceneName: BedroomNight
+  additive: 0
   locked: 0
 --- !u!1 &510416381
 GameObject:
