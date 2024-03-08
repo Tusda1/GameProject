@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,9 +6,9 @@ using Newtonsoft.Json.Linq;
 public static class PlayerDataHolder
 {
     public static Dictionary<string, int> playerData = new Dictionary<string, int>();
-    public static List<string> unlockedPlayerSkills;
-    public static List<string> EquippedItems;
-    public static List<string> InventoryItems;
+    public static List<string> unlockedPlayerSkills = new List<string>();
+    public static List<string> EquippedItems = new List<string>();
+    public static List<string> InventoryItems = new List<string>();
     public static Dictionary<StatusEffectScrub, int> playerStatusEffects = new Dictionary<StatusEffectScrub, int>();
     private const float _expToNextLevelMultiplier = 1.5f;
 

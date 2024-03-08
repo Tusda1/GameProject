@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -123,6 +124,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     public void EndConversation()
     {
+        print("Ending Conversation");
         StopCoroutine(_speakingCoroutine);
         text.text = "";
         _speakingCoroutine = null;
@@ -130,6 +132,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         CurrentSpeaker = null;
         HideDialogueUI();
         GameEvents.interactPressed -= ProgressDialogue;
+        print("Unfreezing player");
         if (!GameManager.Instance.inCombat)
             PlayerEvents.playerUnfrozen?.Invoke();
     }
@@ -156,7 +159,9 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     public void DestroyNpc()
     {
+        print("Destroying Npc");
         EndConversation();
+        print("Finalizing destruction");
         Destroy(gameObject);
     }
 

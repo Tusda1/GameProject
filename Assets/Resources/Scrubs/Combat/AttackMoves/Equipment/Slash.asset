@@ -16,7 +16,7 @@ MonoBehaviour:
   narration: You slashed
   attackModifier:
     statName: 0
-    modifier: {x: 0.8, y: 1.2}
+    modifier: {x: 0.5, y: 0.7}
   manaCost: 0
   critChance: 1
   critMultiplier: 2

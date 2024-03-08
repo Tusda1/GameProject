@@ -10,13 +10,10 @@ public class ItemScrub : ScriptableObject
     
     [TextArea]
     public string itemDescription;
+    public ItemGrade grade;
     
     public Sprite itemSprite;
     public int itemValue;
     public bool isItemStackable;
     public bool isItemKeyItem;
-    public bool doesItemHaveSpecialEffect;  
-    public bool isConsumable;
-    
-    public void UseItem(){}
 }

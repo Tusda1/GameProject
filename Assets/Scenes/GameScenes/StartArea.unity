@@ -1030,6 +1030,46 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: -2, y: 3, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 38
+      m_TileSpriteIndex: 34
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 41
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -1, y: 3, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 38
+      m_TileSpriteIndex: 34
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 41
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 2, y: 3, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 38
+      m_TileSpriteIndex: 34
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 41
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 3, y: 3, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 38
+      m_TileSpriteIndex: 34
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 41
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 4, y: 3, z: 0}
     second:
       serializedVersion: 2
@@ -1198,8 +1238,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 509a046383a6156448d3da3345929350, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 4
+    m_Data: {fileID: 11400000, guid: 85ac65ac560cfc14986191797bce5e54, type: 2}
   - m_RefCount: 50
     m_Data: {fileID: 11400000, guid: 325ce53c88a79dd4c92458659d90787d, type: 2}
   - m_RefCount: 10
@@ -1275,8 +1315,8 @@ Tilemap:
     m_Data: {fileID: 644008980, guid: 8c6758226150d904eb08c29da51a936d, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 4
+    m_Data: {fileID: 1341618087, guid: 57abbc5d361a7e04cbb55631d4dc0dce, type: 3}
   - m_RefCount: 50
     m_Data: {fileID: -403776587, guid: 57abbc5d361a7e04cbb55631d4dc0dce, type: 3}
   - m_RefCount: 10
@@ -1292,7 +1332,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: -294688271, guid: 8c6758226150d904eb08c29da51a936d, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 84
+  - m_RefCount: 88
     m_Data:
       e00: 1
       e01: 0
@@ -1393,7 +1433,7 @@ Tilemap:
     m_Data: {r: 4.4937e-41, g: 4.4937e-41, b: 4.4937e-41, a: 4.4937e-41}
   - m_RefCount: 0
     m_Data: {r: 4.4937e-41, g: 4.4937e-41, b: 4.4937e-41, a: 4.4937e-41}
-  - m_RefCount: 84
+  - m_RefCount: 88
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -1901,6 +1941,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1175431214}
   - component: {fileID: 1175431213}
+  - component: {fileID: 1175431217}
   - component: {fileID: 1175431215}
   - component: {fileID: 1175431216}
   m_Layer: 0
@@ -2043,6 +2084,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 6}
   m_EdgeRadius: 0
+--- !u!114 &1175431217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175431212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cad7bf470153454190460325ba6c62a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleName: SlimeObstacle
 --- !u!1 &1270971043
 GameObject:
   m_ObjectHideFlags: 0
@@ -4668,7 +4722,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: 
   characterName: Slime
+  characterID: 2
   sprite: {fileID: 0}
   portrait: {fileID: 0}
   animatorController: {fileID: 22100000, guid: fb02061a68d11cc439901fab05107475, type: 2}
   isBoss: 0
   chanceToRun: 50
-  chanceToTalk: 100
+  chanceToTalk: 0
   level: 1
   maxHealth: 10
   enemyStats:

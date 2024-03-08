@@ -164,10 +164,20 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
     {
         bool itemExists = false;
 
-        /*foreach (var item in DataBase.)
+        foreach (var item in DataBase.allItems)
         {
-            
-        }*/
+            if (item.itemName == itemName)
+            {
+                itemExists = true;
+                break;
+            }
+        }
+        
+        if (!itemExists)
+        {
+            Debug.LogError("Item does not exist");
+            return;
+        }
         
         PlayerDataHolder.AddItemToInventory(itemName);
     }
@@ -200,7 +210,6 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
     private static void DisplayDialogueUI()
     {
         NpcSpeaker.CurrentSpeaker.DisplayDialogueUI();
-        NpcSpeaker.CurrentSpeaker.ProgressDialogue();
     }
     
     private static void DestroyNpc()

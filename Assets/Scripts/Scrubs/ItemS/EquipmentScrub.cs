@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum EquipmentGrade
+public enum ItemGrade
 {
     Normal,
     Elite,
@@ -17,17 +17,9 @@ public class StatModifier
 }
 
 [CreateAssetMenu(fileName = "Equipment", menuName = "Items/Equipment/New Equipment")]
-public class EquipmentScrub : ScriptableObject
+public class EquipmentScrub : ItemScrub
 {
-    public string itemName;
-    
-    [TextArea]
-    public string itemDescription;
-    
-    public Sprite itemSprite;
-    public int itemValue;
     public bool isUnique;
-    public EquipmentGrade grade;
     
     public StatModifier[] statModifiers;
     
