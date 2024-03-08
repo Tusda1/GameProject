@@ -113,7 +113,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         
         PlayerEvents.playerFrozen?.Invoke();
         
-        whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.characterName);
+        whichDialogue = DataBase.whichDialogueDictionary[npc.characterName];
         dialogueDict = NpcDialogueHandler.GetDialogue(npc.characterName);
         
         _conversationRunning = true;
@@ -143,7 +143,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
         text.text = "";
         _speakingCoroutine = null;
         
-        whichDialogue = NpcDialogueHandler.GetWhichDialogue(npc.characterName);
+        whichDialogue = DataBase.whichDialogueDictionary[npc.characterName];
         dialogueDict = NpcDialogueHandler.GetDialogue(npc.characterName);
         _speakingCoroutine ??= StartCoroutine(Speaking());
     }

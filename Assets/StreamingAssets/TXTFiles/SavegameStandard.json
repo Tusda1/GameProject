@@ -16,8 +16,8 @@
       "Magic": 5
     },
     {
-      "DataType": "Npc",
-      "Interacted": 0
+      "DataType": "Quests",
+      "Quests": []
     },
     {
       "DataType": "AttackMoves",
@@ -30,6 +30,12 @@
     {
       "DataType": "Inventory",
       "Inventory content": []
+    },
+    {
+      "DataType": "PlayerPosition",
+      "Scene": "Bedroom",
+      "X": 0,
+      "Y": 0
     }
   ]
 }

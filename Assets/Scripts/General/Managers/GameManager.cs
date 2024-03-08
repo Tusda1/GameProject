@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
 
     [Header("Variables")] 
-    private bool _levelingUp;
+    public bool levelingUp;
     [HideInInspector]
     public bool inCombat;
     
@@ -99,17 +100,14 @@ public class GameManager : MonoBehaviour
     {
         inCombat = false;
         SceneManager.UnloadSceneAsync("Combat");
-        if (!_levelingUp)
-        {
-            PlayerEvents.playerUnfrozen?.Invoke();
-            PlayerEvents.playerCanInteract?.Invoke();
-        }
+        PlayerEvents.playerUnfrozen?.Invoke();
+        PlayerEvents.playerCanInteract?.Invoke();
     }
     
     private void LevelUp()
     {
-        SceneManager.LoadSceneAsync("LevelUpScene", LoadSceneMode.Additive);
-        _levelingUp = true;
+        levelingUp = true;
+        SceneManager.LoadScene("LevelUpScene", LoadSceneMode.Additive);
         PlayerEvents.playerFrozen?.Invoke();
         PlayerEvents.playerCantInteract?.Invoke();
     }
@@ -117,7 +115,7 @@ public class GameManager : MonoBehaviour
     private void EndLevelUp()
     {
         SceneManager.UnloadSceneAsync("LevelUpScene");
-        _levelingUp = false;
+        levelingUp = false;
         PlayerEvents.playerUnfrozen?.Invoke();
         PlayerEvents.playerCanInteract?.Invoke();
     }

@@ -13,6 +13,7 @@ public static class GameEvents
     //Player
     public static GameEvent levelUp;
     public static GameEvent endLevelUp;
+    public static GameEvent saveGame;
     
     //Sound
     public static GameEvent playWritingSound;
@@ -26,6 +27,9 @@ public static class GameEvents
     
     public delegate void SceneEvent(string sceneName, bool additive, string doorName);
     public static SceneEvent loadScene;
+    
+    public delegate void FirstSceneEvent(string sceneName, Vector2 position);
+    public static FirstSceneEvent loadFirstScene;
     public delegate void FindObject(string doorName);
     public static FindObject lookForObject;
 

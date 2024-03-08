@@ -1,12 +1,15 @@
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
     private bool _saveFileExists;
     [SerializeField] private TextMeshProUGUI continueText;
+    [SerializeField] private Button[] buttons;
+    private ButtonManouverer _buttonManouverer;
     
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,8 @@ public class MainMenuManager : MonoBehaviour
             textmeshColor.a = 1f;
             continueText.color = textmeshColor;
         }
+        
+        _buttonManouverer = new ButtonManouverer(buttons, this);
     }
 
     public void Continue()
@@ -36,6 +41,7 @@ public class MainMenuManager : MonoBehaviour
     public void NewGame()
     {
         SaveFileHandler.CopySaveDataToPersistentPath();
+        NpcDialogueHandler.CopyDialogueDataToPersistentPath();
         
         StartGame();
     }
@@ -47,8 +53,15 @@ public class MainMenuManager : MonoBehaviour
     
     private void StartGame()
     {
+        _buttonManouverer.CleanUp();
+        _buttonManouverer = null;
         DataBase.InitializeData();
         PlayerDataHolder.InitializePlayerData(DataBase.allPlayerSkills);
-        SceneManager.LoadScene("Bedroom");
+        
+        Dictionary<string, object> tempLoadingDict = SaveFileHandler.GetSaveFile("PlayerPosition");
+        
+        print((int)tempLoadingDict["X"].GetType());
+        
+        GameEvents.loadFirstScene?.Invoke(tempLoadingDict["Scene"].ToString(), new Vector2((float)tempLoadingDict["X"], (float)tempLoadingDict["Y"]));
     }
 }

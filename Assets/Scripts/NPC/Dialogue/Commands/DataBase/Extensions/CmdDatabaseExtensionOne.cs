@@ -225,7 +225,7 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
     //Used at the end of a dialogue to move on to the next dialogue.
     private static void NextDialogue()
     {
-        NpcDialogueHandler.ChangeWhichDialogue(NpcSpeaker.CurrentSpeaker.npc.characterName, 1);
+        DataBase.whichDialogueDictionary[NpcSpeaker.CurrentSpeaker.npc.characterName] += 1;
     }
     
     private static void StartNextDialogue()

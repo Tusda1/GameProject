@@ -16,7 +16,7 @@ MonoBehaviour:
   characterID: 1
   sprite: {fileID: 0}
   portrait: {fileID: 0}
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 22100000, guid: fb02061a68d11cc439901fab05107475, type: 2}
   isBoss: 0
   chanceToRun: 0
   chanceToTalk: 0

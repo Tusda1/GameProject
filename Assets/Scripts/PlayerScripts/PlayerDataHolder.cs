@@ -143,7 +143,7 @@ public static class PlayerDataHolder
         EquippedItems.Remove(itemName);
     }
     
-    public static void WriteToSaveFile()
+    public static void WriteToSaveFile(Vector3 playerPosition)
     {
         //Convert playerData to a dictionary of objects then save
         Dictionary<string, object> tempDict = new Dictionary<string, object>();
@@ -154,5 +154,24 @@ public static class PlayerDataHolder
         }
         
         SaveFileHandler.UpdateDataType("Player", tempDict);
+        tempDict.Clear();
+        
+        //Convert unlockedPlayerSkills to a list of objects then save
+        SaveFileHandler.UpdateSaveData("AttackMoves", "UnlockedMoves", unlockedPlayerSkills);
+        
+        //Convert EquippedItems to a list of objects then save
+        SaveFileHandler.UpdateSaveData("Equipped", "EquippedItems", EquippedItems);
+        
+        //Convert InventoryItems to a list of objects then save
+        SaveFileHandler.UpdateSaveData("Inventory", "InventoryItems", InventoryItems);
+        
+        //Add scene to tempdict
+        tempDict.Add("Scene", SceneController.currentScene);
+        tempDict.Add("X", playerPosition.x);
+        tempDict.Add("Y", playerPosition.y);
+        
+        SaveFileHandler.UpdateDataType("PlayerPosition", tempDict);
+        
+        NpcDialogueHandler.UpdateAllWhichDialogues(DataBase.whichDialogueDictionary);
     }
 }
