@@ -26,8 +26,8 @@ public static class GameEvents
     
     public delegate void SceneEvent(string sceneName, bool additive, string doorName);
     public static SceneEvent loadScene;
-    public delegate void DoorEvent(string doorName);
-    public static DoorEvent lookForDoor;
+    public delegate void FindObject(string doorName);
+    public static FindObject lookForObject;
 
     public static GameEvent SceneFadeOut;
     public static GameEvent SceneFadeIn;

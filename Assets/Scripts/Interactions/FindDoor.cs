@@ -7,12 +7,12 @@ public class FindDoor : MonoBehaviour
     
     protected virtual void OnEnable()
     {
-        GameEvents.lookForDoor += CheckForDoor;
+        GameEvents.lookForObject += CheckForDoor;
     }
     
     protected virtual void OnDisable()
     {
-        GameEvents.lookForDoor -= CheckForDoor;
+        GameEvents.lookForObject -= CheckForDoor;
     }
     
     protected virtual void CheckForDoor(string doorName)

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6167036673999698370}
   - component: {fileID: 1380205569802155071}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: EnemyInstance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,9 +59,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whichDialogue: 0
   userInput: 0
-  waitingForResponse: 0
+  waitingForSignal: 0
   currentDialogueLine: 0
   treatCommandAsDialogue: 0
   lockedOptions: 0
+  keepLinesValue: 0
+  waitingForCombatEnd: 0
+  DialogueUIStatusLocked: 0
   npc: {fileID: 0}
   text: {fileID: 0}
+  npcMovement: {fileID: 0}

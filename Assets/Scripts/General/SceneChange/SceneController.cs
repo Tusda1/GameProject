@@ -39,7 +39,7 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(sceneName);
         yield return new WaitForSeconds(0.2f);
-        GameEvents.lookForDoor?.Invoke(_currentDoor);
+        GameEvents.lookForObject?.Invoke(_currentDoor);
         yield return new WaitForSeconds(0.3f);
         GameEvents.SceneFadeOut?.Invoke();
     }

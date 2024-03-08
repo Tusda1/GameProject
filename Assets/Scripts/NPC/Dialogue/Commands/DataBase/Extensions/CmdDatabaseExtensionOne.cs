@@ -21,6 +21,14 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         
         database.AddCommand("SpawnEnemy",new Action<string>(SpawnEnemy));
         
+        database.AddCommand("AddInventoryItem",new Action<string>(AddInventoryItem));
+        
+        database.AddCommand("RemoveInventoryItem",new Action<string>(RemoveInventoryItem));
+        
+        database.AddCommand("AddEquippedItem",new Action<string>(AddEquippedItem));
+        
+        database.AddCommand("RemoveEquippedItem",new Action<string>(RemoveEquippedItem));
+        
         database.AddCommand("DisplayName",new Action<string>(DisplayName));
         
         database.AddCommand("HideDialogueUI",new Action(HideDialogueUI));
@@ -28,6 +36,8 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         database.AddCommand("DisplayDialogueUI",new Action(DisplayDialogueUI));
         
         database.AddCommand("DestroyNpc",new Action(DestroyNpc));
+        
+        database.AddCommand("DestroyObstacle",new Action<string>(DestroyObstacle));
         
         database.AddCommand("NextDialogue",new Action(NextDialogue));
         
@@ -150,6 +160,33 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
         GameManager.Instance.SpawnEnemyByName(enemyName);
     }
     
+    private static void AddInventoryItem(string itemName)
+    {
+        bool itemExists = false;
+
+        /*foreach (var item in DataBase.)
+        {
+            
+        }*/
+        
+        PlayerDataHolder.AddItemToInventory(itemName);
+    }
+    
+    private static void RemoveInventoryItem(string itemName)
+    {
+        PlayerDataHolder.RemoveItemFromInventory(itemName);
+    }
+    
+    private static void AddEquippedItem(string itemName)
+    {
+        PlayerDataHolder.AddEquippedItem(itemName);
+    }
+    
+    private static void RemoveEquippedItem(string itemName)
+    {
+        PlayerDataHolder.RemoveEquippedItem(itemName);
+    }
+    
     private static void DisplayName(string currentName)
     {
         DialogueBoxManager.Instance.DisplayName(currentName);
@@ -169,6 +206,11 @@ public class CmdDatabaseExtensionOne : CMD_Database_Extension
     private static void DestroyNpc()
     {
         NpcSpeaker.CurrentSpeaker.DestroyNpc();
+    }
+    
+    private static void DestroyObstacle(string obstacleName)
+    {
+        GameEvents.lookForObject?.Invoke(obstacleName);
     }
 
     //Used at the end of a dialogue to move on to the next dialogue.

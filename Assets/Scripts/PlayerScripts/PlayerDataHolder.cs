@@ -122,7 +122,21 @@ public static class PlayerDataHolder
     
     public static void AddEquippedItem(string itemName)
     {
+        bool itemIsInInventory = false;
+
+        foreach (var item in InventoryItems)
+        {
+            if (item == itemName)
+            {
+                itemIsInInventory = true;
+                break;
+            }
+        }
         
+        if (!itemIsInInventory)
+            return;
+        
+        EquippedItems.Add(itemName);
     }
     
     public static void RemoveEquippedItem(string itemName)
