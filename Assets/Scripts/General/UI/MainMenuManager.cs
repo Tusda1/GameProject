@@ -1,7 +1,7 @@
 using System.IO;
 using TMPro;
 using UnityEngine;
-using File = UnityEngine.Windows.File;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -49,5 +49,6 @@ public class MainMenuManager : MonoBehaviour
     {
         DataBase.InitializeData();
         PlayerDataHolder.InitializePlayerData(DataBase.allPlayerSkills);
+        SceneManager.LoadScene("Bedroom");
     }
 }
