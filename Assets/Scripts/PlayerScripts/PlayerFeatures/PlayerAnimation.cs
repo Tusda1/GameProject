@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
@@ -12,7 +13,7 @@ public class PlayerAnimation : MonoBehaviour
     [HideInInspector] public int isMovingParamID; 
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _animator = GetComponent<Animator>();
         
@@ -20,6 +21,14 @@ public class PlayerAnimation : MonoBehaviour
         horizontalParamID = Animator.StringToHash("Horizontal");
         verticalParamID = Animator.StringToHash("Vertical");
         isMovingParamID = Animator.StringToHash("IsMoving");
+    }
+    
+    private void GetAnimator()
+    {
+        if (_animator == null)
+        {
+            _animator = GetComponent<Animator>();
+        }
     }
 
     public void UpdateAnimation(Vector2 moveVector)

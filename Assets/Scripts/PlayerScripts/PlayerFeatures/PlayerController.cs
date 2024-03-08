@@ -20,9 +20,6 @@ public class PlayerController : MonoBehaviour
         
         _playerAnimation = GetComponent<PlayerAnimation>();
         _playerMovement = GetComponent<PlayerMovement>();
-        
-        // Subscribe to events
-        GameEvents.interactPressed += Interact;
     }
 
     private void OnEnable()
@@ -30,6 +27,7 @@ public class PlayerController : MonoBehaviour
         PlayerEvents.playerCantInteract += TurnOffInteraction;
         PlayerEvents.playerCanInteract += TurnOnInteraction;
         GameEvents.saveGame += SaveGame;
+        GameEvents.interactPressed += Interact;
     }
     
     private void OnDisable()
@@ -37,6 +35,7 @@ public class PlayerController : MonoBehaviour
         PlayerEvents.playerCantInteract -= TurnOffInteraction;
         PlayerEvents.playerCanInteract -= TurnOnInteraction;
         GameEvents.saveGame -= SaveGame;
+        GameEvents.interactPressed -= Interact;
     }
 
     private void Update()

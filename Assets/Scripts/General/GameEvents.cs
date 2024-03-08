@@ -9,6 +9,8 @@ public static class GameEvents
     public static GameEvent up;
     public static GameEvent left;
     public static GameEvent right;
+    public static GameEvent escapePressed;
+    public static GameEvent backToMenu;
     
     //Player
     public static GameEvent levelUp;
@@ -24,6 +26,9 @@ public static class GameEvents
     
     public delegate void PromptEvent(string prompt);
     public static PromptEvent showPrompt;
+    public static PromptEvent showChoicePrompt;
+    public static GameEvent YesChoice;
+    public static GameEvent NoChoice;
     public static GameEvent hidePrompt;
     
     public delegate void SceneEvent(string sceneName, bool additive, string doorName);

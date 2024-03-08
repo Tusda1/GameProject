@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public static class ButtonScriptCombatMenu
 {
     private static void FillerMethod(){}
@@ -18,7 +20,7 @@ public static class ButtonScriptCombatMenu
         {
             foreach (var equipment in DataBase.allEquipment)
             {
-                if (equipped == equipment.name)
+                if (equipped == equipment.itemName)
                 {
                     foreach (var weaponSkill in equipment.weaponSkills)
                     {

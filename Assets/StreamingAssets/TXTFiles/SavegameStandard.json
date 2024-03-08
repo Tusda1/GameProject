@@ -25,11 +25,11 @@
     },
     {
       "DataType": "Equipped",
-      "Equipment": ["Iron Sword"]
+      "Equipment": []
     },
     {
       "DataType": "Inventory",
-      "Inventory content": []
+      "InventoryContent": []
     },
     {
       "DataType": "PlayerPosition",

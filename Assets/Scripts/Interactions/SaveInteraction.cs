@@ -1,13 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveInteraction : MonoBehaviour, Interactable
 {
+    private bool _interacted;
+    
     public void Interact()
     {
+        if (_interacted)
+            return;
+            
+        GameEvents.showPrompt?.Invoke("Game saved");
         GameEvents.saveGame?.Invoke();
         
-        GameEvents.showPrompt?.Invoke("Game saved");
+        _interacted = !_interacted;
     }
 }

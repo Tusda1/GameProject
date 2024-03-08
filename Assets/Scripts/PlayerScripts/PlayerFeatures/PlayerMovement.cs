@@ -106,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         transform.position = endPosition;
+        PlayerEvents.playerMoved?.Invoke();
         
         StartCoroutine(TurnOffMovement());
         _isMoving = false; 

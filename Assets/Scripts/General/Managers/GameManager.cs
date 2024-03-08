@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Ensures there's only one instance
         }
+        
+        Cursor.visible = false;
     }
 
     private void OnEnable()
@@ -35,6 +37,8 @@ public class GameManager : MonoBehaviour
         CombatEvents.combatEnd += EndCombat;
         GameEvents.levelUp += LevelUp;
         GameEvents.endLevelUp += EndLevelUp;
+        GameEvents.playerDeath += playerDied;
+        GameEvents.escapePressed += BackToMenu;
     }
     
     private void OnDisable()
@@ -42,6 +46,24 @@ public class GameManager : MonoBehaviour
         CombatEvents.combatEnd -= EndCombat;
         GameEvents.levelUp -= LevelUp;
         GameEvents.endLevelUp -= EndLevelUp;
+        GameEvents.playerDeath -= playerDied;
+        GameEvents.escapePressed -= BackToMenu;
+    }
+    
+    private void BackToMenu()
+    {
+        //Unload all scenes then load main menu
+        for (int i = SceneManager.sceneCount - 1; i >= 0; i--)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+            if (scene.name != SceneManager.GetActiveScene().name)
+            {
+                SceneManager.UnloadSceneAsync(scene);
+            }
+        }
+        
+        GameEvents.backToMenu?.Invoke();
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void SpawnEnemy()

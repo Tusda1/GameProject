@@ -45,6 +45,8 @@ public static class PlayerDataHolder
     
     private static void SetPlayerData()
     {
+        playerData.Clear();
+        
         Dictionary<string, object> tempDict = SaveFileHandler.GetSaveFile("Player");  
         
         foreach (var key in tempDict.Keys)
@@ -111,7 +113,26 @@ public static class PlayerDataHolder
     
     public static void AddItemToInventory(string itemName)
     {
+        bool itemExists = false;
+
+        foreach (var item in DataBase.allItems)
+        {
+            if (item.itemName == itemName)
+            {
+                itemExists = true;
+                break;
+            }
+        }
+        
+        if (!itemExists)
+        {
+            Debug.LogError("Item does not exist");
+            return;
+        }
+
+        
         InventoryItems.Add(itemName);
+        AddEquippedItem(itemName);
     }
     
     public static void RemoveItemFromInventory(string itemName)
@@ -160,10 +181,10 @@ public static class PlayerDataHolder
         SaveFileHandler.UpdateSaveData("AttackMoves", "UnlockedMoves", unlockedPlayerSkills);
         
         //Convert EquippedItems to a list of objects then save
-        SaveFileHandler.UpdateSaveData("Equipped", "EquippedItems", EquippedItems);
+        SaveFileHandler.UpdateSaveData("Equipped", "Equipment", EquippedItems);
         
         //Convert InventoryItems to a list of objects then save
-        SaveFileHandler.UpdateSaveData("Inventory", "InventoryItems", InventoryItems);
+        SaveFileHandler.UpdateSaveData("Inventory", "InventoryContent", InventoryItems);
         
         //Add scene to tempdict
         tempDict.Add("Scene", SceneController.currentScene);

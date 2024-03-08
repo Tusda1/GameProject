@@ -44,6 +44,8 @@ public class SceneController : MonoBehaviour
         GameEvents.returnDoor?.Invoke(position);
         yield return new WaitForSeconds(0.3f);
         GameEvents.SceneFadeOut?.Invoke();
+        PlayerEvents.playerUnfrozen?.Invoke();
+        PlayerEvents.playerCanInteract?.Invoke();
     }
 
     private void LoadScene(string sceneName, bool additive, string doorName)
