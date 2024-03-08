@@ -14,6 +14,7 @@ public static class GameEvents
     public static GameEvent levelUp;
     public static GameEvent endLevelUp;
     public static GameEvent saveGame;
+    public static GameEvent playerDeath;
     
     //Sound
     public static GameEvent playWritingSound;

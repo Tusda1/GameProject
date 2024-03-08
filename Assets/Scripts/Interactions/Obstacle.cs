@@ -3,6 +3,7 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour, Interactable
 {
     [SerializeField] private string obstacleName;
+    private bool _interacted;
     
     private void OnEnable()
     {
@@ -24,6 +25,9 @@ public class Obstacle : MonoBehaviour, Interactable
     
     public void Interact()
     {
-        GameEvents.showPrompt?.Invoke("I'll need to find a way to get past this.");
+        if (!_interacted)
+            GameEvents.showPrompt?.Invoke("I'll need to find a way to get past this.");
+        else
+            GameEvents.hidePrompt?.Invoke();
     }
 }

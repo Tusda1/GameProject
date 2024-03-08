@@ -419,7 +419,7 @@ public class CombatManager : MonoBehaviour
     
     private void OnLoss()
     {
-        CombatEnd();
+        GameEvents.playerDeath?.Invoke();
     }
     
     private void CombatEnd()

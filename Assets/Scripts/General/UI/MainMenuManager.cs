@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -60,8 +61,6 @@ public class MainMenuManager : MonoBehaviour
         
         Dictionary<string, object> tempLoadingDict = SaveFileHandler.GetSaveFile("PlayerPosition");
         
-        print((int)tempLoadingDict["X"].GetType());
-        
-        GameEvents.loadFirstScene?.Invoke(tempLoadingDict["Scene"].ToString(), new Vector2((float)tempLoadingDict["X"], (float)tempLoadingDict["Y"]));
+        GameEvents.loadFirstScene?.Invoke(tempLoadingDict["Scene"].ToString(), new Vector2(Convert.ToSingle(tempLoadingDict["X"]), Convert.ToSingle(tempLoadingDict["Y"])));
     }
 }

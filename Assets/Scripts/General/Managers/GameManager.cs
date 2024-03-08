@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
@@ -102,6 +103,20 @@ public class GameManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("Combat");
         PlayerEvents.playerUnfrozen?.Invoke();
         PlayerEvents.playerCanInteract?.Invoke();
+    }
+    
+    private void playerDied()
+    {
+        EndCombat();
+        PlayerEvents.playerFrozen?.Invoke();
+        PlayerEvents.playerCantInteract?.Invoke();
+        
+        DataBase.InitializeData();
+        PlayerDataHolder.InitializePlayerData(DataBase.allPlayerSkills);
+        
+        Dictionary<string, object> tempLoadingDict = SaveFileHandler.GetSaveFile("PlayerPosition");
+        
+        GameEvents.loadFirstScene?.Invoke(tempLoadingDict["Scene"].ToString(), new Vector2(Convert.ToSingle(tempLoadingDict["X"]), Convert.ToSingle(tempLoadingDict["Y"])));
     }
     
     private void LevelUp()
