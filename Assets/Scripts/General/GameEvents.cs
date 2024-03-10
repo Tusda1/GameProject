@@ -9,10 +9,14 @@ public static class GameEvents
     public static GameEvent up;
     public static GameEvent left;
     public static GameEvent right;
+    public static GameEvent escapePressed;
+    public static GameEvent backToMenu;
     
     //Player
     public static GameEvent levelUp;
     public static GameEvent endLevelUp;
+    public static GameEvent saveGame;
+    public static GameEvent playerDeath;
     
     //Sound
     public static GameEvent playWritingSound;
@@ -22,10 +26,16 @@ public static class GameEvents
     
     public delegate void PromptEvent(string prompt);
     public static PromptEvent showPrompt;
+    public static PromptEvent showChoicePrompt;
+    public static GameEvent YesChoice;
+    public static GameEvent NoChoice;
     public static GameEvent hidePrompt;
     
     public delegate void SceneEvent(string sceneName, bool additive, string doorName);
     public static SceneEvent loadScene;
+    
+    public delegate void FirstSceneEvent(string sceneName, Vector2 position);
+    public static FirstSceneEvent loadFirstScene;
     public delegate void FindObject(string doorName);
     public static FindObject lookForObject;
 

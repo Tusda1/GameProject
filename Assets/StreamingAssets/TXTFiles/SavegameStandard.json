@@ -16,8 +16,8 @@
       "Magic": 5
     },
     {
-      "DataType": "Npc",
-      "Interacted": 0
+      "DataType": "Quests",
+      "Quests": []
     },
     {
       "DataType": "AttackMoves",
@@ -25,11 +25,17 @@
     },
     {
       "DataType": "Equipped",
-      "Equipment": ["Iron Sword"]
+      "Equipment": []
     },
     {
       "DataType": "Inventory",
-      "Inventory content": []
+      "InventoryContent": []
+    },
+    {
+      "DataType": "PlayerPosition",
+      "Scene": "Bedroom",
+      "X": 0,
+      "Y": 0
     }
   ]
 }

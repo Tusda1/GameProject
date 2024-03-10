@@ -10,8 +10,6 @@ public class UselessInteraction : MonoBehaviour, Interactable
     {
         if (!_interacted)
             GameEvents.showPrompt?.Invoke(uselessText);
-        else
-            GameEvents.hidePrompt?.Invoke();
         
         _interacted = !_interacted;
     }

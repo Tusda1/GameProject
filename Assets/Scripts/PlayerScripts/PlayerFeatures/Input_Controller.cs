@@ -18,6 +18,8 @@ public class Input_Controller : MonoBehaviour
             GameEvents.left?.Invoke();
         if (_input.Player.Right.IsPressed())
             GameEvents.right?.Invoke();
+        if (_input.Player.Escape.WasPressedThisFrame())
+            GameEvents.escapePressed?.Invoke();
     }
     private void Awake()
     {

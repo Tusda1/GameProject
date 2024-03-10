@@ -16,23 +16,26 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        PlayerEvents.returnPlayer?.Invoke(gameObject);
+        
         _playerAnimation = GetComponent<PlayerAnimation>();
         _playerMovement = GetComponent<PlayerMovement>();
-        
-        // Subscribe to events
-        GameEvents.interactPressed += Interact;
     }
 
     private void OnEnable()
     {
         PlayerEvents.playerCantInteract += TurnOffInteraction;
         PlayerEvents.playerCanInteract += TurnOnInteraction;
+        GameEvents.saveGame += SaveGame;
+        GameEvents.interactPressed += Interact;
     }
     
     private void OnDisable()
     {
         PlayerEvents.playerCantInteract -= TurnOffInteraction;
         PlayerEvents.playerCanInteract -= TurnOnInteraction;
+        GameEvents.saveGame -= SaveGame;
+        GameEvents.interactPressed -= Interact;
     }
 
     private void Update()
@@ -50,7 +53,7 @@ public class PlayerController : MonoBehaviour
         _canInteract = true;
     }
 
-    void Interact()
+    private void Interact()
     {
         if (!_canInteract)
             return;
@@ -69,5 +72,9 @@ public class PlayerController : MonoBehaviour
                 break;
             }
         }
+    }
+    private void SaveGame()
+    {
+        PlayerDataHolder.WriteToSaveFile(gameObject.transform.position);
     }
 }

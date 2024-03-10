@@ -1,23 +1,45 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class EnemySpawning : MonoBehaviour
 {
     [SerializeField] private float spawnChance = 0.2f;
-    [SerializeField] private float spawnCheckInterval = 1f;
-    private float _timer = 0.5f;
+    
+    public bool playerInTrigger;
 
-    void OnTriggerStay2D(Collider2D other)
+    private void OnEnable()
     {
-        _timer -= Time.fixedDeltaTime;
-        if (_timer + spawnCheckInterval <= spawnCheckInterval)
+        PlayerEvents.playerMoved += RollForSpawn;
+    }
+    
+    private void OnDisable()
+    {
+        PlayerEvents.playerMoved -= RollForSpawn;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
         {
-            _timer = spawnCheckInterval;
-            if (other.CompareTag("Player") && Random.value < spawnChance)
-            {
-                GameManager.Instance.SpawnEnemy();
-            }
+            playerInTrigger = true;
+        }
+    }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInTrigger = false;
+        }
+    }
+    
+    private void RollForSpawn()
+    {
+        if (playerInTrigger && Random.value < spawnChance)
+        {
+            GameManager.Instance.SpawnEnemy();
         }
     }
 }

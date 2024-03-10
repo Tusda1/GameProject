@@ -94,7 +94,7 @@
             
             "\"That amazing! However I would still like to watch you in action\"",
             "\"Try defeating this slime, it should be prove an easy task\"",
-            "SpawnEnemy(\"Slime\")",
+            "SpawnEnemy(\"Injured Slime\")",
             "NextDialogue()",
             
             "\"Well, let me tell you how combat works\"",
@@ -105,7 +105,7 @@
             "\"The chance of the attack hitting is dependent on the accuracy of the attack and the speed of the defender\"",
             "\"The person with the highest speed goes first\"",
             "\"Now its time for a test, try to defeat this simple slime\"",
-            "SpawnEnemy(\"Slime\")",
+            "SpawnEnemy(\"Injured Slime\")",
             "NextDialogue()"
         ],
         "dialogue3": [

@@ -45,6 +45,8 @@ public static class PlayerDataHolder
     
     private static void SetPlayerData()
     {
+        playerData.Clear();
+        
         Dictionary<string, object> tempDict = SaveFileHandler.GetSaveFile("Player");  
         
         foreach (var key in tempDict.Keys)
@@ -111,7 +113,26 @@ public static class PlayerDataHolder
     
     public static void AddItemToInventory(string itemName)
     {
+        bool itemExists = false;
+
+        foreach (var item in DataBase.allItems)
+        {
+            if (item.itemName == itemName)
+            {
+                itemExists = true;
+                break;
+            }
+        }
+        
+        if (!itemExists)
+        {
+            Debug.LogError("Item does not exist");
+            return;
+        }
+
+        
         InventoryItems.Add(itemName);
+        AddEquippedItem(itemName);
     }
     
     public static void RemoveItemFromInventory(string itemName)
@@ -143,7 +164,7 @@ public static class PlayerDataHolder
         EquippedItems.Remove(itemName);
     }
     
-    public static void WriteToSaveFile()
+    public static void WriteToSaveFile(Vector3 playerPosition)
     {
         //Convert playerData to a dictionary of objects then save
         Dictionary<string, object> tempDict = new Dictionary<string, object>();
@@ -154,5 +175,24 @@ public static class PlayerDataHolder
         }
         
         SaveFileHandler.UpdateDataType("Player", tempDict);
+        tempDict.Clear();
+        
+        //Convert unlockedPlayerSkills to a list of objects then save
+        SaveFileHandler.UpdateSaveData("AttackMoves", "UnlockedMoves", unlockedPlayerSkills);
+        
+        //Convert EquippedItems to a list of objects then save
+        SaveFileHandler.UpdateSaveData("Equipped", "Equipment", EquippedItems);
+        
+        //Convert InventoryItems to a list of objects then save
+        SaveFileHandler.UpdateSaveData("Inventory", "InventoryContent", InventoryItems);
+        
+        //Add scene to tempdict
+        tempDict.Add("Scene", SceneController.currentScene);
+        tempDict.Add("X", playerPosition.x);
+        tempDict.Add("Y", playerPosition.y);
+        
+        SaveFileHandler.UpdateDataType("PlayerPosition", tempDict);
+        
+        NpcDialogueHandler.UpdateAllWhichDialogues(DataBase.whichDialogueDictionary);
     }
 }

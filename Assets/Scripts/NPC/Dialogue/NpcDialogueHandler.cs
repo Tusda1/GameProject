@@ -61,91 +61,36 @@ public static class NpcDialogueHandler
 
         return allDialogues;
     }
-
     
-    //This method is used to get a variable called whichdialogue which keeps track of what dialogue you are meant to hear next
-    public static int GetWhichDialogue(string npcName)
+    
+    public static Dictionary<string, int> GetAllWhichDialogues()
     {
         string filePath = Path.Combine(_persistentPath, "NpcDialogueCopy.json");
 
         if (!File.Exists(filePath))
         {
             Debug.LogError("File does not exist at the specified path: " + filePath);
-            return -1; // Return a default value or handle error cases as needed
+            return null;
         }
 
         string json = File.ReadAllText(filePath);
         JObject jsonObject = JObject.Parse(json);
 
-        JObject npc = jsonObject["npcs"].FirstOrDefault(n => (string)n["name"] == npcName) as JObject;
+        JArray npcs = (JArray)jsonObject["npcs"];
+        Dictionary<string, int> dialogues = new Dictionary<string, int>();
 
-        if (npc == null)
+        foreach (var jToken in npcs)
         {
-            Debug.LogError("NPC not found with the given name: " + npcName);
-            return -1; // Return a default value or handle error cases as needed
+            var npc = (JObject)jToken;
+            string npcName = (string)npc["name"];
+            int whichDialogue = (int)npc["WhichDialogue"];
+            dialogues[npcName] = whichDialogue;
         }
 
-        if (!npc.TryGetValue("WhichDialogue", out JToken currentDialogToken))
-        {
-            Debug.LogError("WhichDialogue key not found for NPC: " + npcName);
-            return -1; // Return a default value or handle error cases as needed
-        }
-
-        if (currentDialogToken.Type != JTokenType.Integer)
-        {
-            Debug.LogError("Unexpected data type for WhichDialogue for NPC: " + npcName);
-            return -1; // Return a default value or handle error cases as needed
-        }
-
-        return (int)currentDialogToken;
+        return dialogues;
     }
     
-
-    public static void ChangeWhichDialogue(string npcName, int newValue)
-    {
-        string filePath = Path.Combine(_persistentPath, "NpcDialogueCopy.json");
-
-        if (!File.Exists(filePath))
-        {
-            Debug.LogError("File does not exist at the specified path: " + filePath);
-            return;
-        }
-
-        string json = File.ReadAllText(filePath);
-        JObject jsonObject = JObject.Parse(json);
-
-        JObject npc = jsonObject["npcs"].FirstOrDefault(n => (string)n["name"] == npcName) as JObject;
-
-        if (npc == null)
-        {
-            Debug.LogError("NPC not found with the given name: " + npcName);
-            return;
-        }
-
-        if (!npc.TryGetValue("WhichDialogue", out JToken currentDialogToken))
-        {
-            Debug.LogError("WhichDialogue key not found for NPC: " + npcName);
-            return;
-        }
-
-        if (currentDialogToken.Type != JTokenType.Integer)
-        {
-            Debug.LogError("Unexpected data type for WhichDialogue for NPC: " + npcName);
-            return;
-        }
-
-        int currentDialog = (int)currentDialogToken;
-        int updatedDialog = currentDialog + newValue;
-        npc["WhichDialogue"] = updatedDialog;
-
-        // Write the modified JSON back to the file
-        File.WriteAllText(filePath, jsonObject.ToString());
-
-        Debug.Log("Updated WhichDialogue for NPC: " + npcName + " to " + updatedDialog);
-    }
-    
-    
-    public static void ResetDialogue()
+    public static void UpdateAllWhichDialogues(Dictionary<string, int> dialogues)
     {
         string filePath = Path.Combine(_persistentPath, "NpcDialogueCopy.json");
 
@@ -163,14 +108,20 @@ public static class NpcDialogueHandler
         foreach (var jToken in npcs)
         {
             var npc = (JObject)jToken;
-            npc["WhichDialogue"] = 0; // Assigning an integer value instead of a string
+            string npcName = (string)npc["name"];
+
+            if (dialogues.TryGetValue(npcName, out int newWhichDialogue))
+            {
+                npc["WhichDialogue"] = newWhichDialogue;
+            }
         }
 
         // Write the modified JSON back to the file
         File.WriteAllText(filePath, jsonObject.ToString());
 
-        Debug.Log("Updated WhichDialogue for all NPCs to 0");
+        Debug.Log("Updated WhichDialogue for all NPCs according to the provided dictionary");
     }
+    
     
     public static void DeleteLines(int deleteStart, int deleteAmount)
     {

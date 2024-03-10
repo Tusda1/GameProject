@@ -23,4 +23,7 @@ MonoBehaviour:
   accuracy: 0
   accuracyScalesWithSpeed: 1
   alwaysHits: 0
-  statusEffects: []
+  statusEffects:
+  - statusEffectScrub: {fileID: 11400000, guid: ac949a82a3ca02b4ab0e6eeaf1759c46, type: 2}
+    duration: 3
+    chanceToApply: 20

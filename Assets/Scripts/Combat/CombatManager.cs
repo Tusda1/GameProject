@@ -129,9 +129,26 @@ public class CombatManager : MonoBehaviour
                 
                 //Calculate if status effects are applied then applies them
                 List<StatusEffect> statusEffectsToApply = ApplyStatusEffects(attackMove.statusEffects);
+                Dictionary<StatusEffectScrub, int> enemyStatusEffectsCopy = new Dictionary<StatusEffectScrub, int>(EnemyDataHolder.enemyStatusEffects);
+
                 foreach (var statusEffect in statusEffectsToApply)
                 {
-                    EnemyDataHolder.enemyStatusEffects.Add(statusEffect.statusEffectScrub, statusEffect.duration);
+                    bool wasApplied = false;
+
+                    foreach (var appliedStatusEffect in enemyStatusEffectsCopy)
+                    {
+                        if (appliedStatusEffect.Key == statusEffect.statusEffectScrub)
+                        {
+                            print("Was applied");
+                            EnemyDataHolder.enemyStatusEffects[statusEffect.statusEffectScrub] = statusEffect.duration;
+                            wasApplied = true;
+                        }
+                    }
+
+                    if (!wasApplied)
+                    {
+                        EnemyDataHolder.enemyStatusEffects.Add(statusEffect.statusEffectScrub, statusEffect.duration);
+                    }
                 }
 
                 EnemyDataHolder.TakeDamage(damage);
@@ -217,10 +234,28 @@ public class CombatManager : MonoBehaviour
             
             //Calculate if status effects are applied then applies them
             List<StatusEffect> statusEffectsToApply = ApplyStatusEffects(enemyMoveData.statusEffects);
+            Dictionary<StatusEffectScrub, int> playerStatusEffectsCopy = new Dictionary<StatusEffectScrub, int>(EnemyDataHolder.enemyStatusEffects);
+
             foreach (var statusEffect in statusEffectsToApply)
             {
-                PlayerDataHolder.playerStatusEffects.Add(statusEffect.statusEffectScrub, statusEffect.duration);
+                bool wasApplied = false;
+
+                foreach (var appliedStatusEffect in playerStatusEffectsCopy)
+                {
+                    if (appliedStatusEffect.Key == statusEffect.statusEffectScrub)
+                    {
+                        print("Was applied");
+                        PlayerDataHolder.playerStatusEffects[statusEffect.statusEffectScrub] = statusEffect.duration;
+                        wasApplied = true;
+                    }
+                }
+
+                if (!wasApplied)
+                {
+                    PlayerDataHolder.playerStatusEffects.Add(statusEffect.statusEffectScrub, statusEffect.duration);
+                }
             }
+
             
             //Applies attack to player
             PlayerDataHolder.TakeDamage(damage);
@@ -334,9 +369,11 @@ public class CombatManager : MonoBehaviour
     
     private Dictionary<StatusEffectScrub, int> DecreaseStatusEffectDuration(Dictionary<StatusEffectScrub, int> statusEffects)
     {
+        Dictionary<StatusEffectScrub, int> statusEffectsCopy = new Dictionary<StatusEffectScrub, int>(statusEffects);
         List<StatusEffectScrub> statusEffectToRemove = new List<StatusEffectScrub>();
-        
-        foreach (var statusEffect in statusEffects)
+        Dictionary<StatusEffectScrub, int> updatedStatusEffects = new Dictionary<StatusEffectScrub, int>();
+
+        foreach (var statusEffect in statusEffectsCopy)
         {
             if (statusEffect.Value <= 0)
             {
@@ -344,15 +381,20 @@ public class CombatManager : MonoBehaviour
             }
             else
             {
-                statusEffects[statusEffect.Key] = statusEffect.Value - 1;
+                updatedStatusEffects[statusEffect.Key] = statusEffect.Value - 1;
             }
         }
-        
+
         foreach (var statusEffect in statusEffectToRemove)
         {
             statusEffects.Remove(statusEffect);
         }
-        
+
+        foreach (var statusEffect in updatedStatusEffects)
+        {
+            statusEffects[statusEffect.Key] = statusEffect.Value;
+        }
+
         return statusEffects;
     }
     
@@ -366,13 +408,18 @@ public class CombatManager : MonoBehaviour
         
         PlayerDataHolder.GetGold(EnemyDataHolder.goldGiven);
         PlayerDataHolder.GetExp(EnemyDataHolder.expGiven);
+
+        while (GameManager.Instance.levelingUp)
+        {
+            yield return null;
+        }
         
         CombatEnd();
     }
     
     private void OnLoss()
     {
-        CombatEnd();
+        GameEvents.playerDeath?.Invoke();
     }
     
     private void CombatEnd()

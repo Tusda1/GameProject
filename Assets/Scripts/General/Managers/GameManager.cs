@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
 
     [Header("Variables")] 
-    private bool _levelingUp;
+    public bool levelingUp;
     [HideInInspector]
     public bool inCombat;
     
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Ensures there's only one instance
         }
+        
+        Cursor.visible = false;
     }
 
     private void OnEnable()
@@ -33,6 +37,8 @@ public class GameManager : MonoBehaviour
         CombatEvents.combatEnd += EndCombat;
         GameEvents.levelUp += LevelUp;
         GameEvents.endLevelUp += EndLevelUp;
+        GameEvents.playerDeath += playerDied;
+        GameEvents.escapePressed += BackToMenu;
     }
     
     private void OnDisable()
@@ -40,6 +46,24 @@ public class GameManager : MonoBehaviour
         CombatEvents.combatEnd -= EndCombat;
         GameEvents.levelUp -= LevelUp;
         GameEvents.endLevelUp -= EndLevelUp;
+        GameEvents.playerDeath -= playerDied;
+        GameEvents.escapePressed -= BackToMenu;
+    }
+    
+    private void BackToMenu()
+    {
+        //Unload all scenes then load main menu
+        for (int i = SceneManager.sceneCount - 1; i >= 0; i--)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+            if (scene.name != SceneManager.GetActiveScene().name)
+            {
+                SceneManager.UnloadSceneAsync(scene);
+            }
+        }
+        
+        GameEvents.backToMenu?.Invoke();
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void SpawnEnemy()
@@ -99,17 +123,28 @@ public class GameManager : MonoBehaviour
     {
         inCombat = false;
         SceneManager.UnloadSceneAsync("Combat");
-        if (!_levelingUp)
-        {
-            PlayerEvents.playerUnfrozen?.Invoke();
-            PlayerEvents.playerCanInteract?.Invoke();
-        }
+        PlayerEvents.playerUnfrozen?.Invoke();
+        PlayerEvents.playerCanInteract?.Invoke();
+    }
+    
+    private void playerDied()
+    {
+        EndCombat();
+        PlayerEvents.playerFrozen?.Invoke();
+        PlayerEvents.playerCantInteract?.Invoke();
+        
+        DataBase.InitializeData();
+        PlayerDataHolder.InitializePlayerData(DataBase.allPlayerSkills);
+        
+        Dictionary<string, object> tempLoadingDict = SaveFileHandler.GetSaveFile("PlayerPosition");
+        
+        GameEvents.loadFirstScene?.Invoke(tempLoadingDict["Scene"].ToString(), new Vector2(Convert.ToSingle(tempLoadingDict["X"]), Convert.ToSingle(tempLoadingDict["Y"])));
     }
     
     private void LevelUp()
     {
-        SceneManager.LoadSceneAsync("LevelUpScene", LoadSceneMode.Additive);
-        _levelingUp = true;
+        levelingUp = true;
+        SceneManager.LoadScene("LevelUpScene", LoadSceneMode.Additive);
         PlayerEvents.playerFrozen?.Invoke();
         PlayerEvents.playerCantInteract?.Invoke();
     }
@@ -117,7 +152,7 @@ public class GameManager : MonoBehaviour
     private void EndLevelUp()
     {
         SceneManager.UnloadSceneAsync("LevelUpScene");
-        _levelingUp = false;
+        levelingUp = false;
         PlayerEvents.playerUnfrozen?.Invoke();
         PlayerEvents.playerCanInteract?.Invoke();
     }
