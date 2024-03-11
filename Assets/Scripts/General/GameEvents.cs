@@ -24,9 +24,8 @@ public static class GameEvents
     public delegate void MovePlayer(int x, int y);
     public static MovePlayer movePlayer;
     
-    public delegate void PromptEvent(string prompt);
+    public delegate void PromptEvent(string prompt, bool choicePrompt);
     public static PromptEvent showPrompt;
-    public static PromptEvent showChoicePrompt;
     public static GameEvent YesChoice;
     public static GameEvent NoChoice;
     public static GameEvent hidePrompt;

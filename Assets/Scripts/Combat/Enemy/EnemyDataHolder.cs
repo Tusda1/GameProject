@@ -13,6 +13,7 @@ public static class EnemyDataHolder
     
     public static void SetEnemyData(EnemyScrub enemy)
     {
+        enemyStats.Clear();
         enemyData = enemy;
         currentEnemyHealth = enemy.maxHealth;
         goldGiven = Random.Range((int)enemyData.goldGiven.x, (int)enemyData.goldGiven.y+1);

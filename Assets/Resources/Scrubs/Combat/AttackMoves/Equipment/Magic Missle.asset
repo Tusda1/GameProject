@@ -20,7 +20,7 @@ MonoBehaviour:
   manaCost: 3
   critChance: 0
   critMultiplier: 0
-  accuracy: 0
+  accuracy: 1000
   accuracyScalesWithSpeed: 0
-  alwaysHits: 1
+  alwaysHits: 0
   statusEffects: []

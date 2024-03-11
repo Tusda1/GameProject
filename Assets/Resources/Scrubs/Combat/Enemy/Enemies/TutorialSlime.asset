@@ -24,7 +24,7 @@ MonoBehaviour:
   maxHealth: 10
   enemyStats:
   - statName: 0
-    modifier: 15
+    modifier: 1
   - statName: 1
     modifier: 0
   - statName: 2

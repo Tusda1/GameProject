@@ -187,7 +187,7 @@ public static class PlayerDataHolder
         SaveFileHandler.UpdateSaveData("Inventory", "InventoryContent", InventoryItems);
         
         //Add scene to tempdict
-        tempDict.Add("Scene", SceneController.currentScene);
+        tempDict.Add("Scene", SceneController.nextScene);
         tempDict.Add("X", playerPosition.x);
         tempDict.Add("Y", playerPosition.y);
         

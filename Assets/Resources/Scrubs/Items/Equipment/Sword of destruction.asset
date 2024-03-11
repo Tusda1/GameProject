@@ -16,7 +16,7 @@ MonoBehaviour:
   itemDescription: Destroys
   grade: 2
   itemSprite: {fileID: 0}
-  itemValue: 0
+  itemValue: 1
   isItemStackable: 0
   isItemKeyItem: 0
   isUnique: 0

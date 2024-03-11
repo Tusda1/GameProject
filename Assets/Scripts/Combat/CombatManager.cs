@@ -119,7 +119,7 @@ public class CombatManager : MonoBehaviour
             }
             
             //Calculate if attack hits
-            bool attackHit = DidAttackHit(attackMove.accuracy, PlayerDataHolder.playerData["Speed"], EnemyDataHolder.enemyStats[StatEnum.Speed], attackMove.accuracyScalesWithSpeed);
+            bool attackHit = DidAttackHit(attackMove, PlayerDataHolder.playerData["Speed"], EnemyDataHolder.enemyStats[StatEnum.Speed]);
             
             //Applies attack to enemy
             if (attackHit)
@@ -224,7 +224,7 @@ public class CombatManager : MonoBehaviour
         AttackMove enemyMoveData = EnemyDataHolder.enemyData.EnemyAttack();
         
         //Calculate if attack hits
-        bool attackHit = DidAttackHit(enemyMoveData.accuracy, EnemyDataHolder.enemyStats[StatEnum.Speed], PlayerDataHolder.playerData["Speed"], enemyMoveData.accuracyScalesWithSpeed);
+        bool attackHit = DidAttackHit(enemyMoveData, EnemyDataHolder.enemyStats[StatEnum.Speed], PlayerDataHolder.playerData["Speed"]);
 
         //Commence attack if attack hit
         if (attackHit)
@@ -287,9 +287,14 @@ public class CombatManager : MonoBehaviour
     }
     #endregion
     
-    private bool DidAttackHit(int accuracy, int speed, int hostileSpeed, bool accuracyScalesWithSpeed)
+    private bool DidAttackHit(AttackMove attackMove, int speed, int hostileSpeed)
     {
-        var attackAccuracy = accuracyScalesWithSpeed ? speed : accuracy;
+        if (attackMove.alwaysHits)
+        {
+            return true;
+        }
+        
+        var attackAccuracy = attackMove.accuracyScalesWithSpeed ? speed : attackMove.accuracy;
         
         int hostileSpeedRandom = Random.Range(0, hostileSpeed);
         

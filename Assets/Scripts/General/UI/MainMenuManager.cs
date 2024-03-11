@@ -29,6 +29,8 @@ public class MainMenuManager : MonoBehaviour
         }
         
         _buttonManouverer = new ButtonManouverer(buttons, this);
+        PlayerEvents.playerFrozen?.Invoke();
+        PlayerEvents.playerCantInteract?.Invoke();
     }
 
     public void Continue()

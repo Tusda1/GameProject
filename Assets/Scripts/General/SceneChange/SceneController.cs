@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     private string _currentDoor;
-    public static string currentScene;
+    public static string nextScene;
     private GameObject player;
     
     private void OnEnable()
@@ -31,18 +31,21 @@ public class SceneController : MonoBehaviour
     
     private void LoadFirstSceneMethod(string sceneName, Vector2 position)
     {
-        currentScene = sceneName;
+        nextScene = sceneName;
         StartCoroutine(LoadFirstScene(sceneName, position));
     }
     
     private IEnumerator LoadFirstScene(string sceneName, Vector2 position)
     {
+        string currentScene = SceneManager.GetActiveScene().name;
         GameEvents.SceneFadeIn?.Invoke();
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(sceneName);
-        yield return new WaitForSeconds(0.2f);
-        GameEvents.returnDoor?.Invoke(position);
-        yield return new WaitForSeconds(0.3f);
+        while (currentScene == SceneManager.GetActiveScene().name)
+        {
+            yield return null;
+        }
+        player.transform.position = position;
         GameEvents.SceneFadeOut?.Invoke();
         PlayerEvents.playerUnfrozen?.Invoke();
         PlayerEvents.playerCanInteract?.Invoke();
@@ -51,7 +54,7 @@ public class SceneController : MonoBehaviour
     private void LoadScene(string sceneName, bool additive, string doorName)
     {
         _currentDoor = doorName;
-        currentScene = sceneName;
+        nextScene = sceneName;
         
         if (additive)
         {
@@ -65,12 +68,16 @@ public class SceneController : MonoBehaviour
     
     private IEnumerator LoadRegularScene(string sceneName)
     {
+        string currentScene = SceneManager.GetActiveScene().name;
         GameEvents.SceneFadeIn?.Invoke();
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(sceneName);
-        yield return new WaitForSeconds(0.2f);
+        while (currentScene == SceneManager.GetActiveScene().name)
+        {
+            yield return null;
+        }
         GameEvents.lookForObject?.Invoke(_currentDoor);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         GameEvents.SceneFadeOut?.Invoke();
     }
     

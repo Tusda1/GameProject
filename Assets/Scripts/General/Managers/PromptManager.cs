@@ -20,43 +20,35 @@ public class PromptManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.showPrompt += ShowPrompt;
-        GameEvents.showChoicePrompt += ShowChoicePrompt;
-        GameEvents.interactPressed += HidePrompt;
     }
     
     private void OnDisable()
     {
         GameEvents.showPrompt -= ShowPrompt;
-        GameEvents.showChoicePrompt -= ShowChoicePrompt;
-        GameEvents.interactPressed -= HidePrompt;
     }
 
-    private void ShowPrompt(string prompt)
+    private void ShowPrompt(string prompt, bool choicePrompt)
     {
         if (_interacted)
-            return;
-        
-        _interacted = true;
-        PlayerEvents.playerFrozen?.Invoke();
-        promptText.text = prompt;
-        promptPanel.SetActive(true);
-    }
-
-    private void ShowChoicePrompt(string prompt)
-    {
-        if (_interacted)
-            return;
-        
-        _interacted = true;
-        PlayerEvents.playerFrozen?.Invoke();
-        promptText.text = prompt;
-        promptPanel.SetActive(true);
-        foreach (var button in choiceButtons)
         {
-            button.gameObject.SetActive(true);
+            HidePrompt();
+            return;
         }
+
+        _interacted = true;
+        PlayerEvents.playerFrozen?.Invoke();
+        promptText.text = prompt;
+        promptPanel.SetActive(true);
         
-        _buttonManouverer = new ButtonManouverer(choiceButtons, this);
+        if (choicePrompt)
+        {
+            foreach (var button in choiceButtons)
+            {
+                button.gameObject.SetActive(true);
+            }
+        
+            _buttonManouverer = new ButtonManouverer(choiceButtons, this);
+        }
     }
     
     private void HidePrompt()
@@ -64,7 +56,7 @@ public class PromptManager : MonoBehaviour
         if(!_interacted)
             return;
         
-        _interacted = false;
+        _interacted = false; 
         PlayerEvents.playerUnfrozen?.Invoke();
         promptPanel.SetActive(false);
         foreach (var button in choiceButtons)

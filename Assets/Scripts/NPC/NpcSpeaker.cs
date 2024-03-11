@@ -159,9 +159,7 @@ public class NpcSpeaker : MonoBehaviour, Interactable
     
     public void DestroyNpc()
     {
-        print("Destroying Npc");
         EndConversation();
-        print("Finalizing destruction");
         Destroy(gameObject);
     }
 
